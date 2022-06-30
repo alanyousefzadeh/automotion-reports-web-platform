@@ -1,36 +1,38 @@
 import React, { useState} from 'react';
 import axios from 'axios';
-import Garage from '../../components/Garage/Garage';
-
+import GarageCard from '../../components/GarageCard/GarageCard';
+import baxter from '../../assets/baxter.png';
+import vanvorst from '../../assets/vanvorst.png';
+import waverly from '../../assets/waverly.png';
 const data = [
     {
       id: 1,
-      title: "Garage title",
-      image: "https://i.imgur.com/example.jpg"
+      title: "Baxter",
+      image: baxter
     },
     {
       id: 2,
-      title: "Garage title",
-      image: "https://i.imgur.com/example.jpg"
+      title: "VanVorst",
+      image: vanvorst
     },
     {
       id: 3,
-      title: "Garage title",
-      image: "https://i.imgur.com/example.jpg"
+      title: "Waverly",
+      image: waverly
     },
-    ]
+  ]
 
-function ReportPage(){
+function WelcomePage(){
     // const [garages, setGarages] = useState([]);
     return (
 
         <div className="cards d-flex justify-content-center"> 
             {data.map(garage =>(
-                <Garage key={garage.id} title={garage.title} image={garage.image}/>    
+                <GarageCard key={garage.id} id={garage.id} title={garage.title} image={garage.image}/>    
             ))}
         </div>
     );
 
 }
 
-export default ReportPage;
+export default WelcomePage;

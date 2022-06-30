@@ -1,4 +1,6 @@
 import React, {useState} from "react";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Form from 'react-bootstrap/Form';
 import Button from "react-bootstrap/esm/Button";
 import axios from "axios";
@@ -8,6 +10,7 @@ function Login() {
 
     const [ form, setForm ] = useState({})
     const [ errors, setErrors ] = useState({})
+    const [serverSideErr, setServerSideErr] = useState(null)
 
     //function to update the state of the form
     const setField = (field, value) => {
@@ -23,6 +26,7 @@ function Login() {
         })
     }
 
+    const nav = useNavigate();
     const handleSubmit = e => {
         e.preventDefault()
         // get our new errors
@@ -33,9 +37,22 @@ function Login() {
           setErrors(newErrors)
         } else {
           // No errors!
-          alert('logging in')
+          axios
+            .post('http://localhost:8080/login', {
+                email: form.email,
+                password: form.password
+            })
+            //if the credentials are valid, store them in session storage for later use
+            .then((response) => {
+                sessionStorage.setItem("token", response.data.token);
+                e.target.reset();
+                nav('/welcome');
+            })
+            .catch((error) => {
+                setServerSideErr(error.response.data);
+            });
         }
-      }
+    }
 
     const findFormErrors = () => {
         const { email, password} = form
@@ -60,11 +77,12 @@ function Login() {
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" onChange={ e => setField('password', e.target.value) } isInvalid={ !!errors.password } />
+                <Form.Control type="password" placeholder="Password" autoComplete="on" onChange={ e => setField('password', e.target.value) } isInvalid={ !!errors.password } />
                 <Form.Control.Feedback type='invalid'>
                     { errors.password }
                 </Form.Control.Feedback>
             </Form.Group>
+            {/* <p>{serverSideErr}</p> */}
             <Button style={{width:300}} variant="primary" type="submit">
                 Log In
             </Button>
