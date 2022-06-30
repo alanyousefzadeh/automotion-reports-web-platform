@@ -1,10 +1,8 @@
 import React, {useState} from "react";
-import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Form from 'react-bootstrap/Form';
 import Button from "react-bootstrap/esm/Button";
 import axios from "axios";
-
 
 function Login() {
 
