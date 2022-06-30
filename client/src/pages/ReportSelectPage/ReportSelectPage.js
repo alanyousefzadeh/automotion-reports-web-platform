@@ -3,7 +3,7 @@ import axios from 'axios';
 import Garage from '../../components/GarageCard/GarageCard';
 import ReportCard from '../../components/ReportCard/ReportCard';
 
-//make API call to get reports for each garage based on the garageId from URL, use sample data for now
+//make API call to get reports for each garage based on the garageName from URL, use sample data for now
 const reports = [
         {
           id: 1, 
@@ -20,9 +20,9 @@ const reports = [
         }
       ]
    
-
 function ReportSelectPage(){
     // const [garages, setGarages] = useState([]);
+    // const garageName = match.params.garage
     return (
 
         <div className="cards d-flex justify-content-center"> 
