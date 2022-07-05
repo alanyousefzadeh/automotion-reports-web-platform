@@ -1,18 +1,38 @@
-import React, { useState} from 'react';
-import { Link, Navigate } from 'react-router-dom';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import React, { useState, useEffect} from 'react';
 import axios from 'axios';
-import LoginComponent from '../../components/Login/Login';
+
 
 function ReportPage(){
+    const [data, setData] = useState({})
+    const [failedToLoad, setFailedToLoad] = useState(false);
+
+    useEffect(() => {
+        axios
+            .get('http://localhost:8080/garagedata')
+            .then((res) => { 
+                console.log(res.data)
+                setData(res.data);
+            })
+            .catch(() => {
+                setFailedToLoad(true);
+            });
+    }, []);
 
     return (
-        <>
-        <p> sample report here</p>
-        </>
+        
+        <div>
+            {failedToLoad 
+            ? <p>error loading data...</p>
+            :
+            <>
+                <p>InDateTime: {data.InDateTime}</p>
+                <p>OutDateTime: {data.OutDateTime}</p>
+                <p>OverSize: {data.Oversize}</p>
+                <p>Status: {data.Status}</p>
+            </>
+            }
+        </div>
     );
-
 }
 
-export default ReportPage;
+export default ReportPage; 

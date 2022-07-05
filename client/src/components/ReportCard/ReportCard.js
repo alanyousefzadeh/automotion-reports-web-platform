@@ -1,11 +1,10 @@
-import axios from "axios";
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from "react-router-dom";
 
 function ReportCard(props) {
 
-    const {id, title} = props;
+    const {title} = props;
     const urlParam = title.split(" ")[0]
     const nav = useNavigate();
     const clickHandler = async() => {

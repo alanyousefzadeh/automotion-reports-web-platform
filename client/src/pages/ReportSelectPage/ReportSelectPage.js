@@ -1,7 +1,6 @@
-import React, { useState} from 'react';
-import axios from 'axios';
-import Garage from '../../components/GarageCard/GarageCard';
+import React from 'react';
 import ReportCard from '../../components/ReportCard/ReportCard';
+import { useParams } from 'react-router-dom';
 
 //make API call to get reports for each garage based on the garageName from URL, use sample data for now
 const reports = [
@@ -21,16 +20,18 @@ const reports = [
       ]
    
 function ReportSelectPage(){
-    // const [garages, setGarages] = useState([]);
-    // const garageName = match.params.garage
-    return (
-
-        <div className="cards d-flex justify-content-center"> 
-            {reports.map(report =>(
-                <ReportCard key={report.id} id={report.id} title={report.title}/>    
-            ))}
-        </div>
-    );
+  
+  let { garageName } = useParams();
+  return (
+    <>
+    <h1>{garageName}</h1>
+      <div className="cards d-flex justify-content-center"> 
+          {reports.map(report =>(
+              <ReportCard key={report.id} id={report.id} name={garageName} title={report.title}/>    
+          ))}
+      </div>
+    </>
+  );
 
 }
 
