@@ -2,7 +2,7 @@ import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import LoginPage from './pages/LoginPage/LoginPage';
 import WelcomePage from './pages/WelcomePage/WelcomePage';
 import ReportSelectPage from './pages/ReportSelectPage/ReportSelectPage';
-import ReportPage from './pages/ReportPage/ReportPage.';
+import ReportPage from './pages/ReportPage/ReportPage';
 
 function App() {
   return (
