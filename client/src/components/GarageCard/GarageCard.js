@@ -7,7 +7,7 @@ function GarageCard(props) {
 
     const {title, image} = props;
    
-    const urlParam = title.split(" ")[0];
+    const urlParam = title;//title.split(" ")[0];
     const nav = useNavigate();
     const clickHandler = () => {
         nav(`/reportSelect/${urlParam}`)

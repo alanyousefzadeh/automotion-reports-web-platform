@@ -1,9 +1,11 @@
 require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
 const app = express();
+const cors = require("cors");
+const axios = require("axios");
+
 const loginRoute = require('./routes/loginRoute');
-const garageRoute = require('./routes/garageRoute')
+const garageRoute = require('./routes/garageRoute');
 const port = 8080;
 
 //middleware
@@ -15,7 +17,6 @@ app.use(express.json());
 
 app.use('/login', loginRoute);
 app.use('/garagedata', garageRoute);
-
 
 //port listener
 app.listen(port, () => {

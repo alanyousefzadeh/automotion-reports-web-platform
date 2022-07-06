@@ -4,6 +4,7 @@ import GarageCard from '../../components/GarageCard/GarageCard';
 import baxter from '../../assets/baxter.png';
 import vanvorst from '../../assets/vanvorst.png';
 import waverly from '../../assets/waverly.png';
+import atlanticTerrace from '../../assets/atlanticTerrace.png';
 const data = [
     {
       id: 1,
@@ -19,6 +20,11 @@ const data = [
       id: 3,
       title: "Waverly",
       image: waverly
+    },
+    {
+      id: 4,
+      title: "Atlantic Terrace",
+      image: atlanticTerrace
     },
   ]
 
