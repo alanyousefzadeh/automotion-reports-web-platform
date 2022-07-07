@@ -1,15 +1,21 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import Table from 'react-bootstrap/Table';
+import AtlanticTable from '../../components/AtlanticTable/AtlanticTable';
+import DatePicker from '../../components/DatePicker/DatePicker';
 
 function ReportPage(){
     let params = useParams();
-    const [atlanticData, setAtlanticData] = useState([]);
+    const [atlanticAllData, setatlanticAllData] = useState([]);
     const [atlanticNoDiscount, setAtlanticNoDiscount] = useState([]);
+    const [atlanticWithDiscount, setAtlanticWithDiscount] = useState([]);
     const [data, setData] = useState({});
     const [failedToLoad, setFailedToLoad] = useState(false);
     const [garage, setGarage] = useState(params.garageName);
+    const [inDate, setInDate]  = useState("");
+    const [outDate, setOutDate] = useState("");
+    
+    //tally of payments that have no discount applied
     let atlanticNumberOfPayments = {
         'zero': 0,
         '30min': 0,
@@ -19,6 +25,8 @@ function ReportPage(){
         '24hr': 0,
         'Early': 0,
     }
+
+    //table of regular rates
     let atlanticRates = {
         'zero': 0,
         '30min': 3,
@@ -28,20 +36,37 @@ function ReportPage(){
         '24hr': 40,
         'Early': 10,
     }
-    atlanticNumberOfPayments['zero'] = atlanticData.filter(payment=> payment.total_amount === 0).length;
-    console.log('zero:', atlanticNumberOfPayments['zero'])
+
+    //tally of payments using each discount type 
+    let atlanticDiscounts = {
+        'Restaurant': 0,
+        'Wix': 0,
+        'SpotHero': 0,
+        'ParkWhiz': 0,
+        'Event Rate - $45': 0,
+        'BSE Comp': 0,
+        'BSE Staff': 0,
+        'Event Rate OS - $55': 0,
+        'Concert Rate - $50': 0,
+        'Concert Rate OS - $60': 0,
+        'OFFLINE Reservation': 0,
+        'No Charge': 0,
+        'Crown Club Member': 0,
+        'Other': 0
+    }
+
+    atlanticNumberOfPayments['zero'] = atlanticAllData.filter(payment=> payment.total_amount === 0).length;
     atlanticNumberOfPayments['30min'] = atlanticNoDiscount.filter(payment=> payment.total_amount === 3).length;
-    console.log('30min:', atlanticNumberOfPayments['30min'])
     atlanticNumberOfPayments['1hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 6).length;
-    console.log('1hr:', atlanticNumberOfPayments['1hr'])
     atlanticNumberOfPayments['Early'] = atlanticNoDiscount.filter(payment => payment.total_amount === 10).length;
-    console.log('EarlyBird:', atlanticNumberOfPayments['Early'])
     atlanticNumberOfPayments['2hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 15).length;
-    console.log('2hr:', atlanticNumberOfPayments['2hr'])
     atlanticNumberOfPayments['10hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 23).length;
-    console.log('10hr:', atlanticNumberOfPayments['10hr'])
     atlanticNumberOfPayments['24hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 40).length;
-    console.log('24hr:', atlanticNumberOfPayments['24hr'])
+
+    let atlanticDiscountData = atlanticAllData.filter(payment=> Object.keys(payment).includes("discount_name"));
+    console.log(atlanticDiscountData);
+    
+    
     let atlanticTotalTickets = Object.values(atlanticNumberOfPayments).reduce((sum, value) => {
         return sum + value;
     }, 0)
@@ -59,29 +84,36 @@ function ReportPage(){
     }, 0)
     
     useEffect(() => {
-        if(garage === 'Atlantic Terrace'){
-            axios
-            .get('http://localhost:8080/garagedata/atlantic')
-            .then((res) => {
-                setAtlanticData(res.data);
-                setAtlanticNoDiscount(res.data.filter(payment => payment.total_amount === payment.total_value));
-            })
-            .catch(()=>{
-                setFailedToLoad(true);  
-            })
+        if(inDate !== "" && outDate !== ""){
+            if(garage === 'Atlantic Terrace'){
+                axios
+                .get('http://localhost:8080/garagedata/atlantic', {
+                    params: {
+                        inDate: Math.floor(new Date(inDate).getTime() / 1000),
+                        outDate: Math.floor(new Date(outDate).getTime() / 1000)
+                    }
+                })
+                .then((res) => {
+                    setatlanticAllData(res.data);
+                    setAtlanticNoDiscount(res.data.filter(payment => payment.total_amount === payment.total_value));
+                })
+                .catch(()=>{
+                    setFailedToLoad(true);  
+                })
 
-        }else{
-            axios
-            .get('http://localhost:8080/garagedata')
-            .then((res) => { 
-                console.log(res.data)
-                setAtlanticData(res.data);
-            })
-            .catch(() => {
-                setFailedToLoad(true);
-            });
-        }    
-    }, []);
+            }else{
+                axios
+                .get('http://localhost:8080/garagedata')
+                .then((res) => { 
+                    console.log(res.data)
+                    setatlanticAllData(res.data);
+                })
+                .catch(() => {
+                    setFailedToLoad(true);
+                });
+            } 
+        }   
+    }, [inDate, outDate]);
 
 
     return (
@@ -90,67 +122,16 @@ function ReportPage(){
             {failedToLoad 
             ? <p>error loading data...</p>
             :
-            <>
-            <Table striped bordered hover>
-            <thead>
-                <tr>
-                    <th>Revenue by Rate</th>
-                    <th>Tickets</th>
-                    <th>Total</th>
-                    <th>Total w/ Tax</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Default Board - 1/2h</td>
-                    <td>{atlanticNumberOfPayments['30min']}</td>
-                    <td>$$$$</td>
-                    <td>{`$${atlanticTotalWTax['30min'].toFixed(2)}`}</td>
-                </tr>
-                <tr>
-                    <td>Default Board - 1h</td>
-                    <td>{atlanticNumberOfPayments['1hr']}</td>
-                    <td>$$$$</td>
-                    <td>{`$${atlanticTotalWTax['1hr'].toFixed(2)}`}</td>
-                </tr>
-                <tr>
-                    <td>Default Board - 2h</td>
-                    <td>{atlanticNumberOfPayments['2hr']}</td>
-                    <td>$$$$</td>
-                    <td>{`$${atlanticTotalWTax['2hr'].toFixed(2)}`}</td>
-                </tr>
-                <tr>
-                    <td>Default Board - 10h</td>
-                    <td>{atlanticNumberOfPayments['10hr']}</td>
-                    <td>$$$$</td>
-                    <td>{`$${atlanticTotalWTax['10hr'].toFixed(2)}`}</td>
-                </tr>
-                <tr>
-                    <td>Default Board - 24h</td>
-                    <td>{atlanticNumberOfPayments['24hr']}</td>
-                    <td>$$$$</td>
-                    <td>{`$${atlanticTotalWTax['24hr'].toFixed(2)}`}</td>
-                </tr>
-                <tr>
-                    <td>Early Bird</td>
-                    <td>{atlanticNumberOfPayments['Early']}</td>
-                    <td>$$$$</td>
-                    <td>{`$${atlanticTotalWTax['Early'].toFixed(2)}`}</td>
-                </tr>
-                <tr>
-                    <td>$0 Tickets</td>
-                    <td>{atlanticNumberOfPayments['zero']}</td>
-                    <td>$$$$</td>
-                    <td>{`$${atlanticTotalWTax['zero'].toFixed(2)}`}</td>
-                </tr>
-                <tr>
-                    <th>Totals:</th>
-                    <th>{atlanticTotalTickets}</th>
-                    <th>$$$$</th>
-                    <th>{`$${atlanticTotalWTaxPaid.toFixed(2)}`}</th>
-                </tr>
-            </tbody>
-            </Table>
+            <> 
+            <DatePicker label={'In-Date'} setDate={setInDate}/>
+            <DatePicker label={'Out-Date'} setDate={setOutDate}/>
+            <AtlanticTable 
+                atlanticTotalWTax={atlanticTotalWTax} 
+                atlanticNumberOfPayments={atlanticNumberOfPayments}
+                atlanticTotalTickets={atlanticTotalTickets}
+                atlanticTotalWTaxPaid={atlanticTotalWTaxPaid}
+            />
+            
             </>
             }
         </div>

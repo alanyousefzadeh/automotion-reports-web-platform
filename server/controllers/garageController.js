@@ -31,7 +31,11 @@ exports.garage = (req, res) => {
 }; 
 
 exports.atlantic = (req, res) =>{
-    const API_URL = 'https://ssl.garagenet.com/api/N2UwNjFi/woc/reports/allClosedInventoryData?from=1638259200&to=1638345600';
+    let from = parseInt(req.query.inDate) + 14400;//14400 = 4hrs in seconds, add 4 hours to unix stamp to adjust for eastern time (12AM GMT/Unix Time == 8PM(previous day) eastern time)
+    let to = parseInt(req.query.outDate) + 14400;
+    console.log('from', from);
+    console.log('to', to)
+    const API_URL = `https://ssl.garagenet.com/api/N2UwNjFi/woc/reports/allClosedInventoryData?from=${from}&to=${to}`;
     axios
         .get(API_URL, {
             auth: {
