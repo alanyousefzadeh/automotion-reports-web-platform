@@ -5,18 +5,20 @@ import AtlanticTable from '../../components/AtlanticTable/AtlanticTable';
 import DatePicker from '../../components/DatePicker/DatePicker';
 
 function ReportPage(){
+    //access the URL parameters to know which record and garage we are currently on
     let params = useParams();
+
+    //set the state variables
     const [atlanticAllData, setatlanticAllData] = useState([]);
     const [atlanticNoDiscount, setAtlanticNoDiscount] = useState([]);
-    const [atlanticWithDiscount, setAtlanticWithDiscount] = useState([]);
-    const [data, setData] = useState({});
+    const [atlanticDiscount, setAtlanticDiscount] = useState([]);
     const [failedToLoad, setFailedToLoad] = useState(false);
     const [garage, setGarage] = useState(params.garageName);
     const [inDate, setInDate]  = useState("");
     const [outDate, setOutDate] = useState("");
     
     //tally of payments that have no discount applied
-    let atlanticNumberOfPayments = {
+    let atlanticTicketsSoldNoDiscountTable = {
         'zero': 0,
         '30min': 0,
         '1hr': 0,
@@ -55,33 +57,27 @@ function ReportPage(){
         'Other': 0
     }
 
-    atlanticNumberOfPayments['zero'] = atlanticAllData.filter(payment=> payment.total_amount === 0).length;
-    atlanticNumberOfPayments['30min'] = atlanticNoDiscount.filter(payment=> payment.total_amount === 3).length;
-    atlanticNumberOfPayments['1hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 6).length;
-    atlanticNumberOfPayments['Early'] = atlanticNoDiscount.filter(payment => payment.total_amount === 10).length;
-    atlanticNumberOfPayments['2hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 15).length;
-    atlanticNumberOfPayments['10hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 23).length;
-    atlanticNumberOfPayments['24hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 40).length;
+    //find number of payments for each non-discount rate
+                                                //atlanticAllData = entire array of all tickets
+                                                //atlanticNoDiscount = only including payments where total_amount == total_value
+    atlanticTicketsSoldNoDiscountTable['zero'] = atlanticAllData.filter(payment=> payment.total_amount === 0).length;
+    atlanticTicketsSoldNoDiscountTable['30min'] = atlanticNoDiscount.filter(payment=> payment.total_amount === 3).length;
+    atlanticTicketsSoldNoDiscountTable['1hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 6).length;
+    atlanticTicketsSoldNoDiscountTable['Early'] = atlanticNoDiscount.filter(payment => payment.total_amount === 10).length;
+    atlanticTicketsSoldNoDiscountTable['2hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 15).length;
+    atlanticTicketsSoldNoDiscountTable['10hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 23).length;
+    atlanticTicketsSoldNoDiscountTable['24hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 40).length;
 
-    let atlanticDiscountData = atlanticAllData.filter(payment=> Object.keys(payment).includes("discount_name"));
-    console.log(atlanticDiscountData);
-    
-    
-    let atlanticTotalTickets = Object.values(atlanticNumberOfPayments).reduce((sum, value) => {
-        return sum + value;
-    }, 0)
-    let atlanticTotalWTax = {
-        'zero': (atlanticRates['zero'] * atlanticNumberOfPayments['zero']),
-        '30min': (atlanticRates['30min'] * atlanticNumberOfPayments['30min']),
-        '1hr': (atlanticRates['1hr'] * atlanticNumberOfPayments['1hr']),
-        '2hr': (atlanticRates['2hr'] * atlanticNumberOfPayments['2hr']),
-        '10hr': (atlanticRates['10hr'] * atlanticNumberOfPayments['10hr']),
-        '24hr': (atlanticRates['24hr'] * atlanticNumberOfPayments['24hr']),
-        'Early': (atlanticRates['Early'] * atlanticNumberOfPayments['Early'])
+    //table of total $$$ revenue of each ticket type of non-discount tix - total including tax
+    let atlanticTotalWTaxTable = {
+        'zero': (atlanticRates['zero'] * atlanticTicketsSoldNoDiscountTable['zero']),
+        '30min': (atlanticRates['30min'] * atlanticTicketsSoldNoDiscountTable['30min']),
+        '1hr': (atlanticRates['1hr'] * atlanticTicketsSoldNoDiscountTable['1hr']),
+        '2hr': (atlanticRates['2hr'] * atlanticTicketsSoldNoDiscountTable['2hr']),
+        '10hr': (atlanticRates['10hr'] * atlanticTicketsSoldNoDiscountTable['10hr']),
+        '24hr': (atlanticRates['24hr'] * atlanticTicketsSoldNoDiscountTable['24hr']),
+        'Early': (atlanticRates['Early'] * atlanticTicketsSoldNoDiscountTable['Early'])
     }
-    let atlanticTotalWTaxPaid = Object.values(atlanticTotalWTax).reduce((sum, value) => {
-        return (sum + value);
-    }, 0)
     
     useEffect(() => {
         if(inDate !== "" && outDate !== ""){
@@ -96,6 +92,7 @@ function ReportPage(){
                 .then((res) => {
                     setatlanticAllData(res.data);
                     setAtlanticNoDiscount(res.data.filter(payment => payment.total_amount === payment.total_value));
+                    setAtlanticDiscount(res.data.filter(payment => Object.keys(payment).includes("discount_name")));
                 })
                 .catch(()=>{
                     setFailedToLoad(true);  
@@ -126,10 +123,8 @@ function ReportPage(){
             <DatePicker label={'In-Date'} setDate={setInDate}/>
             <DatePicker label={'Out-Date'} setDate={setOutDate}/>
             <AtlanticTable 
-                atlanticTotalWTax={atlanticTotalWTax} 
-                atlanticNumberOfPayments={atlanticNumberOfPayments}
-                atlanticTotalTickets={atlanticTotalTickets}
-                atlanticTotalWTaxPaid={atlanticTotalWTaxPaid}
+                atlanticTotalWTaxTable={atlanticTotalWTaxTable} //table of total $$$ revenue of each no discount ticket (1hr, 2hr, etc) 
+                atlanticTicketsSoldNoDiscountTable={atlanticTicketsSoldNoDiscountTable} //table of number of tickets sold of each no-discount ticket (1hr, 2hr, etc) 
             />
             
             </>
