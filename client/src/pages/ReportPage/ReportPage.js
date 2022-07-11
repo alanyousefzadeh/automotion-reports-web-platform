@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import AtlanticTable from '../../components/AtlanticTable/AtlanticTable';
 import DatePicker from '../../components/DatePicker/DatePicker';
+import ReportHeader from '../../components/ReportHeader/ReportHeader';
 
 function ReportPage(){
 
@@ -84,7 +85,7 @@ function ReportPage(){
         if(inDate !== "" && outDate !== ""){
             if(garage === 'Atlantic Terrace'){
                 axios
-                .get('http://localhost:8080/garagedata/atlantic', {
+                .get('http://localhost:8080/garagedata/atlanticClosed', {
                     params: {
                         inDate: Math.floor(new Date(inDate).getTime() / 1000),
                         outDate: Math.floor(new Date(outDate).getTime() / 1000)
@@ -94,6 +95,21 @@ function ReportPage(){
                     setatlanticAllData(res.data);
                     setAtlanticNoDiscount(res.data.filter(payment => payment.total_amount === payment.total_value));
                     setAtlanticDiscount(res.data.filter(payment => Object.keys(payment).includes("discount_name")));
+                })
+                .then(()=> {
+                    axios
+                        .get('http://localhost:8080/garagedata/atlanticOpen', {
+                            params: {
+                                inDate: Math.floor(new Date(inDate).getTime() / 1000),
+                                outDate: Math.floor(new Date(outDate).getTime() / 1000)                 
+                            }
+                        })
+                        // .then((res) => {
+                            //starting open = previous days open (data saved in local storage)
+                            //ending day open tickets = openData.length 
+                            //save ending day open tickets locally to be used as starting open tomorrow
+                            //issued tickets = closed - starting
+                        // })
                 })
                 .catch(()=>{
                     setFailedToLoad(true);  
@@ -121,6 +137,10 @@ function ReportPage(){
             ? <p>error loading data...</p>
             :
             <> 
+            <ReportHeader 
+            closed={atlanticAllData.length}
+            endDate={outDate}
+            />
             <DatePicker label={'In-Date'} setDate={setInDate}/>
             <DatePicker label={'Out-Date'} setDate={setOutDate}/>
             <AtlanticTable 

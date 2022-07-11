@@ -30,14 +30,33 @@ exports.garage = (req, res) => {
         });
 }; 
 
-exports.atlantic = (req, res) =>{
-    let from = parseInt(req.query.inDate) + 14400;//14400 = 4hrs in seconds, add 4 hours to unix stamp to adjust for eastern time (12AM GMT/Unix Time == 8PM(previous day) eastern time)
-    let to = parseInt(req.query.outDate) + 14400;
+exports.atlanticClosed = (req, res) =>{
+    let from = parseInt(req.query.inDate) + 10800;//10800 = 3hrs in seconds, add 3 hours to unix stamp to adjust for eastern time 3am
+    let to = parseInt(req.query.outDate) + 10800;
     console.log('from', from);
     console.log('to', to)
-    const API_URL = `https://ssl.garagenet.com/api/N2UwNjFi/woc/reports/allClosedInventoryData?from=${from}&to=${to}`;
+    const CLOSED_API_URL = `https://ssl.garagenet.com/api/N2UwNjFi/woc/reports/allClosedInventoryData?from=${from}&to=${to}`;
     axios
-        .get(API_URL, {
+        .get(CLOSED_API_URL, {
+            auth: {
+                username:'wocreports' ,
+                password: 'wqEsCg0LticrMNtG'
+            }
+        })
+        .then(response => res.send(response.data))
+            .catch((err) => {
+                res.send(err);
+            });
+}; 
+
+exports.atlanticOpen = (req, res) =>{
+    let from = parseInt(req.query.inDate) + 10800;//10800 = 3hrs in seconds, add 3 hours to unix stamp to adjust for eastern time 3am
+    let to = parseInt(req.query.outDate) + 10800;
+    console.log('from', from);
+    console.log('to', to)
+    const OPEN_API_URL = `https://ssl.garagenet.com/api/N2UwNjFi/woc/reports/allOpenInventoryData?from=${from}&to=${to}`;
+    axios
+        .get(OPEN_API_URL, {
             auth: {
                 username:'wocreports' ,
                 password: 'wqEsCg0LticrMNtG'

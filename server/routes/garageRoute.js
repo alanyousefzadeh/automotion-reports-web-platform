@@ -6,8 +6,11 @@ router
     .get(garageController.garage);
 
 router
-    .route('/atlantic')
-    .get(garageController.atlantic)
+    .route('/atlanticClosed')
+    .get(garageController.atlanticClosed)
 
+router
+    .route('/atlanticOpen')
+    .get(garageController.atlanticOpen)
 
 module.exports = router;  
