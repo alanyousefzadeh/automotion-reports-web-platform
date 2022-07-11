@@ -18,7 +18,7 @@ function ReportPage(){
     const [outDate, setOutDate] = useState("");
     
     //tally of payments that have no discount applied
-    let atlanticTicketsSoldNoDiscountTable = {
+    let atlanticTicketsSoldPerRateTable = {
         'zero': 0,
         '30min': 0,
         '1hr': 0,
@@ -40,7 +40,7 @@ function ReportPage(){
     }
 
     //tally of payments using each discount type 
-    let atlanticDiscounts = {
+    let atlanticDiscountsTable = {
         'Restaurant': 0,
         'Wix': 0,
         'SpotHero': 0,
@@ -60,23 +60,28 @@ function ReportPage(){
     //find number of payments for each non-discount rate
                                                 //atlanticAllData = entire array of all tickets
                                                 //atlanticNoDiscount = only including payments where total_amount == total_value
-    atlanticTicketsSoldNoDiscountTable['zero'] = atlanticAllData.filter(payment=> payment.total_amount === 0).length;
-    atlanticTicketsSoldNoDiscountTable['30min'] = atlanticNoDiscount.filter(payment=> payment.total_amount === 3).length;
-    atlanticTicketsSoldNoDiscountTable['1hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 6).length;
-    atlanticTicketsSoldNoDiscountTable['Early'] = atlanticNoDiscount.filter(payment => payment.total_amount === 10).length;
-    atlanticTicketsSoldNoDiscountTable['2hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 15).length;
-    atlanticTicketsSoldNoDiscountTable['10hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 23).length;
-    atlanticTicketsSoldNoDiscountTable['24hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 40).length;
-
+    atlanticTicketsSoldPerRateTable['zero'] = atlanticAllData.filter(payment=> payment.total_amount === 0).length;
+    atlanticTicketsSoldPerRateTable['30min'] = atlanticNoDiscount.filter(payment=> payment.total_amount === 3).length;
+    atlanticTicketsSoldPerRateTable['1hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 6).length;
+    atlanticTicketsSoldPerRateTable['Early'] = atlanticNoDiscount.filter(payment => payment.total_amount === 10).length;
+    atlanticTicketsSoldPerRateTable['2hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 15).length;
+    atlanticTicketsSoldPerRateTable['10hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 23).length;
+    atlanticTicketsSoldPerRateTable['24hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 40).length;
+    
+    //fill the discounts table with tally
+    Object.keys(atlanticDiscountsTable).forEach(key => {
+        atlanticDiscountsTable[key] = atlanticDiscount.filter(payment => payment.discount_name === key).length;
+    })
+    console.log(atlanticDiscountsTable);
     //table of total $$$ revenue of each ticket type of non-discount tix - total including tax
     let atlanticTotalWTaxTable = {
-        'zero': (atlanticRates['zero'] * atlanticTicketsSoldNoDiscountTable['zero']),
-        '30min': (atlanticRates['30min'] * atlanticTicketsSoldNoDiscountTable['30min']),
-        '1hr': (atlanticRates['1hr'] * atlanticTicketsSoldNoDiscountTable['1hr']),
-        '2hr': (atlanticRates['2hr'] * atlanticTicketsSoldNoDiscountTable['2hr']),
-        '10hr': (atlanticRates['10hr'] * atlanticTicketsSoldNoDiscountTable['10hr']),
-        '24hr': (atlanticRates['24hr'] * atlanticTicketsSoldNoDiscountTable['24hr']),
-        'Early': (atlanticRates['Early'] * atlanticTicketsSoldNoDiscountTable['Early'])
+        'zero': (atlanticRates['zero'] * atlanticTicketsSoldPerRateTable['zero']),
+        '30min': (atlanticRates['30min'] * atlanticTicketsSoldPerRateTable['30min']),
+        '1hr': (atlanticRates['1hr'] * atlanticTicketsSoldPerRateTable['1hr']),
+        '2hr': (atlanticRates['2hr'] * atlanticTicketsSoldPerRateTable['2hr']),
+        '10hr': (atlanticRates['10hr'] * atlanticTicketsSoldPerRateTable['10hr']),
+        '24hr': (atlanticRates['24hr'] * atlanticTicketsSoldPerRateTable['24hr']),
+        'Early': (atlanticRates['Early'] * atlanticTicketsSoldPerRateTable['Early'])
     }
     
     useEffect(() => {
@@ -124,9 +129,8 @@ function ReportPage(){
             <DatePicker label={'Out-Date'} setDate={setOutDate}/>
             <AtlanticTable 
                 atlanticTotalWTaxTable={atlanticTotalWTaxTable} //table of total $$$ revenue of each no discount ticket (1hr, 2hr, etc) 
-                atlanticTicketsSoldNoDiscountTable={atlanticTicketsSoldNoDiscountTable} //table of number of tickets sold of each no-discount ticket (1hr, 2hr, etc) 
-            />
-            
+                atlanticTicketsSoldPerRateTable={atlanticTicketsSoldPerRateTable} //table of number of tickets sold of each no-discount ticket (1hr, 2hr, etc) 
+            />            
             </>
             }
         </div>
