@@ -1,7 +1,7 @@
 import Table from 'react-bootstrap/Table';
 
 function AtlanticTable(props) {
-    const {atlanticTicketsSoldPerRateTable, atlanticTotalWTaxTable} = props;
+    const {atlanticTicketsSoldPerRateTable, atlanticTotalWTaxTable, atlanticDiscountsTable} = props;
 
     //total number of all atlantic tickets sold without any discount 
     let atlanticTotalTicketsSoldNoDiscount = Object.values(atlanticTicketsSoldPerRateTable).reduce((sum, value) => {
@@ -13,7 +13,16 @@ function AtlanticTable(props) {
         return (sum + value);
     }, 0)
 
+    let atlanticTotalTicketsSoldWDiscount = 0;
+    let atlanticTotalPaidWTaxWDiscount = 0;
+    Object.keys(atlanticDiscountsTable).forEach((key) => {
+        atlanticTotalTicketsSoldWDiscount += atlanticDiscountsTable[key].tally;
+        atlanticTotalPaidWTaxWDiscount += atlanticDiscountsTable[key].totalPaid;
+
+    })
+
     return (
+        
         <Table striped bordered hover>
             <thead>
                 <tr>
@@ -67,14 +76,50 @@ function AtlanticTable(props) {
                     <td>{`$${atlanticTotalWTaxTable['zero'].toFixed(2)}`}</td>
                 </tr>
                 <tr>
-                    <th>Totals:</th>
+                    <th>Revenue By Rate Totals:</th>
                     <th>{atlanticTotalTicketsSoldNoDiscount}</th>
                     <th>$$$$</th>
                     <th>{`$${atlanticTotalWTaxPaid.toFixed(2)}`}</th>
                 </tr>
+                
             </tbody>
+            
+            <thead>
+                <tr>
+                    <th>Discount Summary</th>
+                    <th>Tickets</th>
+                    <th>Total</th>
+                    <th>Total w/ Tax</th>
+                </tr>
+            </thead>
+            <tbody>
+            {Object.keys(atlanticDiscountsTable).map((key) => {
+                return(
+                <tr key={key} >
+                    <td>{key}</td>
+                    <td>{atlanticDiscountsTable[key].tally}</td>
+                    <td>$$$$</td>
+                    <td>{`$${atlanticDiscountsTable[key].totalPaid.toFixed(2)}`}</td>
+                </tr>
+                )
+            })
+            }
+            <tr>
+                    <th>Discount Totals:</th>
+                    <th>{atlanticTotalTicketsSoldWDiscount}</th>
+                    <th>$$$$</th>
+                    <th>{`$${atlanticTotalPaidWTaxWDiscount.toFixed(2)}`}</th>
+                </tr>
+            </tbody>
+            <thead>
+                <tr>
+                    <th>All Totals:</th>
+                    <th>{atlanticTotalTicketsSoldNoDiscount + atlanticTotalTicketsSoldWDiscount}</th>
+                    <th>Total $$$</th>
+                    <th>{`$${(atlanticTotalPaidWTaxWDiscount + atlanticTotalWTaxPaid).toFixed(2)}`}</th>
+                </tr>
+            </thead>
             </Table>
-
     )
 }
 

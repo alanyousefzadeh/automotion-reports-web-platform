@@ -5,6 +5,10 @@ import AtlanticTable from '../../components/AtlanticTable/AtlanticTable';
 import DatePicker from '../../components/DatePicker/DatePicker';
 
 function ReportPage(){
+
+    function sortObjectByKeys(o) {
+        return Object.keys(o).sort().reduce((r, k) => (r[k] = o[k], r), {});
+    }
     //access the URL parameters to know which record and garage we are currently on
     let params = useParams();
 
@@ -40,22 +44,7 @@ function ReportPage(){
     }
 
     //tally of payments using each discount type 
-    let atlanticDiscountsTable = {
-        'Restaurant': 0,
-        'Wix': 0,
-        'SpotHero': 0,
-        'ParkWhiz': 0,
-        'Event Rate - $45': 0,
-        'BSE Comp': 0,
-        'BSE Staff': 0,
-        'Event Rate OS - $55': 0,
-        'Concert Rate - $50': 0,
-        'Concert Rate OS - $60': 0,
-        'OFFLINE Reservation': 0,
-        'No Charge': 0,
-        'Crown Club Member': 0,
-        'Other': 0
-    }
+    let atlanticDiscountsTable = {}
 
     //find number of payments for each non-discount rate
                                                 //atlanticAllData = entire array of all tickets
@@ -69,10 +58,17 @@ function ReportPage(){
     atlanticTicketsSoldPerRateTable['24hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 40).length;
     
     //fill the discounts table with tally
-    Object.keys(atlanticDiscountsTable).forEach(key => {
-        atlanticDiscountsTable[key] = atlanticDiscount.filter(payment => payment.discount_name === key).length;
-    })
+    atlanticDiscount.forEach(payment => {
+        // atlanticDiscountsTable[payment.discount_name].tally += 1;
+        // atlanticDiscountsTable[payment.discount_name].totalPaid += payment.total_amount;
+        atlanticDiscountsTable[payment.discount_name] = {
+            tally: (atlanticDiscountsTable[payment.discount_name] ? (atlanticDiscountsTable[payment.discount_name].tally + 1) : 1) ,
+            totalPaid : (atlanticDiscountsTable[payment.discount_name] ? (atlanticDiscountsTable[payment.discount_name].totalPaid + parseInt(payment.total_amount)) : parseInt(payment.total_amount) )
+        }
+    });
+    
     console.log(atlanticDiscountsTable);
+
     //table of total $$$ revenue of each ticket type of non-discount tix - total including tax
     let atlanticTotalWTaxTable = {
         'zero': (atlanticRates['zero'] * atlanticTicketsSoldPerRateTable['zero']),
@@ -130,6 +126,7 @@ function ReportPage(){
             <AtlanticTable 
                 atlanticTotalWTaxTable={atlanticTotalWTaxTable} //table of total $$$ revenue of each no discount ticket (1hr, 2hr, etc) 
                 atlanticTicketsSoldPerRateTable={atlanticTicketsSoldPerRateTable} //table of number of tickets sold of each no-discount ticket (1hr, 2hr, etc) 
+                atlanticDiscountsTable={sortObjectByKeys(atlanticDiscountsTable)}
             />            
             </>
             }
