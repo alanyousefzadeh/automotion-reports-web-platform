@@ -65,7 +65,7 @@ function ReportPage(){
                 tally : (atlanticDiscountsTable['Misc. Tickets'] ? (atlanticDiscountsTable['Misc. Tickets'].tally + 1) : 1),
                 totalPaid: (atlanticDiscountsTable['Misc. Tickets'] ? (atlanticDiscountsTable['Misc. Tickets'].totalPaid + parseInt(payment.total_amount)) : parseInt(payment.total_amount))
             }
-        //all other regular discout tickets
+        //all other regular discount tickets
         }else{
             atlanticDiscountsTable[payment.discount_name] = {
                 tally: (atlanticDiscountsTable[payment.discount_name] ? (atlanticDiscountsTable[payment.discount_name].tally + 1) : 1) ,
@@ -142,13 +142,13 @@ function ReportPage(){
             ? <p>error loading data...</p>
             :
             <> 
-            <ReportHeader 
+            <ReportHeader
             closed={atlanticAllData.length}
             endDate={outDate}
             />
-            <section>
-                <DatePicker className='reportDates__picker' label={'In-Date'} setDate={setInDate}/>
-                <DatePicker className='reportDates__picker' label={'Out-Date'} setDate={setOutDate}/>
+            <section className='m-2'>
+                <DatePicker label={'In-Date'} setDate={setInDate}/>
+                <DatePicker label={'Out-Date'} setDate={setOutDate}/>
                 <Button onClick={generateReport} className='reportDates__button'>Generate Report</Button>
             </section>
             <AtlanticTable 

@@ -24,7 +24,7 @@ function AtlanticTable(props) {
         
         <Table striped bordered hover>
             <thead>
-                <tr>
+                <tr className='table-warning'>
                     <th>Revenue by Rate</th>
                     <th>Tickets</th>
                     <th>Total</th>
@@ -33,37 +33,37 @@ function AtlanticTable(props) {
             </thead>
             <tbody>
                 <tr>
-                    <td>Default Board - 1/2h</td>
+                    <th>Default Board - 1/2h</th>
                     <td>{atlanticTicketsSoldPerRateTable['30min']}</td>
                     <td>$$$$</td>
                     <td>{`$${atlanticTotalWTaxTable['30min'].toFixed(2)}`}</td>
                 </tr>
                 <tr>
-                    <td>Default Board - 1h</td>
+                    <th>Default Board - 1h</th>
                     <td>{atlanticTicketsSoldPerRateTable['1hr']}</td>
                     <td>$$$$</td>
                     <td>{`$${atlanticTotalWTaxTable['1hr'].toFixed(2)}`}</td>
                 </tr>
                 <tr>
-                    <td>Default Board - 2h</td>
+                    <th>Default Board - 2h</th>
                     <td>{atlanticTicketsSoldPerRateTable['2hr']}</td>
                     <td>$$$$</td>
                     <td>{`$${atlanticTotalWTaxTable['2hr'].toFixed(2)}`}</td>
                 </tr>
                 <tr>
-                    <td>Default Board - 10h</td>
+                    <th>Default Board - 10h</th>
                     <td>{atlanticTicketsSoldPerRateTable['10hr']}</td>
                     <td>$$$$</td>
                     <td>{`$${atlanticTotalWTaxTable['10hr'].toFixed(2)}`}</td>
                 </tr>
                 <tr>
-                    <td>Default Board - 24h</td>
+                    <th>Default Board - 24h</th>
                     <td>{atlanticTicketsSoldPerRateTable['24hr']}</td>
                     <td>$$$$</td>
                     <td>{`$${atlanticTotalWTaxTable['24hr'].toFixed(2)}`}</td>
                 </tr>
                 <tr>
-                    <td>Early Bird</td>
+                    <th>Early Bird</th>
                     <td>{atlanticTicketsSoldPerRateTable['Early']}</td>
                     <td>$$$$</td>
                     <td>{`$${atlanticTotalWTaxTable['Early'].toFixed(2)}`}</td>
@@ -73,7 +73,7 @@ function AtlanticTable(props) {
             {Object.keys(atlanticDiscountsTable).map((key) => {
                 return(
                 <tr key={key} >
-                    <td>{key}</td>
+                    <th>{key}</th>
                     <td>{atlanticDiscountsTable[key].tally}</td>
                     <td>$$$$</td>
                     <td>{`$${atlanticDiscountsTable[key].totalPaid.toFixed(2)}`}</td>
@@ -83,7 +83,7 @@ function AtlanticTable(props) {
             }
             </tbody>
             <thead>
-                <tr>
+                <tr className='table-success'>
                     <th>All Totals:</th>
                     <th>{atlanticTotalTicketsSoldNoDiscount + atlanticTotalTicketsSoldWDiscount}</th>
                     <th>Total $$$</th>

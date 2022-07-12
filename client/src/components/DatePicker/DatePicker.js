@@ -6,16 +6,16 @@ function DatePicker(props) {
     const {label, setDate} = props;
 
     return (
-        <div>
-            <div className="row">
-                <div className="col-md-4">
-                    <Form.Group controlId="date">
-                        <Form.Label>{label}</Form.Label>
-                        <Form.Control type="date" name="date" placeholder="Date" onChange={e => setDate(e.target.value)} />
-                    </Form.Group>
-                </div>
+    
+        <div className="row mb-3">
+            <div className="col-md-4">
+                <Form.Group controlId="date">
+                    <Form.Label className='mb-0'>{label}</Form.Label>
+                    <Form.Control type="date" name="date" placeholder="Date" onChange={e => setDate(e.target.value)} />
+                </Form.Group>
             </div>
         </div>
+    
     );
   }
   export default DatePicker;
