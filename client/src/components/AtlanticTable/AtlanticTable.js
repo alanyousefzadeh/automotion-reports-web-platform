@@ -18,7 +18,6 @@ function AtlanticTable(props) {
     Object.keys(atlanticDiscountsTable).forEach((key) => {
         atlanticTotalTicketsSoldWDiscount += atlanticDiscountsTable[key].tally;
         atlanticTotalPaidWTaxWDiscount += atlanticDiscountsTable[key].totalPaid;
-
     })
 
     return (
@@ -69,29 +68,7 @@ function AtlanticTable(props) {
                     <td>$$$$</td>
                     <td>{`$${atlanticTotalWTaxTable['Early'].toFixed(2)}`}</td>
                 </tr>
-                <tr>
-                    <td>$0 Tickets</td>
-                    <td>{atlanticTicketsSoldPerRateTable['zero']}</td>
-                    <td>$$$$</td>
-                    <td>{`$${atlanticTotalWTaxTable['zero'].toFixed(2)}`}</td>
-                </tr>
-                <tr>
-                    <th>Revenue By Rate Totals:</th>
-                    <th>{atlanticTotalTicketsSoldNoDiscount}</th>
-                    <th>$$$$</th>
-                    <th>{`$${atlanticTotalWTaxPaid.toFixed(2)}`}</th>
-                </tr>
-                
             </tbody>
-            
-            <thead>
-                <tr>
-                    <th>Discount Summary</th>
-                    <th>Tickets</th>
-                    <th>Total</th>
-                    <th>Total w/ Tax</th>
-                </tr>
-            </thead>
             <tbody>
             {Object.keys(atlanticDiscountsTable).map((key) => {
                 return(
@@ -104,12 +81,6 @@ function AtlanticTable(props) {
                 )
             })
             }
-            <tr>
-                    <th>Discount Totals:</th>
-                    <th>{atlanticTotalTicketsSoldWDiscount}</th>
-                    <th>$$$$</th>
-                    <th>{`$${atlanticTotalPaidWTaxWDiscount.toFixed(2)}`}</th>
-                </tr>
             </tbody>
             <thead>
                 <tr>

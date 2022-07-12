@@ -26,7 +26,6 @@ function ReportPage(){
     
     //tally of payments that have no discount applied
     let atlanticTicketsSoldPerRateTable = {
-        'zero': 0,
         '30min': 0,
         '1hr': 0,
         '2hr': 0,
@@ -37,7 +36,6 @@ function ReportPage(){
 
     //table of regular rates
     let atlanticRates = {
-        'zero': 0,
         '30min': 3,
         '1hr': 6,
         '2hr': 15,
@@ -50,9 +48,7 @@ function ReportPage(){
     let atlanticDiscountsTable = {}
 
     //find number of payments for each non-discount rate
-                                                //atlanticAllData = entire array of all tickets
-                                                //atlanticNoDiscount = only including payments where total_amount == total_value
-    atlanticTicketsSoldPerRateTable['zero'] = atlanticAllData.filter(payment=> payment.total_amount === 0).length;
+    //atlanticNoDiscount = only including payments where total_amount == total_value
     atlanticTicketsSoldPerRateTable['30min'] = atlanticNoDiscount.filter(payment=> payment.total_amount === 3).length;
     atlanticTicketsSoldPerRateTable['1hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 6).length;
     atlanticTicketsSoldPerRateTable['Early'] = atlanticNoDiscount.filter(payment => payment.total_amount === 10).length;
@@ -62,19 +58,27 @@ function ReportPage(){
     
     //fill the discounts table with tally
     atlanticDiscount.forEach(payment => {
-        // atlanticDiscountsTable[payment.discount_name].tally += 1;
-        // atlanticDiscountsTable[payment.discount_name].totalPaid += payment.total_amount;
-        atlanticDiscountsTable[payment.discount_name] = {
-            tally: (atlanticDiscountsTable[payment.discount_name] ? (atlanticDiscountsTable[payment.discount_name].tally + 1) : 1) ,
-            totalPaid : (atlanticDiscountsTable[payment.discount_name] ? (atlanticDiscountsTable[payment.discount_name].totalPaid + parseInt(payment.total_amount)) : parseInt(payment.total_amount) )
+        
+        //check for misc tickets
+        if(!payment.discount_name){
+            atlanticDiscountsTable['Misc. Tickets'] = {
+                tally : (atlanticDiscountsTable['Misc. Tickets'] ? (atlanticDiscountsTable['Misc. Tickets'].tally + 1) : 1),
+                totalPaid: (atlanticDiscountsTable['Misc. Tickets'] ? (atlanticDiscountsTable['Misc. Tickets'].totalPaid + parseInt(payment.total_amount)) : parseInt(payment.total_amount))
+            }
+        //all other regular discout tickets
+        }else{
+            atlanticDiscountsTable[payment.discount_name] = {
+                tally: (atlanticDiscountsTable[payment.discount_name] ? (atlanticDiscountsTable[payment.discount_name].tally + 1) : 1) ,
+                totalPaid : (atlanticDiscountsTable[payment.discount_name] ? (atlanticDiscountsTable[payment.discount_name].totalPaid + parseInt(payment.total_amount)) : parseInt(payment.total_amount) )
+            }
         }
     });
     
     console.log(atlanticDiscountsTable);
+    console.log(atlanticAllData.filter(payment => !(atlanticDiscount.includes(payment) || atlanticNoDiscount.includes(payment)) ))
 
     //table of total $$$ revenue of each ticket type of non-discount tix - total including tax
     let atlanticTotalWTaxTable = {
-        'zero': (atlanticRates['zero'] * atlanticTicketsSoldPerRateTable['zero']),
         '30min': (atlanticRates['30min'] * atlanticTicketsSoldPerRateTable['30min']),
         '1hr': (atlanticRates['1hr'] * atlanticTicketsSoldPerRateTable['1hr']),
         '2hr': (atlanticRates['2hr'] * atlanticTicketsSoldPerRateTable['2hr']),
@@ -96,7 +100,7 @@ function ReportPage(){
                 .then((res) => {
                     setatlanticAllData(res.data);
                     setAtlanticNoDiscount(res.data.filter(payment => payment.total_amount === payment.total_value));
-                    setAtlanticDiscount(res.data.filter(payment => Object.keys(payment).includes("discount_name")));
+                    setAtlanticDiscount(res.data.filter(payment => (Object.keys(payment).includes("discount_name") || Object.values(payment).includes("misc_ticket_payment"))));
                 })
                 .then(()=> {
                     axios
@@ -130,8 +134,6 @@ function ReportPage(){
             } 
         } 
     }  
-    // }, [inDate, outDate]);
-
 
     return (
         
