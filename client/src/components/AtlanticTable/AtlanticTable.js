@@ -68,8 +68,12 @@ function AtlanticTable(props) {
                     <td>$$$$</td>
                     <td>{`$${atlanticTotalWTaxTable['Early'].toFixed(2)}`}</td>
                 </tr>
-            </tbody>
-            <tbody>
+                <tr>
+                    <th>Misc. Tickets</th>
+                    <td>{atlanticTicketsSoldPerRateTable['Misc.']}</td>
+                    <td>$$$$</td>
+                    <td>{`$${atlanticTotalWTaxTable['Misc.'].toFixed(2)}`}</td>
+                </tr>
             {Object.keys(atlanticDiscountsTable).map((key) => {
                 return(
                 <tr key={key} >
@@ -86,7 +90,7 @@ function AtlanticTable(props) {
                 <tr className='table-success'>
                     <th>All Totals:</th>
                     <th>{atlanticTotalTicketsSoldNoDiscount + atlanticTotalTicketsSoldWDiscount}</th>
-                    <th>Total $$$</th>
+                    <th>$$$.$$</th>
                     <th>{`$${(atlanticTotalPaidWTaxWDiscount + atlanticTotalWTaxPaid).toFixed(2)}`}</th>
                 </tr>
             </thead>
