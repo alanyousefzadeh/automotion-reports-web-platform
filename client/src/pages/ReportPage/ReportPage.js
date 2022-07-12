@@ -1,6 +1,8 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
+import './ReportPage.scss';
 import { useParams } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
 import AtlanticTable from '../../components/AtlanticTable/AtlanticTable';
 import DatePicker from '../../components/DatePicker/DatePicker';
 import ReportHeader from '../../components/ReportHeader/ReportHeader';
@@ -81,7 +83,7 @@ function ReportPage(){
         'Early': (atlanticRates['Early'] * atlanticTicketsSoldPerRateTable['Early'])
     }
     
-    useEffect(() => {
+    const generateReport = () => {
         if(inDate !== "" && outDate !== ""){
             if(garage === 'Atlantic Terrace'){
                 axios
@@ -126,8 +128,9 @@ function ReportPage(){
                     setFailedToLoad(true);
                 });
             } 
-        }   
-    }, [inDate, outDate]);
+        } 
+    }  
+    // }, [inDate, outDate]);
 
 
     return (
@@ -141,8 +144,11 @@ function ReportPage(){
             closed={atlanticAllData.length}
             endDate={outDate}
             />
-            <DatePicker label={'In-Date'} setDate={setInDate}/>
-            <DatePicker label={'Out-Date'} setDate={setOutDate}/>
+            <section>
+                <DatePicker className='reportDates__picker' label={'In-Date'} setDate={setInDate}/>
+                <DatePicker className='reportDates__picker' label={'Out-Date'} setDate={setOutDate}/>
+                <Button onClick={generateReport} className='reportDates__button'>Generate Report</Button>
+            </section>
             <AtlanticTable 
                 atlanticTotalWTaxTable={atlanticTotalWTaxTable} //table of total $$$ revenue of each no discount ticket (1hr, 2hr, etc) 
                 atlanticTicketsSoldPerRateTable={atlanticTicketsSoldPerRateTable} //table of number of tickets sold of each no-discount ticket (1hr, 2hr, etc) 
