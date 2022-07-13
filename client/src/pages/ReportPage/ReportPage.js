@@ -10,86 +10,99 @@ import ReportHeader from '../../components/ReportHeader/ReportHeader';
 function ReportPage(){
 
     function sortObjectByKeys(o) {
-        return Object.keys(o).sort().reduce((r, k) => (r[k] = o[k], r), {});
+        return Object.keys(o).sort().reduce((r, k) => (r[k] = o[k], r), {})
     }
     //access the URL parameters to know which record and garage we are currently on
     let params = useParams();
 
     //set the state variables
     const [atlanticAllData, setatlanticAllData] = useState([]);
-    const [atlanticNoDiscount, setAtlanticNoDiscount] = useState([]);
-    const [atlanticDiscount, setAtlanticDiscount] = useState([]);
     const [failedToLoad, setFailedToLoad] = useState(false);
     const [garage, setGarage] = useState(params.garageName);
     const [inDate, setInDate]  = useState("");
     const [outDate, setOutDate] = useState("");
 
-    //tally of payments that have no discount applied
-    let atlanticTicketsSoldPerRateTable = {
-        '30min': 0,
-        '1hr': 0,
-        '2hr': 0,
-        '10hr': 0,
-        '24hr': 0,
-        'Early': 0,
-        'Misc.': 0
-    }
-
-    //table of regular rates
-    let atlanticRates = {
-        '30min': 3,
-        '1hr': 6,
-        '2hr': 15,
-        '10hr': 23,
-        '24hr': 40,
-        'Early': 10,
-    }
-
-    //tally of payments using each discount type 
-    let atlanticDiscountsTable = {};
-
-    //find misc tickets
-    let miscTix = atlanticAllData.filter(payment => (!atlanticDiscount.includes(payment) && !atlanticNoDiscount.includes(payment)));
-
-     //find total paid w tax using misc tix   
-     let miscTixTotalPaidWTax = 0;
-     miscTix.forEach(payment => {
-         miscTixTotalPaidWTax += payment.total_amount;   
-     })
-
-    //find number of payments for each non-discount rate
-    //atlanticNoDiscount = only including payments where total_amount == total_value
-    atlanticTicketsSoldPerRateTable['30min'] = atlanticNoDiscount.filter(payment=> payment.total_amount === 3).length;
-    atlanticTicketsSoldPerRateTable['1hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 6).length;
-    atlanticTicketsSoldPerRateTable['Early'] = atlanticNoDiscount.filter(payment => payment.total_amount === 10).length;
-    atlanticTicketsSoldPerRateTable['2hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 15).length;
-    atlanticTicketsSoldPerRateTable['10hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 23).length;
-    atlanticTicketsSoldPerRateTable['24hr'] = atlanticNoDiscount.filter(payment => payment.total_amount === 40).length;
-    atlanticTicketsSoldPerRateTable['Misc.'] = miscTix.length;
-
-    //fill the discounts table with tally
-    atlanticDiscount.forEach(payment => {
-        atlanticDiscountsTable[payment.discount_name] = {
-            tally: (atlanticDiscountsTable[payment.discount_name] ? (atlanticDiscountsTable[payment.discount_name].tally + 1) : 1) ,
-            totalPaid : (atlanticDiscountsTable[payment.discount_name] ? (atlanticDiscountsTable[payment.discount_name].totalPaid + parseInt(payment.total_amount)) : parseInt(payment.total_amount) )
+    ////////////////////////////////////////
+    let atlanticTable = {
+        'Default Rate - 1/2hr' : {
+            tally: 0,
+            totalPaid: 0
+        },
+        'Default Rate - 1hr' : {
+            tally: 0,
+            totalPaid: 0
+        },
+        'Early' : {
+            tally: 0,
+            totalPaid: 0
+        },
+        'Default Rate - 2hr' : {
+            tally: 0,
+            totalPaid: 0
+        },
+        'Default Rate - 10hr' : {
+            tally: 0,
+            totalPaid: 0
+        },
+        'Default Rate - 24hr' : {
+            tally: 0,
+            totalPaid: 0
         }
-    });
-    
-    console.log(atlanticDiscountsTable);
-    console.log(miscTix);
-    // console.log(atlanticAllData.filter(payment => (!atlanticDiscount.includes(payment) && !atlanticNoDiscount.includes(payment) && !miscTix.includes(payment))))
+    };
 
-    //table of total $$$ revenue of each ticket type of non-discount tix - total including tax
-    let atlanticTotalWTaxTable = {
-        '30min': (atlanticRates['30min'] * atlanticTicketsSoldPerRateTable['30min']),
-        '1hr': (atlanticRates['1hr'] * atlanticTicketsSoldPerRateTable['1hr']),
-        '2hr': (atlanticRates['2hr'] * atlanticTicketsSoldPerRateTable['2hr']),
-        '10hr': (atlanticRates['10hr'] * atlanticTicketsSoldPerRateTable['10hr']),
-        '24hr': (atlanticRates['24hr'] * atlanticTicketsSoldPerRateTable['24hr']),
-        'Early': (atlanticRates['Early'] * atlanticTicketsSoldPerRateTable['Early']),
-        'Misc.' : miscTixTotalPaidWTax
-    }
-    
+    let atlanticDiscountTable = {};
+
+    let atlanticMiscTable = {
+        tally: 0,
+        totalPaid: 0
+    };
+
+    atlanticAllData.forEach(payment => {
+        if((payment.total_amount === payment.total_value) && (payment.total_amount === 3)){
+            atlanticTable['Default Rate - 1/2hr'] = {
+                tally: (atlanticTable['Default Rate - 1/2hr'] ? (atlanticTable['Default Rate - 1/2hr'].tally + 1) : 1) ,
+                totalPaid : (atlanticTable['Default Rate - 1/2hr'] ? (atlanticTable['Default Rate - 1/2hr'].totalPaid + parseInt(payment.total_amount)) : parseInt(payment.total_amount) )
+            }
+        }else if((payment.total_amount === payment.total_value) && (payment.total_amount === 6)){
+            atlanticTable['Default Rate - 1hr'] = {
+                tally: (atlanticTable['Default Rate - 1hr'] ? (atlanticTable['Default Rate - 1hr'].tally + 1) : 1) ,
+                totalPaid : (atlanticTable['Default Rate - 1hr'] ? (atlanticTable['Default Rate - 1hr'].totalPaid + parseInt(payment.total_amount)) : parseInt(payment.total_amount) )
+            }
+        }else if((payment.total_amount === payment.total_value) && (payment.total_amount === 10)){
+            atlanticTable['Early'] = {
+                tally: (atlanticTable['Early'] ? (atlanticTable['Early'].tally + 1) : 1) ,
+                totalPaid : (atlanticTable['Early'] ? (atlanticTable['Early'].totalPaid + parseInt(payment.total_amount)) : parseInt(payment.total_amount) )
+            }
+        }else if((payment.total_amount === payment.total_value) && (payment.total_amount === 15)){
+            atlanticTable['Default Rate - 2hr'] = {
+                tally: (atlanticTable['Default Rate - 2hr'] ? (atlanticTable['Default Rate - 2hr'].tally + 1) : 1) ,
+                totalPaid : (atlanticTable['Default Rate - 2hr'] ? (atlanticTable['Default Rate - 2hr'].totalPaid + parseInt(payment.total_amount)) : parseInt(payment.total_amount) )
+            }
+        }else if((payment.total_amount === payment.total_value) && (payment.total_amount === 23)){
+            atlanticTable['Default Rate - 10hr'] = {
+                tally: (atlanticTable['Default Rate - 10hr'] ? (atlanticTable['Default Rate - 10hr'].tally + 1) : 1) ,
+                totalPaid : (atlanticTable['Default Rate - 10hr'] ? (atlanticTable['Default Rate - 10hr'].totalPaid + parseInt(payment.total_amount)) : parseInt(payment.total_amount) )
+            }
+        }else if((payment.total_amount === payment.total_value) && (payment.total_amount === 40)){
+            atlanticTable['Default Rate - 24hr'] = {
+                tally: (atlanticTable['Default Rate - 24hr'] ? (atlanticTable['Default Rate - 24hr'].tally + 1) : 1) ,
+                totalPaid : (atlanticTable['Default Rate - 24hr'] ? (atlanticTable['Default Rate - 24hr'].totalPaid + parseInt(payment.total_amount)) : parseInt(payment.total_amount) )
+            }
+        }else if(payment.discount_name){
+            atlanticDiscountTable[payment.discount_name] = {
+                tally: (atlanticDiscountTable[payment.discount_name] ? (atlanticDiscountTable[payment.discount_name].tally + 1) : 1) ,
+                totalPaid : (atlanticDiscountTable[payment.discount_name] ? (atlanticDiscountTable[payment.discount_name].totalPaid + parseInt(payment.total_amount)) : parseInt(payment.total_amount) )
+            }
+        }else{
+            atlanticMiscTable = {
+                tally: (atlanticMiscTable.tally + 1) ,
+                totalPaid : (atlanticMiscTable.totalPaid + parseInt(payment.total_amount)) 
+            }
+        }  
+    })
+
+    console.log(atlanticMiscTable)
+    ///////
     const generateReport = () => {
         if(inDate !== "" && outDate !== ""){
             if(garage === 'Atlantic Terrace'){
@@ -102,16 +115,6 @@ function ReportPage(){
                 })
                 .then((res) => {
                     setatlanticAllData(res.data);
-                    setAtlanticNoDiscount(res.data.filter(payment => ((payment.total_amount === payment.total_value) && 
-                    (payment.total_amount === 3 ||
-                    payment.total_amount === 6 ||
-                    payment.total_amount === 10 ||
-                    payment.total_amount === 15 ||
-                    payment.total_amount === 23 ||
-                    payment.totoal_amount === 40
-                    ))));
-                    setAtlanticDiscount(res.data.filter(payment => (Object.keys(payment).includes("discount_name"))));
-
                 })
                 .then(()=> {
                     axios
@@ -163,9 +166,9 @@ function ReportPage(){
                 <Button onClick={generateReport} className='reportDates__button'>Generate Report</Button>
             </section>
             <AtlanticTable 
-                atlanticTotalWTaxTable={atlanticTotalWTaxTable} //table of total $$$ revenue of each no discount ticket (1hr, 2hr, etc) 
-                atlanticTicketsSoldPerRateTable={atlanticTicketsSoldPerRateTable} //table of number of tickets sold of each no-discount ticket (1hr, 2hr, etc) 
-                atlanticDiscountsTable={sortObjectByKeys(atlanticDiscountsTable)}
+                atlanticTable={(atlanticTable)}
+                atlanticDiscountTable={sortObjectByKeys(atlanticDiscountTable)}
+                atlanticMiscTable={atlanticMiscTable}   
             />            
             </>
             }

@@ -1,27 +1,31 @@
 import Table from 'react-bootstrap/Table';
 
 function AtlanticTable(props) {
-    const {atlanticTicketsSoldPerRateTable, atlanticTotalWTaxTable, atlanticDiscountsTable} = props;
+    
+    const {atlanticTable, atlanticDiscountTable, atlanticMiscTable} = props;
 
-    //total number of all atlantic tickets sold without any discount 
-    let atlanticTotalTicketsSoldNoDiscount = Object.values(atlanticTicketsSoldPerRateTable).reduce((sum, value) => {
-        return sum + value;
+    let totalDefaultTixSold = Object.values(atlanticTable).reduce((sum, value)=>{
+        return sum + value.tally;
+    }, 0)
+    
+    let totalDiscountTixSold = Object.values(atlanticDiscountTable).reduce((sum, value)=>{
+        return sum + value.tally;
     }, 0)
 
-    //total $$$ revenue w/ tax of all non-discount tickets combined
-    let atlanticTotalWTaxPaid = Object.values(atlanticTotalWTaxTable).reduce((sum, value) => {
-        return (sum + value);
+    let totalMiscTixSold = atlanticMiscTable.tally;
+    
+    let totalDefaultPaidWTax = Object.values(atlanticTable).reduce((sum, value)=>{
+        return sum + value.totalPaid;
     }, 0)
 
-    let atlanticTotalTicketsSoldWDiscount = 0;
-    let atlanticTotalPaidWTaxWDiscount = 0;
-    Object.keys(atlanticDiscountsTable).forEach((key) => {
-        atlanticTotalTicketsSoldWDiscount += atlanticDiscountsTable[key].tally;
-        atlanticTotalPaidWTaxWDiscount += atlanticDiscountsTable[key].totalPaid;
-    })
+    let totalDiscountPaidWTax = Object.values(atlanticDiscountTable).reduce((sum, value)=>{
+        return sum + value.totalPaid;
+    }, 0)
+
+    let totalMiscPaidWTax = atlanticMiscTable.totalPaid;
 
     return (
-        
+        <>
         <Table striped bordered hover>
             <thead>
                 <tr className='table-warning'>
@@ -34,67 +38,70 @@ function AtlanticTable(props) {
             <tbody>
                 <tr>
                     <th>Default Board - 1/2h</th>
-                    <td>{atlanticTicketsSoldPerRateTable['30min']}</td>
+                    <td>{atlanticTable['Default Rate - 1/2hr'].tally}</td>
                     <td>$$$$</td>
-                    <td>{`$${atlanticTotalWTaxTable['30min'].toFixed(2)}`}</td>
+                    <td>{`$${atlanticTable['Default Rate - 1/2hr'].totalPaid.toFixed(2)}`}</td>
                 </tr>
                 <tr>
                     <th>Default Board - 1h</th>
-                    <td>{atlanticTicketsSoldPerRateTable['1hr']}</td>
+                    <td>{atlanticTable['Default Rate - 1hr'].tally}</td>
                     <td>$$$$</td>
-                    <td>{`$${atlanticTotalWTaxTable['1hr'].toFixed(2)}`}</td>
+                    <td>{`$${atlanticTable['Default Rate - 1hr'].totalPaid.toFixed(2)}`}</td>
+
                 </tr>
                 <tr>
                     <th>Default Board - 2h</th>
-                    <td>{atlanticTicketsSoldPerRateTable['2hr']}</td>
+                    <td>{atlanticTable['Default Rate - 2hr'].tally}</td>
                     <td>$$$$</td>
-                    <td>{`$${atlanticTotalWTaxTable['2hr'].toFixed(2)}`}</td>
+                    <td>{`$${atlanticTable['Default Rate - 2hr'].totalPaid.toFixed(2)}`}</td>
                 </tr>
                 <tr>
                     <th>Default Board - 10h</th>
-                    <td>{atlanticTicketsSoldPerRateTable['10hr']}</td>
+                    <td>{atlanticTable['Default Rate - 10hr'].tally}</td>
                     <td>$$$$</td>
-                    <td>{`$${atlanticTotalWTaxTable['10hr'].toFixed(2)}`}</td>
+                    <td>{`$${atlanticTable['Default Rate - 10hr'].totalPaid.toFixed(2)}`}</td>
                 </tr>
                 <tr>
                     <th>Default Board - 24h</th>
-                    <td>{atlanticTicketsSoldPerRateTable['24hr']}</td>
+                    <td>{atlanticTable['Default Rate - 24hr'].tally}</td>
                     <td>$$$$</td>
-                    <td>{`$${atlanticTotalWTaxTable['24hr'].toFixed(2)}`}</td>
+                    <td>{`$${atlanticTable['Default Rate - 24hr'].totalPaid.toFixed(2)}`}</td>
                 </tr>
                 <tr>
                     <th>Early Bird</th>
-                    <td>{atlanticTicketsSoldPerRateTable['Early']}</td>
+                    <td>{atlanticTable['Early'].tally}</td>
                     <td>$$$$</td>
-                    <td>{`$${atlanticTotalWTaxTable['Early'].toFixed(2)}`}</td>
+                    <td>{`$${atlanticTable['Early'].totalPaid.toFixed(2)}`}</td>
                 </tr>
                 <tr>
                     <th>Misc. Tickets</th>
-                    <td>{atlanticTicketsSoldPerRateTable['Misc.']}</td>
+                    <td>{atlanticMiscTable.tally}</td>
                     <td>$$$$</td>
-                    <td>{`$${atlanticTotalWTaxTable['Misc.'].toFixed(2)}`}</td>
-                </tr>
-            {Object.keys(atlanticDiscountsTable).map((key) => {
+                    <td>{`$${atlanticMiscTable.totalPaid.toFixed(2)}`}</td>
+                </tr> 
+            {Object.keys(atlanticDiscountTable).map((key) => {
                 return(
                 <tr key={key} >
                     <th>{key}</th>
-                    <td>{atlanticDiscountsTable[key].tally}</td>
+                    <td>{atlanticDiscountTable[key].tally}</td>
                     <td>$$$$</td>
-                    <td>{`$${atlanticDiscountsTable[key].totalPaid.toFixed(2)}`}</td>
+                    <td>{`$${atlanticDiscountTable[key].totalPaid.toFixed(2)}`}</td>
                 </tr>
                 )
             })
             }
+
             </tbody>
             <thead>
                 <tr className='table-success'>
                     <th>All Totals:</th>
-                    <th>{atlanticTotalTicketsSoldNoDiscount + atlanticTotalTicketsSoldWDiscount}</th>
+                    <th>{totalDefaultTixSold + totalDiscountTixSold + totalMiscTixSold}</th>
                     <th>$$$.$$</th>
-                    <th>{`$${(atlanticTotalPaidWTaxWDiscount + atlanticTotalWTaxPaid).toFixed(2)}`}</th>
+                    <th>{`$${totalDefaultPaidWTax + totalDiscountPaidWTax + totalMiscPaidWTax }.00`}</th>
+
                 </tr>
             </thead>
-            </Table>
+            </Table></>
     )
 }
 
