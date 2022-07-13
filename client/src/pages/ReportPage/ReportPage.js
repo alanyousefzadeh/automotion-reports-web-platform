@@ -163,8 +163,8 @@ function ReportPage(){
             <section className='datepicker m-2'>
                 <DatePicker label={'In-Date'} setDate={setInDate}/>
                 <DatePicker label={'Out-Date'} setDate={setOutDate}/>
-                <Button onClick={generateReport} className='button'>Generate Report</Button>
             </section>
+            <Button onClick={generateReport} className='button'>Generate Report</Button>
             <AtlanticTable 
                 atlanticTable={(atlanticTable)}
                 atlanticDiscountTable={sortObjectByKeys(atlanticDiscountTable)}
