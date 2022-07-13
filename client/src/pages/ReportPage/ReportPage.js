@@ -6,10 +6,12 @@ import Button from 'react-bootstrap/Button';
 import AtlanticTable from '../../components/AtlanticTable/AtlanticTable';
 import DatePicker from '../../components/DatePicker/DatePicker';
 import ReportHeader from '../../components/ReportHeader/ReportHeader';
+import html2canvas from 'html2canvas';
+import jsPDF from "jspdf";
 
 function ReportPage(){
 
-    function sortObjectByKeys(o) {
+    const sortObjectByKeys = (o) => {
         return Object.keys(o).sort().reduce((r, k) => (r[k] = o[k], r), {})
     }
     //access the URL parameters to know which record and garage we are currently on
@@ -57,6 +59,7 @@ function ReportPage(){
         totalPaid: 0
     };
 
+    //fill the tables with the closed API data
     atlanticAllData.forEach(payment => {
         if((payment.total_amount === payment.total_value) && (payment.total_amount === 3)){
             atlanticTable['Default Rate - 1/2hr'] = {
@@ -102,7 +105,28 @@ function ReportPage(){
     })
 
     console.log(atlanticMiscTable)
-    ///////
+    /////
+    const genPDF = () => {
+        let file = html2canvas(document.getElementById("pdf-report")).then(function (canvas) {
+            const doc = new jsPDF("p","mm","a4");
+            const img = canvas.toDataURL("image/png",6.0);
+            doc.addImage(img, 'PNG', 10, 10,180,150);
+            let date = new Date().toLocaleTimeString();
+            let saveInfo = `${garage.split(" ")[0]}-${outDate}-generated-${date}.pdf`;
+            doc.save(saveInfo); 
+            return saveInfo;
+        })
+        return file;
+    }
+
+    const email = async () =>{
+        let filepath = await genPDF();
+        axios
+            .post('http://localhost:8080/emailGenerator', {
+                file: filepath
+            })
+    }
+
     const generateReport = () => {
         if(inDate !== "" && outDate !== ""){
             if(garage === 'Atlantic Terrace'){
@@ -155,7 +179,7 @@ function ReportPage(){
             {failedToLoad 
             ? <p>error loading data...</p>
             :
-            <> 
+            <div id="pdf-report"> 
             <ReportHeader
             closed={atlanticAllData.length}
             endDate={outDate}
@@ -165,12 +189,14 @@ function ReportPage(){
                 <DatePicker label={'Out-Date'} setDate={setOutDate}/>
             </section>
             <Button onClick={generateReport} className='button'>Generate Report</Button>
+            <Button onClick={genPDF} className='button'>Download PDF</Button>
+            <Button onClick={email} className='button'>Send as Email</Button>
             <AtlanticTable 
                 atlanticTable={(atlanticTable)}
                 atlanticDiscountTable={sortObjectByKeys(atlanticDiscountTable)}
                 atlanticMiscTable={atlanticMiscTable}   
             />            
-            </>
+            </div>
             }
         </div>
     );
