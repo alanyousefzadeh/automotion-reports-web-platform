@@ -60,33 +60,33 @@ function ReportPage(){
     atlanticAllData.forEach(payment => {
         if((payment.total_amount === payment.total_value) && (payment.total_amount === 3)){
             atlanticTable['Default Rate - 1/2hr'] = {
-                tally: (atlanticTable['Default Rate - 1/2hr'] ? (atlanticTable['Default Rate - 1/2hr'].tally + 1) : 1) ,
-                totalPaid : (atlanticTable['Default Rate - 1/2hr'] ? (atlanticTable['Default Rate - 1/2hr'].totalPaid + parseInt(payment.total_amount)) : parseInt(payment.total_amount) )
+                tally: (atlanticTable['Default Rate - 1/2hr'].tally + 1) ,
+                totalPaid : (atlanticTable['Default Rate - 1/2hr'].totalPaid + parseInt(payment.total_amount))
             }
         }else if((payment.total_amount === payment.total_value) && (payment.total_amount === 6)){
             atlanticTable['Default Rate - 1hr'] = {
-                tally: (atlanticTable['Default Rate - 1hr'] ? (atlanticTable['Default Rate - 1hr'].tally + 1) : 1) ,
-                totalPaid : (atlanticTable['Default Rate - 1hr'] ? (atlanticTable['Default Rate - 1hr'].totalPaid + parseInt(payment.total_amount)) : parseInt(payment.total_amount) )
+                tally: (atlanticTable['Default Rate - 1hr'].tally + 1) ,
+                totalPaid : (atlanticTable['Default Rate - 1hr'].totalPaid + parseInt(payment.total_amount)) 
             }
         }else if((payment.total_amount === payment.total_value) && (payment.total_amount === 10)){
             atlanticTable['Early'] = {
                 tally: (atlanticTable['Early'] ? (atlanticTable['Early'].tally + 1) : 1) ,
-                totalPaid : (atlanticTable['Early'] ? (atlanticTable['Early'].totalPaid + parseInt(payment.total_amount)) : parseInt(payment.total_amount) )
+                totalPaid : (atlanticTable['Early'].totalPaid + parseInt(payment.total_amount))
             }
         }else if((payment.total_amount === payment.total_value) && (payment.total_amount === 15)){
             atlanticTable['Default Rate - 2hr'] = {
-                tally: (atlanticTable['Default Rate - 2hr'] ? (atlanticTable['Default Rate - 2hr'].tally + 1) : 1) ,
-                totalPaid : (atlanticTable['Default Rate - 2hr'] ? (atlanticTable['Default Rate - 2hr'].totalPaid + parseInt(payment.total_amount)) : parseInt(payment.total_amount) )
+                tally: (atlanticTable['Default Rate - 2hr'].tally + 1) ,
+                totalPaid : (atlanticTable['Default Rate - 2hr'].totalPaid + parseInt(payment.total_amount))
             }
         }else if((payment.total_amount === payment.total_value) && (payment.total_amount === 23)){
             atlanticTable['Default Rate - 10hr'] = {
-                tally: (atlanticTable['Default Rate - 10hr'] ? (atlanticTable['Default Rate - 10hr'].tally + 1) : 1) ,
-                totalPaid : (atlanticTable['Default Rate - 10hr'] ? (atlanticTable['Default Rate - 10hr'].totalPaid + parseInt(payment.total_amount)) : parseInt(payment.total_amount) )
+                tally: (atlanticTable['Default Rate - 10hr'].tally + 1)  ,
+                totalPaid : (atlanticTable['Default Rate - 10hr'].totalPaid + parseInt(payment.total_amount))
             }
         }else if((payment.total_amount === payment.total_value) && (payment.total_amount === 40)){
             atlanticTable['Default Rate - 24hr'] = {
-                tally: (atlanticTable['Default Rate - 24hr'] ? (atlanticTable['Default Rate - 24hr'].tally + 1) : 1) ,
-                totalPaid : (atlanticTable['Default Rate - 24hr'] ? (atlanticTable['Default Rate - 24hr'].totalPaid + parseInt(payment.total_amount)) : parseInt(payment.total_amount) )
+                tally:  (atlanticTable['Default Rate - 24hr'].tally + 1) ,
+                totalPaid : (atlanticTable['Default Rate - 24hr'].totalPaid + parseInt(payment.total_amount))
             }
         }else if(payment.discount_name){
             atlanticDiscountTable[payment.discount_name] = {
