@@ -151,7 +151,7 @@ function ReportPage(){
 
     return (
         
-        <div>
+        <div className='report'>
             {failedToLoad 
             ? <p>error loading data...</p>
             :
@@ -160,10 +160,10 @@ function ReportPage(){
             closed={atlanticAllData.length}
             endDate={outDate}
             />
-            <section className='m-2'>
+            <section className='datepicker m-2'>
                 <DatePicker label={'In-Date'} setDate={setInDate}/>
                 <DatePicker label={'Out-Date'} setDate={setOutDate}/>
-                <Button onClick={generateReport} className='reportDates__button'>Generate Report</Button>
+                <Button onClick={generateReport} className='button'>Generate Report</Button>
             </section>
             <AtlanticTable 
                 atlanticTable={(atlanticTable)}

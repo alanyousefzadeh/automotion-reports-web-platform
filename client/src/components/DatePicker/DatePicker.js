@@ -7,15 +7,13 @@ function DatePicker(props) {
 
     return (
     
-        <div className="row mb-3">
-            <div className="col-md-4">
-                <Form.Group controlId="date">
-                    <Form.Label className='mb-0'>{label}</Form.Label>
-                    <Form.Control type="date" name="date" placeholder="Date" onChange={e => setDate(e.target.value)} />
-                </Form.Group>
-            </div>
+        <div>
+            <Form.Group controlId="date">
+                <Form.Label className='mb-0'>{label}</Form.Label>
+                <Form.Control type="date" name="date" placeholder="Date" onChange={e => setDate(e.target.value)} />
+            </Form.Group>
         </div>
-    
+
     );
   }
   export default DatePicker;

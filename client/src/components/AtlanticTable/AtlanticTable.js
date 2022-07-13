@@ -1,4 +1,5 @@
 import Table from 'react-bootstrap/Table';
+import './AtlanticTable.scss';
 
 function AtlanticTable(props) {
     
@@ -26,7 +27,7 @@ function AtlanticTable(props) {
 
     return (
         <>
-        <Table striped bordered hover>
+        <Table striped bordered size='sm'>
             <thead>
                 <tr className='table-warning'>
                     <th>Revenue by Rate</th>
