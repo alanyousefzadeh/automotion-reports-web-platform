@@ -92,10 +92,17 @@ function ReportPage(){
                 totalPaid : (atlanticTable['Default Rate - 24hr'].totalPaid + parseInt(payment.total_amount))
             }
         }else if(payment.discount_name){
-            atlanticDiscountTable[payment.discount_name] = {
-                tally: (atlanticDiscountTable[payment.discount_name] ? (atlanticDiscountTable[payment.discount_name].tally + 1) : 1) ,
-                totalPaid : (atlanticDiscountTable[payment.discount_name] ? (atlanticDiscountTable[payment.discount_name].totalPaid + parseInt(payment.total_amount)) : parseInt(payment.total_amount) )
-            }
+                if((payment.discount_name === 'ParkWhiz') || (payment.discount_name === 'SpotHero')){
+                    atlanticDiscountTable[payment.discount_name] = {
+                        tally: (atlanticDiscountTable[payment.discount_name] ? (atlanticDiscountTable[payment.discount_name].tally + 1) : 1) ,
+                        totalPaid : (atlanticDiscountTable[payment.discount_name] ? (atlanticDiscountTable[payment.discount_name].totalPaid + parseInt(payment.reservation_value)) : parseInt(payment.reservation_value) )
+                    }    
+                }else{
+                    atlanticDiscountTable[payment.discount_name] = {
+                        tally: (atlanticDiscountTable[payment.discount_name] ? (atlanticDiscountTable[payment.discount_name].tally + 1) : 1) ,
+                        totalPaid : (atlanticDiscountTable[payment.discount_name] ? (atlanticDiscountTable[payment.discount_name].totalPaid + parseInt(payment.total_amount)) : parseInt(payment.total_amount) )
+                    }
+                }
         }else{
             atlanticMiscTable = {
                 tally: (atlanticMiscTable.tally + 1) ,
