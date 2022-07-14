@@ -189,7 +189,8 @@ function FilteredReportPage(){
             <div id="pdf-report"> 
             <ReportHeader
             closed={atlanticAllData.length}
-            endDate={outDate}
+            startDate={`${inDate} 3am`}
+            endDate={`${outDate} 3am`}
             />
             <section className='datepicker m-2'>
                 <DatePicker label={'In-Date'} setDate={setInDate}/>
