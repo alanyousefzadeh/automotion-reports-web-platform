@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
-import './ReportPage.scss';
+import './FilteredReportPage.scss';
 import { useParams } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import AtlanticTable from '../../components/AtlanticTable/AtlanticTable';
@@ -9,7 +9,7 @@ import ReportHeader from '../../components/ReportHeader/ReportHeader';
 import html2canvas from 'html2canvas';
 import jsPDF from "jspdf";
 
-function ReportPage(){
+function FilteredReportPage(){
 
     const sortObjectByKeys = (o) => {
         return Object.keys(o).sort().reduce((r, k) => (r[k] = o[k], r), {})
@@ -209,4 +209,4 @@ function ReportPage(){
     );
 }
 
-export default ReportPage; 
+export default FilteredReportPage; 

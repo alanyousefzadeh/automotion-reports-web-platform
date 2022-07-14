@@ -2,7 +2,8 @@ import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import LoginPage from './pages/LoginPage/LoginPage';
 import WelcomePage from './pages/WelcomePage/WelcomePage';
 import ReportSelectPage from './pages/ReportSelectPage/ReportSelectPage';
-import ReportPage from './pages/ReportPage/ReportPage';
+import FilteredReportPage from './pages/FilteredReportPage/FilteredReportPage';
+import DailyReportPage from './pages/DailyReportPage/DailyReportPage';
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
           <Route path='/login' element={<LoginPage/>}/>
           <Route path='/welcome' element={<WelcomePage/>}/>
           <Route path='/reportSelect/:garageName' element={<ReportSelectPage/>}/>  
-          <Route path='/reportSelect/:garageName/:reportName' element={<ReportPage/>}/>  
+          <Route path='/reportSelect/:garageName/filtered' element={<FilteredReportPage/>}/>  
+          <Route path='/reportSelect/:garageName/daily' element={<DailyReportPage/>}/>  
         </Routes>
       </BrowserRouter>
     </div>
