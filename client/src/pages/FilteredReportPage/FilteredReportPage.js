@@ -187,15 +187,15 @@ function FilteredReportPage(){
             ? <p>error loading data...</p>
             :
             <div id="pdf-report"> 
+            <section className='datepicker m-2'>
+                <DatePicker label={'In-Date'} setDate={setInDate}/>
+                <DatePicker label={'Out-Date'} setDate={setOutDate}/>
+            </section>
             <ReportHeader
             closed={atlanticAllData.length}
             startDate={`${inDate} 3am`}
             endDate={`${outDate} 3am`}
             />
-            <section className='datepicker m-2'>
-                <DatePicker label={'In-Date'} setDate={setInDate}/>
-                <DatePicker label={'Out-Date'} setDate={setOutDate}/>
-            </section>
             <Button onClick={generateReport} className='button'>Generate Report</Button>
             <Button onClick={genPDF} className='button'>Download PDF</Button>
             <Button onClick={email} className='button'>Send as Email</Button>
