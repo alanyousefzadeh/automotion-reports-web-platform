@@ -164,9 +164,11 @@ function FilteredReportPage(){
             } 
         } 
     }  
+    
     useEffect (()=>{
         generateReport();
     }, [])
+
     return (
         
         <div className='report'>
