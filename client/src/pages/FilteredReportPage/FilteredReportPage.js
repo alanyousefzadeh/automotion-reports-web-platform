@@ -21,8 +21,8 @@ function FilteredReportPage(){
     const [atlanticAllData, setatlanticAllData] = useState([]);
     const [failedToLoad, setFailedToLoad] = useState(false);
     const [garage, setGarage] = useState(params.garageName);
-    const [inDate, setInDate]  = useState("");
-    const [outDate, setOutDate] = useState("");
+    const [inDate, setInDate]  = useState(new Date().setHours(3, 0, 0, 0));
+    const [outDate, setOutDate] = useState(new Date().getTime());
 
     ////////////////////////////////////////
     let atlanticTable = {
@@ -164,7 +164,9 @@ function FilteredReportPage(){
             } 
         } 
     }  
-
+    useEffect (()=>{
+        generateReport();
+    }, [])
     return (
         
         <div className='report'>
