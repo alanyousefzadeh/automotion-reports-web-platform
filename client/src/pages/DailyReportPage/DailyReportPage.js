@@ -21,8 +21,6 @@ function DailyReportPage(){
     const [garage, setGarage] = useState(params.garageName);
     const [inDate, setInDate]  = useState(Math.floor(new Date().setHours(3, 0, 0, 0) - (24*60*60*1000)));
     const [outDate, setOutDate] = useState(Math.floor(new Date().setHours(3, 0, 0, 0)));
-    const [endTotal, setEndTotal] = useState(null);
-
     ////////////////////////////////////////
     let atlanticTable = {
         'Default Rate - 1/2hr' : {
@@ -148,18 +146,6 @@ function DailyReportPage(){
                 })
                 .then((res) => {
                     setatlanticAllData(res.data);
-                })
-                .then(()=> {
-                    axios
-                        .get('http://localhost:8080/garagedata/atlanticOpen', {
-                            params: {
-                                inDate: Math.floor(new Date(inDate).getTime() / 1000),
-                                outDate: Math.floor(new Date(outDate).getTime() / 1000)                 
-                            }
-                        })
-                        .then((res) => {
-                            setEndTotal(res.data.length)
-                        })
                 })
                 .catch(()=>{
                     setFailedToLoad(true);  
