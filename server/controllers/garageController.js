@@ -49,21 +49,3 @@ exports.atlanticClosed = (req, res) =>{
             });
 }; 
 
-exports.atlanticOpen = (req, res) =>{
-    let from = parseInt(req.query.inDate)  + 28800;//10800 = 3hrs in seconds, add 3 hours to unix stamp to adjust for eastern time 3am
-    let to = parseInt(req.query.outDate) + 28800;
-    // console.log('from', from);
-    // console.log('to', to)
-    const OPEN_API_URL = `https://ssl.garagenet.com/api/N2UwNjFi/woc/reports/allOpenInventoryData?from=${from}&to=${to}`;
-    axios
-        .get(OPEN_API_URL, {
-            auth: {
-                username:'wocreports' ,
-                password: 'wqEsCg0LticrMNtG'
-            }
-        })
-        .then(response => res.send(response.data))
-            .catch((err) => {
-                res.send(err);
-            });
-}; 
