@@ -140,27 +140,12 @@ function FilteredReportPage(){
                 axios
                 .get('http://localhost:8080/garagedata/atlanticClosed', {
                     params: {
-                        inDate: Math.floor(new Date(inDate).getTime() / 1000),
-                        outDate: Math.floor(new Date(outDate).getTime() / 1000)
+                        inDate: (Math.floor(new Date(inDate).getTime() /1000) + 25200),
+                        outDate: (Math.floor(new Date(outDate).getTime()/1000) +25200)
                     }
                 })
                 .then((res) => {
                     setatlanticAllData(res.data);
-                })
-                .then(()=> {
-                    axios
-                        .get('http://localhost:8080/garagedata/atlanticOpen', {
-                            params: {
-                                inDate: Math.floor(new Date(inDate).getTime() / 1000),
-                                outDate: Math.floor(new Date(outDate).getTime() / 1000)                 
-                            }
-                        })
-                        // .then((res) => {
-                            //starting open = previous days open (data saved in local storage)
-                            //ending day open tickets = openData.length 
-                            //save ending day open tickets locally to be used as starting open tomorrow
-                            //issued tickets = closed - starting
-                        // })
                 })
                 .catch(()=>{
                     setFailedToLoad(true);  
@@ -191,11 +176,6 @@ function FilteredReportPage(){
                 <DatePicker label={'In-Date'} setDate={setInDate}/>
                 <DatePicker label={'Out-Date'} setDate={setOutDate}/>
             </section>
-            <ReportHeader
-            closed={atlanticAllData.length}
-            startDate={`${inDate} 3am`}
-            endDate={`${outDate} 3am`}
-            />
             <Button onClick={generateReport} className='button'>Generate Report</Button>
             <Button onClick={genPDF} className='button'>Download PDF</Button>
             <Button onClick={email} className='button'>Send as Email</Button>

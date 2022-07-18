@@ -21,6 +21,7 @@ function DailyReportPage(){
     const [garage, setGarage] = useState(params.garageName);
     const [inDate, setInDate]  = useState(Math.floor(new Date().setHours(3, 0, 0, 0) - (24*60*60*1000)));
     const [outDate, setOutDate] = useState(Math.floor(new Date().setHours(3, 0, 0, 0)));
+    const [endTotal, setEndTotal] = useState(null);
 
     ////////////////////////////////////////
     let atlanticTable = {
@@ -56,9 +57,14 @@ function DailyReportPage(){
         tally: 0,
         totalPaid: 0
     };
+    let start = 0
+    let formattedInDate = new Date(inDate).toISOString().replace(/T/, ' ').replace(/\..+/, '');
 
     //fill the tables with the closed API data
     atlanticAllData.forEach(payment => {
+        if(payment.from_date < formattedInDate){
+            start += 1
+        }
         if((payment.total_amount === payment.total_value) && (payment.total_amount === 3)){
             atlanticTable['Default Rate - 1/2hr'] = {
                 tally: (atlanticTable['Default Rate - 1/2hr'].tally + 1) ,
@@ -109,8 +115,6 @@ function DailyReportPage(){
         }  
     })
 
-    console.log(atlanticMiscTable)
-    /////
     const genPDF = () => {
         let file = html2canvas(document.getElementById("pdf-report")).then(function (canvas) {
             const doc = new jsPDF("p","mm","a4");
@@ -153,12 +157,9 @@ function DailyReportPage(){
                                 outDate: Math.floor(new Date(outDate).getTime() / 1000)                 
                             }
                         })
-                        // .then((res) => {
-                            //starting open = previous days open (data saved in local storage)
-                            //ending day open tickets = openData.length 
-                            //save ending day open tickets locally to be used as starting open tomorrow
-                            //issued tickets = closed - starting
-                        // })
+                        .then((res) => {
+                            setEndTotal(res.data.length)
+                        })
                 })
                 .catch(()=>{
                     setFailedToLoad(true);  
@@ -186,6 +187,7 @@ function DailyReportPage(){
             :
             <div id="pdf-report"> 
             <ReportHeader
+            start={start}
             closed={atlanticAllData.length}
             startDate={(new Date(inDate).toString())}
             endDate={(new Date(outDate).toString())}

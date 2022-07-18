@@ -31,8 +31,8 @@ exports.garage = (req, res) => {
 }; 
 
 exports.atlanticClosed = (req, res) =>{
-    let from = parseInt(req.query.inDate) + 28800;//add hours to unix stamp to adjust for eastern time 3am
-    let to = parseInt(req.query.outDate) + 28800;
+    let from = parseInt(req.query.inDate) //+ 28800;//add 8 hours to unix stamp to adjust for eastern time 3am
+    let to = parseInt(req.query.outDate)// + 28800;
     console.log('from', from);
     console.log('to', to)
     const CLOSED_API_URL = `https://ssl.garagenet.com/api/N2UwNjFi/woc/reports/allClosedInventoryData?from=${from}&to=${to}`;

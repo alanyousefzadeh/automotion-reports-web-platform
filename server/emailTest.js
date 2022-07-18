@@ -17,7 +17,7 @@ async function main(downloaded) {
             pass: 'Aut0m0ti0n', // generated ethereal password
         },
         tls:{
-            rejectUnauthorized:false
+            rejectUnauthorized: false
         }
     });
 
@@ -33,7 +33,6 @@ async function main(downloaded) {
                 filename: 'license.pdf',
                 // path: 'https://raw.github.com/nodemailer/nodemailer/master/LICENSE'
                 path: `C:/Users/shmue/Downloads/${downloaded}`
-
             }
         ]
     });
