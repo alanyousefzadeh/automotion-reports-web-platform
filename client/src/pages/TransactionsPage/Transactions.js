@@ -6,6 +6,9 @@ import { Button } from "react-bootstrap";
 function Transactions(){
     const [inDate, setInDate] = useState(null)
     const [outDate, setOutDate] = useState(null)
+    const [response, setResponse] = useState(null)
+    const [startTicket, setStartTicket] = useState(null)
+    const [endTicket, setEndTicket] = useState(null)
     // useEffect(()=>{
     //     axios.get("http://localhost:8080/garagedata/transactions")
     //     .then((res) =>{
@@ -21,6 +24,9 @@ function Transactions(){
         })
         .then((res) =>{
             console.log(res.data)
+            setResponse(res.data)
+            setStartTicket(res.data[0].TicketNum)
+            setEndTicket(res.data[res.data.length-1].TicketNum)
         })
 
     }
