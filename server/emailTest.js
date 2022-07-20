@@ -30,7 +30,8 @@ async function main(downloaded) {
         html: "<b>I'm Your Father!</b>", // html body
         attachments:[
             {
-                filename: 'license.pdf',
+                // filename: 'license.pdf',
+                filename: JSON.stringify(downloaded),
                 // path: 'https://raw.github.com/nodemailer/nodemailer/master/LICENSE'
                 path: `C:/Users/shmue/Downloads/${downloaded}`
             }

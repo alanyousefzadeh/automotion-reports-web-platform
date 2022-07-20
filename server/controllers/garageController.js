@@ -15,24 +15,27 @@ const knex = require('knex')({
     }
   });
 
-exports.garage = (req, res) => {
+exports.transactions = (req, res) => {
+    let start = req.query.inDate
+    let end = req.query.outDate
+    // Find the transactions
+    knex
+    .from('Transactions')
+    .select('Type','InDateTime', 'OutDateTime', 'PayType', 'TicketNum')
+    .where({Type: 'T'})
+    .whereBetween('InDateTime', [start, end])
+    .then((result) => {
+        res.json(result);
+    })
+    .catch(() => {
+        res.status(400).send("error fetching transactions");
+    });
 
-    // Find the user
-    knex('Transactions')
-        .where({ Type: 'M' })
-        .first()
-        .then((result) => {
-
-            res.json(result);
-        })
-        .catch(() => {
-            res.status(400).send("error fetching transactions");
-        });
 }; 
 
 exports.atlanticClosed = (req, res) =>{
-    let from = parseInt(req.query.inDate) //+ 28800;//add 8 hours to unix stamp to adjust for eastern time 3am
-    let to = parseInt(req.query.outDate)// + 28800;
+    let from = parseInt(req.query.inDate) 
+    let to = parseInt(req.query.outDate)
     console.log('from', from);
     console.log('to', to)
     const CLOSED_API_URL = `https://ssl.garagenet.com/api/N2UwNjFi/woc/reports/allClosedInventoryData?from=${from}&to=${to}`;
