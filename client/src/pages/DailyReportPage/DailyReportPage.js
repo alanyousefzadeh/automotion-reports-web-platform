@@ -57,9 +57,11 @@ function DailyReportPage(){
     };
 
     let start = 0
+    let inDateTimeStamp = new Date(`${inDate} 03:00:00`).getTime()
     //fill the tables with the closed API data
     atlanticAllData.forEach(payment => {
-        if(new Date(payment.from_date).getTime() < inDate){
+        let paymentTimestamp = new Date(payment.from_date).getTime()
+        if( paymentTimestamp < inDateTimeStamp){
             start += 1
         }
         if((payment.total_amount === payment.total_value) && (payment.total_amount === 3)){
@@ -140,7 +142,7 @@ function DailyReportPage(){
                 .get('http://localhost:8080/garagedata/atlanticClosed', {
                     params: {
                         inDate: inDate,
-                        outDate: outDate
+                        outDate: outDate,
                     }
                 })
                 .then((res) => {

@@ -21,8 +21,8 @@ function FilteredReportPage(){
     const [atlanticAllData, setatlanticAllData] = useState([]);
     const [failedToLoad, setFailedToLoad] = useState(false);
     const [garage, setGarage] = useState(params.garageName);
-    const [inDate, setInDate]  = useState(new Date().setHours(3, 0, 0, 0));
-    const [outDate, setOutDate] = useState(new Date().getTime());
+    const [inDate, setInDate]  = useState(null);
+    const [outDate, setOutDate] = useState(null);
 
     ////////////////////////////////////////
     let atlanticTable = {
@@ -135,14 +135,14 @@ function FilteredReportPage(){
     }
 
     const generateReport = () => {
-        if(inDate !== "" && outDate !== ""){
-            if(garage === 'Atlantic Terrace'){
+        if(garage === 'Atlantic Terrace'){
+            if(inDate === null){
+                //default report (partial report)
                 axios
                 .get('http://localhost:8080/garagedata/atlanticClosed', {
                     params: {
-                        
-                        inDate: inDate, 
-                        outDate: outDate 
+                        inDate: new Date().setHours(3,0,0,0),
+                        outDate: new Date().getTime() 
                     }
                 })
                 .then((res) => {
@@ -151,20 +151,39 @@ function FilteredReportPage(){
                 .catch(()=>{
                     setFailedToLoad(true);  
                 })
-
             }else{
+                //filtered report
                 axios
-                .get('http://localhost:8080/garagedata')
-                .then((res) => { 
-                    console.log(res.data)
+                .get('http://localhost:8080/garagedata/atlanticClosed', {
+                    params: {
+                        inDate: new Date(`${inDate} 03:00:00`).getTime(),
+                        outDate: new Date(`${outDate} 03:00:00`).getTime() 
+                    }
+                })
+                .then((res) => {
                     setatlanticAllData(res.data);
                 })
-                .catch(() => {
-                    setFailedToLoad(true);
-                });
-            } 
-        } 
-    }  
+                .catch(()=>{
+                    setFailedToLoad(true);  
+                })
+            }
+        }
+    }
+            
+                
+    //         }else{
+    //             axios
+    //             .get('http://localhost:8080/garagedata')
+    //             .then((res) => { 
+    //                 console.log(res.data)
+    //                 setatlanticAllData(res.data);
+    //             })
+    //             .catch(() => {
+    //                 setFailedToLoad(true);
+    //             });
+    //         } 
+    //     } 
+    // }  
     
     useEffect (()=>{
         generateReport();
@@ -195,4 +214,4 @@ function FilteredReportPage(){
     );
 }
 
-export default FilteredReportPage; 
+export default FilteredReportPage;

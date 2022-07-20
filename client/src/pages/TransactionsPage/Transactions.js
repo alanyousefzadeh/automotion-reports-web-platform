@@ -19,8 +19,8 @@ function Transactions(){
     const getData = () => {
         axios.get("http://localhost:8080/garagedata/transactions", {
             params: {
-                inDate: inDate,
-                outDate: outDate
+                inDate: `${inDate} 03:00:00`,
+                outDate: `${outDate} 03:00:00`
             }
         })
         .then((res) =>{

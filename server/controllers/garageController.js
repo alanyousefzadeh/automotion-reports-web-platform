@@ -18,6 +18,7 @@ const knex = require('knex')({
 exports.transactions = (req, res) => {
     let start = req.query.inDate
     let end = req.query.outDate
+    console.log(start)
     // Find the transactions
     knex
     .from('Transactions')
@@ -34,8 +35,9 @@ exports.transactions = (req, res) => {
 }; 
 
 exports.atlanticClosed = (req, res) =>{
-    let from = parseInt(req.query.inDate) 
-    let to = parseInt(req.query.outDate)
+    let from = (req.query.inDate) 
+    let to = (req.query.outDate)
+    console.log(req.query)
     console.log('from', from);
     console.log('to', to)
     const CLOSED_API_URL = `https://ssl.garagenet.com/api/N2UwNjFi/woc/reports/allClosedInventoryData?from=${from}&to=${to}`;

@@ -9,7 +9,7 @@ function DatePicker(props) {
         <div className='sm-4'>
             <Form.Group controlId="date">
                 <Form.Label className='mb-0'>{label}</Form.Label>
-                <Form.Control type="date" name="date" placeholder="Date" onChange={e => setDate(new Date(`${e.target.value} 03:00:00`).getTime())} />
+                <Form.Control type="date" name="date" placeholder="Date" onChange={e => setDate(e.target.value)} />
             </Form.Group>
         </div>
 
