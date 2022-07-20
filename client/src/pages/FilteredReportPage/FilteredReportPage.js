@@ -140,8 +140,9 @@ function FilteredReportPage(){
                 axios
                 .get('http://localhost:8080/garagedata/atlanticClosed', {
                     params: {
-                        inDate: (Math.floor(new Date(inDate).getTime() /1000) + 25200),
-                        outDate: (Math.floor(new Date(outDate).getTime()/1000) +25200)
+                        
+                        inDate: inDate, 
+                        outDate: outDate 
                     }
                 })
                 .then((res) => {

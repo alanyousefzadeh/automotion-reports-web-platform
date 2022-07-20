@@ -55,12 +55,11 @@ function DailyReportPage(){
         tally: 0,
         totalPaid: 0
     };
-    let start = 0
-    let formattedInDate = new Date(inDate).toISOString().replace(/T/, ' ').replace(/\..+/, '');
 
+    let start = 0
     //fill the tables with the closed API data
     atlanticAllData.forEach(payment => {
-        if(payment.from_date < formattedInDate){
+        if(new Date(payment.from_date).getTime() < inDate){
             start += 1
         }
         if((payment.total_amount === payment.total_value) && (payment.total_amount === 3)){
@@ -175,8 +174,8 @@ function DailyReportPage(){
             <ReportHeader
             start={start}
             closed={atlanticAllData.length}
-            startDate={(new Date(inDate).toString())}
-            endDate={(new Date(outDate).toString())}
+            startDate={(new Date(inDate).toLocaleString('en-US', { timeZone: "America/New_York" }))}
+            endDate={(new Date(outDate).toLocaleString('en-US', { timeZone: "America/New_York" }))}
             />
             <Button onClick={genPDF} className='button'>Download PDF</Button>
             <Button onClick={email} className='button'>Send as Email</Button>
