@@ -1,4 +1,5 @@
 const axios = require('axios');
+const helpers = require('../helpers');
 
 require('dotenv').config()
 const knex = require('knex')({
@@ -15,23 +16,40 @@ const knex = require('knex')({
     }
   });
 
-exports.transactions = (req, res) => {
-    let start = req.query.inDate
-    let end = req.query.outDate
-    console.log(start)
-    // Find the transactions
-    knex
-    .from('Transactions')
-    .select('Type','InDateTime', 'OutDateTime', 'PayType', 'TicketNum')
-    .where({Type: 'T'})
-    .whereBetween('InDateTime', [start, end])
-    .then((result) => {
-        res.json(result);
-    })
-    .catch(() => {
-        res.status(400).send("error fetching transactions");
-    });
+exports.transactions = async (req, res) => {
+    let inDate = req.query.inDate.slice(0,10)
+    let outDate = req.query.outDate.slice(0,10)
+    let data = {
+        mInDateTimes : [],
+        mOutDateTimes : [],
+        tInDateTimes : [],
+        tOutDateTimes : []
+    }
+    //query for InDateTime type = M
+    let query1 = await knex.raw(
+        helpers.sqlQuery('InDateTime' ,inDate, outDate, "M")
+    )
+    data.mInDateTimes = query1
 
+    //query for OutDateTime type = M
+    let query2 = await knex.raw(
+        helpers.sqlQuery('OutDateTime', inDate, outDate, "M")
+    )
+    data.mOutDateTimes = query2
+
+    //query for InDateTime type = T
+    let query3 = await knex.raw(
+        helpers.sqlQuery('InDateTime', inDate, outDate, "T")
+    )
+    data.tInDateTimes = query3
+    
+    //query for OutDateTime type = T
+    let query4 = await knex.raw(
+        helpers.sqlQuery('OutDateTime', inDate, outDate, "T")
+    )
+    data.tOutDateTimes = query4
+
+    res.send(data)
 }; 
 
 exports.atlanticClosed = (req, res) =>{

@@ -10,13 +10,31 @@ function Transactions(){
     const [startTicket, setStartTicket] = useState(null)
     const [endTicket, setEndTicket] = useState(null)
     const [ticketsIssued, setTicketsIssued] = useState(null)
-    // useEffect(()=>{
-    //     axios.get("http://localhost:8080/garagedata/transactions")
-    //     .then((res) =>{
-    //         console.log(res.data)
-    //     })
-    // })
+    
+    let table = {}
+    //make table
+    for(let i = 0; i< 24; i++){
+        table[i] = {
+            transientIn: 0,
+            transientOut: 0,
+            monthlyIn: 0,
+            monthlyOut: 0,
+            total: 0
+        }
+    }
+    //fill table
+    if(response.length > 0){
+        response.forEach((transaction) =>{
+            //check time
+            //check type
+            //     
+        })
+    }
+
+    
+    
     const getData = () => {
+        // console.log(table)
         axios.get("http://localhost:8080/garagedata/transactions", {
             params: {
                 inDate: `${inDate} 03:00:00`,
@@ -25,10 +43,12 @@ function Transactions(){
         })
         .then((res) =>{
             console.log(res.data)
-            setResponse(res.data)
-            setStartTicket(res.data[0].TicketNum)
-            setEndTicket(res.data[res.data.length-1].TicketNum)
-            setTicketsIssued(res.data.length)
+            // setResponse(res.data)
+            // setTicketsIssued(res.data.length)
+            // if(res.data.length > 0){
+            //     setStartTicket(res.data[0].TicketNum)
+            //     setEndTicket(res.data[res.data.length-1].TicketNum)
+            // }
         })
     }
 
@@ -41,9 +61,14 @@ function Transactions(){
 
     return(
         <>
-        <h1>transactions</h1>
-        <p>tix issued: {ticketsIssued}</p>
-        <p>open tix today: {openTixToday}</p>
+        <ul>
+        <li>transactions</li>
+        <li>tix issued: {ticketsIssued}</li>
+        <li>open tix today: {openTixToday}</li>
+        <li>starting ticktet: {startTicket}</li>
+        <li>ending ticket: {endTicket}</li>
+        </ul>
+
         <DatePicker label={'In-Date'} setDate={setInDate}/>
         <DatePicker label={'Out-Date'} setDate={setOutDate}/>
         <Button onClick={getData}>Generate Table </Button>
