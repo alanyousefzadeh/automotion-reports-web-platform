@@ -4,8 +4,8 @@ import DatePicker from "../../components/DatePicker/DatePicker";
 import { Button } from "react-bootstrap";
 
 function Transactions(){
-    const [inDate, setInDate] = useState("")
-    const [outDate, setOutDate] = useState("")
+    const [inDate, setInDate] = useState(null)
+    const [outDate, setOutDate] = useState(null)
     const [response, setResponse] = useState([])
     const [startTicket, setStartTicket] = useState(null)
     const [endTicket, setEndTicket] = useState(null)
@@ -35,21 +35,26 @@ function Transactions(){
     
     const getData = () => {
         // console.log(table)
-        axios.get("http://localhost:8080/garagedata/transactions", {
+        if(inDate == null || outDate == null){
+            alert("in/out dates must be selected")
+        }
+        if(inDate != null && outDate != null){
+            axios.get("http://localhost:8080/garagedata/transactions", {
             params: {
                 inDate: `${inDate} 03:00:00`,
                 outDate: `${outDate} 03:00:00`
             }
-        })
-        .then((res) =>{
-            console.log(res.data)
+            })
+            .then((res) =>{
+                console.log(res.data)
             // setResponse(res.data)
             // setTicketsIssued(res.data.length)
             // if(res.data.length > 0){
             //     setStartTicket(res.data[0].TicketNum)
             //     setEndTicket(res.data[res.data.length-1].TicketNum)
             // }
-        })
+            })
+        }
     }
 
     let openTixToday = 0
