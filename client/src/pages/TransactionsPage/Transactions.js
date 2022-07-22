@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import DatePicker from "../../components/DatePicker/DatePicker";
 import { Button } from "react-bootstrap";
+import TransactionTable from "../../components/TransactionTable/TransactionTable";
+import ReactDOMServer from "react-dom/server";
 
 function Transactions(){
     const [inDate, setInDate] = useState(null)
     const [outDate, setOutDate] = useState(null)
-    const [response, setResponse] = useState([])
+    const [response, setResponse] = useState(null)
     // const [startTicket, setStartTicket] = useState(null)
     // const [endTicket, setEndTicket] = useState(null)
     // const [ticketsIssued, setTicketsIssued] = useState(null)
@@ -32,6 +34,7 @@ function Transactions(){
                 })
             data = promise.data                    
             setResponse(data)
+            console.log(data)
         }
     }
     //         // setTicketsIssued(res.data.length)
@@ -40,27 +43,29 @@ function Transactions(){
     //         //     setEndTicket(res.data[res.data.length-1].TicketNum)
     //         // }
     // }
-    console.log(response)
-    response.tInDateTimes.forEach((hour) => {
-        transientInTable[hour.hourofday] = hour.countperhour
-    });
+    if(response != null){
+        //console.log(response)
+        response.tInDateTimes.forEach((hour) => {
+            transientInTable[hour.hourofday] = hour.countperhour
+        });
+    
+        response.tOutDateTimes.forEach((hour) => {
+            transientOutTable[hour.hourofday] = hour.countperhour
+        });
+    
+        response.mInDateTimes.forEach((hour) => {
+            monthlyInTable[hour.hourofday] = hour.countperhour
+        });
+    
+        response.mOutDateTimes.forEach((hour) => {
+            monthlyOutTable[hour.hourofday] = hour.countperhour
+        });
+    }
 
-    response.tOutDateTimes.forEach((hour) => {
-        transientOutTable[hour.hourofday] = hour.countperhour
-    });
-
-    response.mInDateTimes.forEach((hour) => {
-        monthlyInTable[hour.hourofday] = hour.countperhour
-    });
-
-    response.mOutDateTimes.forEach((hour) => {
-        monthlyOutTable[hour.hourofday] = hour.countperhour
-    });
-
-    console.log(monthlyInTable)
-    console.log(monthlyOutTable)
-    console.log(transientOutTable)
-    console.log(transientInTable)
+    console.log("mInCol", monthlyInTable)
+    console.log("mOutCol", monthlyOutTable)
+    console.log("tInCol", transientOutTable)
+    console.log("tOutCol",transientInTable)
     
 
 
@@ -84,8 +89,15 @@ function Transactions(){
         <DatePicker label={'In-Date'} setDate={setInDate}/>
         <DatePicker label={'Out-Date'} setDate={setOutDate}/>
         <Button onClick={getData}>Generate Table </Button>
+        <TransactionTable 
+            monthlyInTable={monthlyInTable}
+            monthlyOutTable={monthlyOutTable}
+            transientInTable={transientInTable}
+            transientOutTable={transientOutTable}
+        />
         </>
     )
 }
-
+const html = ReactDOMServer.renderToStaticMarkup(<Transactions/>);
+console.log(html.toString());
 export default Transactions

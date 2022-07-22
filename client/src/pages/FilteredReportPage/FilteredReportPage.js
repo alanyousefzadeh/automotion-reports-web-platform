@@ -144,6 +144,8 @@ function FilteredReportPage(){
                         inDate: new Date().setHours(3,0,0,0),
                         outDate: new Date().getTime() 
                     }
+
+                    
                 })
                 .then((res) => {
                     setatlanticAllData(res.data);

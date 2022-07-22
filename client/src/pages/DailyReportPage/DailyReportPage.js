@@ -7,7 +7,8 @@ import ReportHeader from '../../components/ReportHeader/ReportHeader';
 import html2canvas from 'html2canvas';
 import jsPDF from "jspdf";
 
-function DailyReportPage(){
+
+const DailyReportPage = () => {
 
     const sortObjectByKeys = (o) => {
         return Object.keys(o).sort().reduce((r, k) => (r[k] = o[k], r), {})
@@ -167,7 +168,7 @@ function DailyReportPage(){
     }, [])  
 
     return (
-        
+    
         <div className='report'>
             {failedToLoad 
             ? <p>error loading data...</p>
@@ -187,9 +188,13 @@ function DailyReportPage(){
                 atlanticMiscTable={atlanticMiscTable}   
             />            
             </div>
+             
             }
         </div>
     );
 }
+
+// let html = ReactDOM.render(<DailyReportPage/>, document.getElementById('root'))
+// console.log(html);
 
 export default DailyReportPage; 
