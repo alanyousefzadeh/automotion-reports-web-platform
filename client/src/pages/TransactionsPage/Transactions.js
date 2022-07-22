@@ -7,72 +7,79 @@ function Transactions(){
     const [inDate, setInDate] = useState(null)
     const [outDate, setOutDate] = useState(null)
     const [response, setResponse] = useState([])
-    const [startTicket, setStartTicket] = useState(null)
-    const [endTicket, setEndTicket] = useState(null)
-    const [ticketsIssued, setTicketsIssued] = useState(null)
+    // const [startTicket, setStartTicket] = useState(null)
+    // const [endTicket, setEndTicket] = useState(null)
+    // const [ticketsIssued, setTicketsIssued] = useState(null)
     
-    let table = {}
-    //make table
-    for(let i = 0; i< 24; i++){
-        table[i] = {
-            transientIn: 0,
-            transientOut: 0,
-            monthlyIn: 0,
-            monthlyOut: 0,
-            total: 0
-        }
-    }
-    //fill table
-    if(response.length > 0){
-        response.forEach((transaction) =>{
-            //check time
-            //check type
-            //     
-        })
-    }
+    let transientInTable = new Array(24).fill(0)
+    let transientOutTable = new Array(24).fill(0)
+    let monthlyInTable = new Array(24).fill(0)
+    let monthlyOutTable = new Array(24).fill(0)
+    
+    const getData = async () => {
 
-    
-    
-    const getData = () => {
-        // console.log(table)
+        let data = null
         if(inDate == null || outDate == null){
             alert("in/out dates must be selected")
         }
         if(inDate != null && outDate != null){
-            axios.get("http://localhost:8080/garagedata/transactions", {
-            params: {
-                inDate: `${inDate} 03:00:00`,
-                outDate: `${outDate} 03:00:00`
-            }
-            })
-            .then((res) =>{
-                console.log(res.data)
-            // setResponse(res.data)
-            // setTicketsIssued(res.data.length)
-            // if(res.data.length > 0){
-            //     setStartTicket(res.data[0].TicketNum)
-            //     setEndTicket(res.data[res.data.length-1].TicketNum)
-            // }
-            })
+            let promise = await axios
+                .get("http://localhost:8080/garagedata/transactions", {
+                    params: {
+                        inDate: `${inDate} 03:00:00`,
+                        outDate: `${outDate} 03:00:00`
+                    }
+                })
+            data = promise.data                    
+            setResponse(data)
         }
     }
+    //         // setTicketsIssued(res.data.length)
+    //         // if(res.data.length > 0){
+    //         //     setStartTicket(res.data[0].TicketNum)
+    //         //     setEndTicket(res.data[res.data.length-1].TicketNum)
+    //         // }
+    // }
+    console.log(response)
+    response.tInDateTimes.forEach((hour) => {
+        transientInTable[hour.hourofday] = hour.countperhour
+    });
 
-    let openTixToday = 0
-    response.forEach((ticket) => {
-        if(ticket.OutDateTime == null){
-            openTixToday += 1
-        }
-    })
+    response.tOutDateTimes.forEach((hour) => {
+        transientOutTable[hour.hourofday] = hour.countperhour
+    });
+
+    response.mInDateTimes.forEach((hour) => {
+        monthlyInTable[hour.hourofday] = hour.countperhour
+    });
+
+    response.mOutDateTimes.forEach((hour) => {
+        monthlyOutTable[hour.hourofday] = hour.countperhour
+    });
+
+    console.log(monthlyInTable)
+    console.log(monthlyOutTable)
+    console.log(transientOutTable)
+    console.log(transientInTable)
+    
+
+
+    // let openTixToday = 0
+    // response.forEach((ticket) => {
+    //     if(ticket.OutDateTime == null){
+    //         openTixToday += 1
+    //     }
+    // })
 
     return(
         <>
-        <ul>
+        {/* <ul>
         <li>transactions</li>
         <li>tix issued: {ticketsIssued}</li>
         <li>open tix today: {openTixToday}</li>
         <li>starting ticktet: {startTicket}</li>
         <li>ending ticket: {endTicket}</li>
-        </ul>
+        </ul> */}
 
         <DatePicker label={'In-Date'} setDate={setInDate}/>
         <DatePicker label={'Out-Date'} setDate={setOutDate}/>
