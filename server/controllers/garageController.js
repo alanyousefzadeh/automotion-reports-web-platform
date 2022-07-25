@@ -1,8 +1,10 @@
 const axios = require('axios');
+const e = require('cors');
 const helpers = require('../helpers');
 
 require('dotenv').config()
-const knex = require('knex')({
+
+let db = {
     client : 'mssql',
     connection: {
       server : process.env.SERVER,
@@ -10,15 +12,31 @@ const knex = require('knex')({
       password : process.env.PASSWORD,
       options: {
           port: 1433,
-          database : process.env.DATABASE,
+          database : '',
           encrypt: true
       }
     }
-  });
+}
 
 exports.transactions = async (req, res) => {
-    let inDate = req.query.inDate.slice(0,10)
-    let outDate = req.query.outDate.slice(0,10)
+    const currentGarage = (req.query.garage)
+    switch(currentGarage){
+        case 'Baxter':
+            db.connection.options.database = 'BaxterSync'
+            break;
+        case 'Waverly' :
+            db.connection.options.database = '502WaverlySync'
+            break;
+        case 'VanVorst':
+            db.connection.options.database = '207VanvorstSync'
+            break;
+        default:
+            console.log("please provode a db name")
+    }
+    const knex = require('knex')(db);   
+    let inDate = req.query.inDate
+    let outDate = req.query.outDate
+
     let data = {
         mInDateTimes : [],
         mOutDateTimes : [],
@@ -55,7 +73,7 @@ exports.transactions = async (req, res) => {
         .from('Transactions')
         .select('InDateTime', 'OutDateTime', 'TicketNum')
         .whereBetween('InDateTime', [`${inDate} 00:00:00`, `${outDate} 23:59:59`])
-        
+
     res.send(data)
 }; 
 

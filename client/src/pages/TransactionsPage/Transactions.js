@@ -4,6 +4,7 @@ import DatePicker from "../../components/DatePicker/DatePicker";
 import { Button } from "react-bootstrap";
 import TransactionTable from "../../components/TransactionTable/TransactionTable";
 import ReactDOMServer from "react-dom/server";
+import { useParams } from "react-router-dom";
 
 function Transactions(){
     const [inDate, setInDate] = useState(null)
@@ -18,6 +19,8 @@ function Transactions(){
     let monthlyInTable = new Array(24).fill(0)
     let monthlyOutTable = new Array(24).fill(0)
     
+    const {garageName} = useParams()
+    console.log('db',garageName)
     const getData = async () => {
 
         let data = null
@@ -28,8 +31,9 @@ function Transactions(){
             let promise = await axios
                 .get("http://localhost:8080/garagedata/transactions", {
                     params: {
-                        inDate: `${inDate} 03:00:00`,
-                        outDate: `${outDate} 03:00:00`
+                        inDate: inDate,
+                        outDate: outDate,
+                        garage : garageName
                     }
                 })
             data = promise.data                    
