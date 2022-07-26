@@ -43,29 +43,30 @@ exports.transactions = async (req, res) => {
         tInDateTimes : [],
         tOutDateTimes : [],
         allTickets : [], 
-        total: 0
+        total: 0,
+        rateTable: {}
     }
     //query for InDateTime type = M
     let query1 = await knex.raw(
-        helpers.sqlQuery('InDateTime' ,inDate, outDate, "M")
+        helpers.hourOfDayQuery('InDateTime' ,inDate, outDate, "M")
     )
     data.mInDateTimes = query1
 
     //query for OutDateTime type = M
     let query2 = await knex.raw(
-        helpers.sqlQuery('OutDateTime', inDate, outDate, "M")
+        helpers.hourOfDayQuery('OutDateTime', inDate, outDate, "M")
     )
     data.mOutDateTimes = query2
 
     //query for InDateTime type = T
     let query3 = await knex.raw(
-        helpers.sqlQuery('InDateTime', inDate, outDate, "T")
+        helpers.hourOfDayQuery('InDateTime', inDate, outDate, "T")
     )
     data.tInDateTimes = query3
     
     //query for OutDateTime type = T
     let query4 = await knex.raw(
-        helpers.sqlQuery('OutDateTime', inDate, outDate, "T")
+        helpers.hourOfDayQuery('OutDateTime', inDate, outDate, "T")
     )
     data.tOutDateTimes = query4
 
@@ -74,9 +75,14 @@ exports.transactions = async (req, res) => {
         .from('Transactions')
         .select('InDateTime', 'OutDateTime', 'TicketNum')
         .whereBetween('InDateTime', [`${inDate} 00:00:00`, `${outDate} 23:59:59`])
-        
+
     data.total = await knex.raw(
         helpers.totalQuery(inDate, outDate)
+    )
+
+    //query for rate table
+    data.rateTable = await knex.raw(
+        helpers.rateTableQuery(inDate, outDate)
     )
 
     res.send(data)

@@ -1,4 +1,4 @@
-function sqlQuery(timeCol, inDate, outDate, type){
+function hourOfDayQuery(timeCol, inDate, outDate, type){
     return (
         `Select datepart(hour, ${timeCol}) as hourofday, count (*) as countperhour
         From [dbo].[Transactions]
@@ -15,7 +15,16 @@ function totalQuery(inDate, outDate){
     )
 }
 
+function rateTableQuery(inDate, outDate){
+    return(
+        `SELECT InDateTime, OutDateTime, total
+        FROM [dbo].[Transactions]
+        WHERE OutDateTime between '${inDate} 00:00:00' and '${outDate} 23:59:59' and [Type] = 'T'`
+    )
+}
+
 module.exports = {
-    sqlQuery,
-    totalQuery
+    hourOfDayQuery,
+    totalQuery,
+    rateTableQuery
 }
