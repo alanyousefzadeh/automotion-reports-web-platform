@@ -5,11 +5,14 @@ import { Button } from "react-bootstrap";
 import TransactionTable from "../../components/TransactionTable/TransactionTable";
 import ReactDOMServer from "react-dom/server";
 import { useParams } from "react-router-dom";
+import RateTable from '../../components/RateTable/RateTable';
 
 function Transactions(){
     const [inDate, setInDate] = useState(null)
     const [outDate, setOutDate] = useState(null)
     const [response, setResponse] = useState(null)
+    // const [rateData, setRateData] = useState(null);
+
     const [total, setTotal] = useState(0)
     // const [startTicket, setStartTicket] = useState(null)
     // const [endTicket, setEndTicket] = useState(null)
@@ -29,7 +32,7 @@ function Transactions(){
             alert("in/out dates must be selected")
         }
         if(inDate != null && outDate != null){
-            let promise = await axios
+            const promise = await axios
                 .get("http://localhost:8080/garagedata/transactions", {
                     params: {
                         inDate: inDate,
@@ -43,14 +46,9 @@ function Transactions(){
             if(data.total[0].total != null){
                 setTotal(data.total[0].total)
             }
+
         }
     }
-    //         // setTicketsIssued(res.data.length)
-    //         // if(res.data.length > 0){
-    //         //     setStartTicket(res.data[0].TicketNum)
-    //         //     setEndTicket(res.data[res.data.length-1].TicketNum)
-    //         // }
-    // }
     if(response != null){
         //console.log(response)
         response.tInDateTimes.forEach((hour) => {
@@ -79,6 +77,7 @@ function Transactions(){
     //     }
     // })
     return(
+        
         <div className="report">
         {/* <ul>
         <li>transactions</li>
@@ -98,6 +97,14 @@ function Transactions(){
             transientOutTable={transientOutTable}
             total={total}
         />
+        {response ? 
+         <RateTable
+            inDate={inDate}
+            outDate={outDate}
+            garageName={garageName}
+            rateData={response.rateTable}
+         />: ''
+        }
         </div>
     
     )

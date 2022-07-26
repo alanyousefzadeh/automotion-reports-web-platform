@@ -29,7 +29,7 @@ function TransactionTable(props) {
     const transientOutTotal = transientOutTable.reduce((prevVal, currVal) => prevVal + currVal, 0)
 
     return(
-        
+            <>
             <Table striped bordered className='report' size='sm'>
             <thead>
                 <tr className='table-warning'>
@@ -70,6 +70,7 @@ function TransactionTable(props) {
                 </tr>
             </tbody>
             </Table>
+            </>
     )
     
 }
