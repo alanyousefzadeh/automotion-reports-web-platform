@@ -7,6 +7,15 @@ function sqlQuery(timeCol, inDate, outDate, type){
     )
 }
 
+function totalQuery(inDate, outDate){
+    return (
+        `SELECT sum(total) as total
+        FROM [dbo].[Transactions]
+        where OutDateTime between '${inDate} 00:00:00' and '${outDate} 23:59:59'`
+    )
+}
+
 module.exports = {
-    sqlQuery
+    sqlQuery,
+    totalQuery
 }

@@ -5,8 +5,11 @@ function TransactionTable(props) {
         monthlyInTable,
         monthlyOutTable,
         transientInTable,
-        transientOutTable
+        transientOutTable, 
+        total
     } = props;
+
+    console.log(total)
 
     let listElements = []
 
@@ -60,6 +63,10 @@ function TransactionTable(props) {
                     <th>{monthlyInTotal}</th>
                     <th>{monthlyOutTotal}</th>
                     <th>{transientInTotal+transientOutTotal+monthlyInTotal+monthlyOutTotal}</th>
+                </tr>
+                <tr className='table-warning'>
+                    <th>Total: ${total.toFixed(2)}</th>
+                    
                 </tr>
             </tbody>
             </Table>

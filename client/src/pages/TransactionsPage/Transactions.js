@@ -10,6 +10,7 @@ function Transactions(){
     const [inDate, setInDate] = useState(null)
     const [outDate, setOutDate] = useState(null)
     const [response, setResponse] = useState(null)
+    const [total, setTotal] = useState(0)
     // const [startTicket, setStartTicket] = useState(null)
     // const [endTicket, setEndTicket] = useState(null)
     // const [ticketsIssued, setTicketsIssued] = useState(null)
@@ -38,7 +39,8 @@ function Transactions(){
                 })
             data = promise.data                    
             setResponse(data)
-            console.log(data)
+            setTotal(data.total[0].total)
+            console.log(response)
         }
     }
     //         // setTicketsIssued(res.data.length)
@@ -79,7 +81,6 @@ function Transactions(){
     //         openTixToday += 1
     //     }
     // })
-
     return(
         <>
         {/* <ul>
@@ -98,8 +99,10 @@ function Transactions(){
             monthlyOutTable={monthlyOutTable}
             transientInTable={transientInTable}
             transientOutTable={transientOutTable}
+            total={total}
         />
         </>
+    
     )
 }
 const html = ReactDOMServer.renderToStaticMarkup(<Transactions/>);

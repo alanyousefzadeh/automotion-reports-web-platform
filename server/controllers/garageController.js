@@ -42,7 +42,8 @@ exports.transactions = async (req, res) => {
         mOutDateTimes : [],
         tInDateTimes : [],
         tOutDateTimes : [],
-        allTickets : []
+        allTickets : [], 
+        total: 0
     }
     //query for InDateTime type = M
     let query1 = await knex.raw(
@@ -73,6 +74,10 @@ exports.transactions = async (req, res) => {
         .from('Transactions')
         .select('InDateTime', 'OutDateTime', 'TicketNum')
         .whereBetween('InDateTime', [`${inDate} 00:00:00`, `${outDate} 23:59:59`])
+        
+    data.total = await knex.raw(
+        helpers.totalQuery(inDate, outDate)
+    )
 
     res.send(data)
 }; 
