@@ -37,10 +37,12 @@ function Transactions(){
                         garage : garageName
                     }
                 })
-            data = promise.data                    
+            data = promise.data
+            console.log(data)                    
             setResponse(data)
-            setTotal(data.total[0].total)
-            console.log(response)
+            if(data.total[0].total != null){
+                setTotal(data.total[0].total)
+            }
         }
     }
     //         // setTicketsIssued(res.data.length)
@@ -67,11 +69,6 @@ function Transactions(){
             monthlyOutTable[hour.hourofday] = hour.countperhour
         });
     }
-
-    console.log("mInCol", monthlyInTable)
-    console.log("mOutCol", monthlyOutTable)
-    console.log("tInCol", transientOutTable)
-    console.log("tOutCol",transientInTable)
     
 
 
@@ -82,7 +79,7 @@ function Transactions(){
     //     }
     // })
     return(
-        <>
+        <div className="report">
         {/* <ul>
         <li>transactions</li>
         <li>tix issued: {ticketsIssued}</li>
@@ -91,8 +88,8 @@ function Transactions(){
         <li>ending ticket: {endTicket}</li>
         </ul> */}
 
-        <DatePicker label={'In-Date'} setDate={setInDate}/>
-        <DatePicker label={'Out-Date'} setDate={setOutDate}/>
+        <DatePicker label={'In-Date - 12:00AM'} setDate={setInDate}/>
+        <DatePicker label={'Out-Date - 11:59PM'} setDate={setOutDate}/>
         <Button onClick={getData}>Generate Table </Button>
         <TransactionTable 
             monthlyInTable={monthlyInTable}
@@ -101,7 +98,7 @@ function Transactions(){
             transientOutTable={transientOutTable}
             total={total}
         />
-        </>
+        </div>
     
     )
 }

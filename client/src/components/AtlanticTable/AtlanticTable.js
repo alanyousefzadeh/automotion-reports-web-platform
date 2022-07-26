@@ -27,7 +27,7 @@ function AtlanticTable(props) {
 
     return (
         <>
-        <Table striped bordered size='sm'>
+        <Table striped bordered >
             <thead>
                 <tr className='table-warning'>
                     <th>Revenue by Rate</th>
@@ -98,7 +98,7 @@ function AtlanticTable(props) {
                     <th>All Totals:</th>
                     <th>{totalDefaultTixSold + totalDiscountTixSold + totalMiscTixSold}</th>
                     <th>$$$.$$</th>
-                    <th>{`$${totalDefaultPaidWTax + totalDiscountPaidWTax + totalMiscPaidWTax }.00`}</th>
+                    <th>{`$${totalDefaultPaidWTax + totalDiscountPaidWTax + totalMiscPaidWTax }`}</th>
 
                 </tr>
             </thead>

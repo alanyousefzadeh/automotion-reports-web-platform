@@ -30,7 +30,7 @@ function TransactionTable(props) {
 
     return(
         
-            <Table striped bordered size='sm'>
+            <Table striped bordered className='report' size='sm'>
             <thead>
                 <tr className='table-warning'>
                     <th>Hour</th>
@@ -56,7 +56,7 @@ function TransactionTable(props) {
                     )
                 })
             }
-                <tr className='table-warning'>
+                <tr className='table-success'>
                     <th>Total</th>
                     <th>{transientInTotal}</th>
                     <th>{transientOutTotal}</th>
@@ -64,7 +64,7 @@ function TransactionTable(props) {
                     <th>{monthlyOutTotal}</th>
                     <th>{transientInTotal+transientOutTotal+monthlyInTotal+monthlyOutTotal}</th>
                 </tr>
-                <tr className='table-warning'>
+                <tr className='table-success'>
                     <th>Total: ${total.toFixed(2)}</th>
                     
                 </tr>
