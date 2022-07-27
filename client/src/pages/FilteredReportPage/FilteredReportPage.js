@@ -1,15 +1,14 @@
-import React, { useState, useEffect} from 'react';
-import axios from 'axios';
-import './FilteredReportPage.scss';
-import { useParams } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
-import AtlanticTable from '../../components/AtlanticTable/AtlanticTable';
-import DatePicker from '../../components/DatePicker/DatePicker';
-import ReportHeader from '../../components/ReportHeader/ReportHeader';
-import html2canvas from 'html2canvas';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./FilteredReportPage.scss";
+import { useParams } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import AtlanticTable from "../../components/AtlanticTable/AtlanticTable";
+import DatePicker from "../../components/DatePicker/DatePicker";
+import ReportHeader from "../../components/ReportHeader/ReportHeader";
+import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import Transactions from '../TransactionsPage/Transactions';
-
+import Transactions from "../TransactionsPage/Transactions";
 
 function FilteredReportPage() {
   const sortObjectByKeys = (o) => {
@@ -37,7 +36,7 @@ function FilteredReportPage() {
       tally: 0,
       totalPaid: 0,
     },
-    "Early": {
+    'Early': {
       tally: 0,
       totalPaid: 0,
     },
