@@ -233,8 +233,8 @@ function FilteredReportPage() {
           ) : (
             <div id="pdf-report">
               <section className="datepicker m-2">
-                <DatePicker label={"In-Date"} setDate={setInDate} />
-                <DatePicker label={"Out-Date"} setDate={setOutDate} />
+                <DatePicker label={"In-Date - 3AM"} setDate={setInDate} />
+                <DatePicker label={"Out-Date - 3AM"} setDate={setOutDate} />
               </section>
               <Button onClick={generateReport} className="button">
                 Generate Report
