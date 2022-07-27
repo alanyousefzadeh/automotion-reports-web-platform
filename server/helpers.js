@@ -17,8 +17,17 @@ function rateTableQuery(inDate, outDate) {
         WHERE OutDateTime between '${inDate} 00:00:00' and '${outDate} 23:59:59' and [Type] = 'T'`;
 }
 
+function overParkedQuery(inDate, outDate){
+    return `select  type, STOPAKey2 ,InDateTime ,  DATEDIFF(day, InDateTime,GETDATE()) as 'Total Days in Garage'
+    from  [Transactions]
+    where Status='InSystem' and DATEDIFF(day, InDateTime,GETDATE()) >=7
+    group by type ,InDateTime ,STOPAKey2
+    order by type desc`
+}
+
 module.exports = {
   hourOfDayQuery,
   totalQuery,
   rateTableQuery,
+  overParkedQuery
 };

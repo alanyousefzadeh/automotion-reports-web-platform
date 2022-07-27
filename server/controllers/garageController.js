@@ -1,5 +1,4 @@
 const axios = require("axios");
-const e = require("cors");
 const helpers = require("../helpers");
 
 require("dotenv").config();
