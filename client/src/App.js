@@ -17,7 +17,7 @@ function App() {
           <Route path='/reportSelect/:garageName' element={<ReportSelectPage/>}/>  
           <Route path='/reportSelect/:garageName/filtered' element={<FilteredReportPage/>}/>  
           <Route path='/reportSelect/:garageName/daily' element={<DailyReportPage/>}/>  
-          <Route path='/reportSelect/:garageName/partial' element={<Transactions/>}/>
+          {/* <Route path='/reportSelect/:garageName/partial' element={<Transactions/>}/> */}
         </Routes>
       </BrowserRouter>
     </div>

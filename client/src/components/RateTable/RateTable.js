@@ -21,7 +21,7 @@ function RateTable(props) {
     "Up to 24 hours",
     "Other",
   ];
-  const baxterPrices = [25, 15, 25, 32, 42, 46, 55, null];
+  const baxterPrices = [25, 15, 25, 32, 42, 46, 55, 'N/A'];
 
   const WaverlyBuckets = [
     "Early Bird",
@@ -32,7 +32,7 @@ function RateTable(props) {
     "Up to 24 hours",
     "Other",
   ];
-  const waverlyPrices = [15, 5, 15, 20, 25, 35, null];
+  const waverlyPrices = [15, 5, 15, 20, 25, 35, 'N/A'];
 
   const VanVorstBuckets = [
     "Up to 1/2 hour",
@@ -43,7 +43,7 @@ function RateTable(props) {
     "Up to 24 hours",
     "Other",
   ];
-  const vanvorstPrices = [3.56, 10.67, 13.04, 17.78, 20.15, 28.44, null];
+  const vanvorstPrices = [3.56, 10.67, 13.04, 17.78, 20.15, 28.44, 'N/A'];
 
   console.log(garageName);
 

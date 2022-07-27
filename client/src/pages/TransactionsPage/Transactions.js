@@ -25,6 +25,9 @@ function Transactions(){
     
     const {garageName} = useParams()
     console.log('db',garageName)
+
+  
+   
     const getData = async () => {
 
         let data = null
@@ -48,7 +51,7 @@ function Transactions(){
             }
 
         }
-    }
+    };
     if(response != null){
         //console.log(response)
         response.tInDateTimes.forEach((hour) => {
