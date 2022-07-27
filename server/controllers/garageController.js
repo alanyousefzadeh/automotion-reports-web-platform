@@ -44,6 +44,7 @@ exports.transactions = async (req, res) => {
     allTickets: [],
     total: 0,
     rateTable: {},
+    overParked: []
   };
   //query for InDateTime type = M
   let query1 = await knex.raw(
@@ -79,6 +80,9 @@ exports.transactions = async (req, res) => {
 
   //query for rate table
   data.rateTable = await knex.raw(helpers.rateTableQuery(inDate, outDate));
+
+  //query for over parked cars
+  data.overParked = await knex.raw(helpers.overParkedQuery())
 
   res.send(data);
 };

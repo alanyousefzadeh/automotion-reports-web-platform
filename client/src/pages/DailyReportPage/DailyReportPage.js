@@ -37,7 +37,7 @@ const DailyReportPage = () => {
       tally: 0,
       totalPaid: 0,
     },
-    Early: {
+    "Early": {
       tally: 0,
       totalPaid: 0,
     },

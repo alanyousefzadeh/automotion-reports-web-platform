@@ -6,6 +6,7 @@ import TransactionTable from "../../components/TransactionTable/TransactionTable
 import ReactDOMServer from "react-dom/server";
 import { useParams } from "react-router-dom";
 import RateTable from '../../components/RateTable/RateTable';
+import OverParkedTable from "../../components/OverParked/OverParkedTable";
 
 function Transactions(){
     const [inDate, setInDate] = useState(null)
@@ -101,12 +102,18 @@ function Transactions(){
             total={total}
         />
         {response ? 
+        <>
          <RateTable
             // inDate={inDate}
             // outDate={outDate}
             garageName={garageName}
             rateData={response.rateTable}
-         />: ''
+         />
+         <OverParkedTable
+            overParkedData={response.overParked}
+         />
+         </>
+         : ''
         }
         </div>
     
