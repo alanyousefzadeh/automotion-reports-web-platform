@@ -46,7 +46,7 @@ function makeBaxterRateTable(rateData, ratesTable){
 
 function makeWaverlyRateTable(rateData, ratesTable){
     rateData.forEach((record)=>{
-        if((record.total === 25) && (((new Date(record.OutDateTime) - new Date(record.InDateTime)) > 1800000)) ){
+        if((record.total === 15) && (((new Date(record.OutDateTime) - new Date(record.InDateTime)) > 1800000)) ){
             ratesTable['Early Bird'] = {
                 count: ratesTable['Early Bird'].count + 1,
                 revenue: ratesTable['Early Bird'].revenue + record.total
