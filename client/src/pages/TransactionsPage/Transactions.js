@@ -99,8 +99,8 @@ function Transactions(){
         />
         {response ? 
          <RateTable
-            inDate={inDate}
-            outDate={outDate}
+            // inDate={inDate}
+            // outDate={outDate}
             garageName={garageName}
             rateData={response.rateTable}
          />: ''
