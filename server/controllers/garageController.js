@@ -32,7 +32,8 @@ exports.transactions = async (req, res) => {
     default:
       console.log("please provode a db name");
   }
-  const knex = require("knex")(db);
+  console.log(db.connection.options.database)
+  const knex = await require("knex")(db);
   let inDate = req.query.inDate;
   let outDate = req.query.outDate;
 

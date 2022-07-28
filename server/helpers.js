@@ -22,7 +22,7 @@ function overParkedQuery(){
     from  [Transactions]
     where Status='InSystem' and DATEDIFF(day, InDateTime,GETDATE()) >=7
     group by type ,InDateTime ,STOPAKey2
-    order by InDateTime asc`
+    order by type desc`
 }
 
 module.exports = {
