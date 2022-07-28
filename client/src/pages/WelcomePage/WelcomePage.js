@@ -1,10 +1,12 @@
-import React, { useState} from 'react';
+import { Link } from 'react-router-dom';
+import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import GarageCard from '../../components/GarageCard/GarageCard';
 import baxter from '../../assets/baxter.png';
 import vanvorst from '../../assets/vanvorst.png';
 import waverly from '../../assets/waverly.png';
 import atlanticTerrace from '../../assets/atlanticTerrace.png';
+
 const data = [
     {
       id: 1,
@@ -30,8 +32,11 @@ const data = [
 
 function WelcomePage() {
   // const [garages, setGarages] = useState([]);
+  const [currUser, setCurrUser] = useState(null)
+  const [failedAuth, setFailedAuth] = useState(false)
 
   useEffect(() => {
+
     const token = sessionStorage.getItem("token");
     if (!token) {
       setFailedAuth(true);
@@ -39,7 +44,7 @@ function WelcomePage() {
     }
     // Get the data from the API
     axios
-      .get("http://localhost:8080/authenticate", {
+      .get("http://localhost:8080/currentUser", {
         headers: {
           authorization: "Bearer " + token,
         },
@@ -48,13 +53,23 @@ function WelcomePage() {
         console.log(response);
         setCurrUser(response.data.name);
       })
-      .catch(() => {
-        setFailedAuth(true);
+      .catch((e) => {
+        // setFailedAuth(true);
+        console.log(e)
       });
   }, []);
 
+  if (failedAuth) {
+    return (
+      <p>
+        You must be logged in to see this page. <Link to="/login">Log in</Link>
+      </p>
+    );
+  }
+
   return (
     <div className="cards d-flex justify-content-center">
+      <h5>Welcome, {currUser}</h5>
       {data.map((garage) => (
         <GarageCard
           key={garage.id}

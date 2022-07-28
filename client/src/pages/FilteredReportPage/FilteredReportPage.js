@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./FilteredReportPage.scss";
-import { useParams } from "react-router-dom";
+import { useParams, Link} from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import AtlanticTable from "../../components/AtlanticTable/AtlanticTable";
 import DatePicker from "../../components/DatePicker/DatePicker";
@@ -22,6 +22,7 @@ function FilteredReportPage() {
   //set the state variables
   const [atlanticAllData, setatlanticAllData] = useState([]);
   const [failedToLoad, setFailedToLoad] = useState(false);
+  const [err, setErr] = useState(null)
   const [garage, setGarage] = useState(params.garageName);
   const [inDate, setInDate] = useState(null);
   const [outDate, setOutDate] = useState(null);
@@ -176,13 +177,23 @@ function FilteredReportPage() {
   };
 
   const email = async () => {
+    const token = sessionStorage.getItem("token");
     let filepath = await genPDF();
-    axios.post("http://localhost:8080/emailGenerator", {
-      file: filepath,
-    });
+    axios.post(
+      "http://localhost:8080/emailGenerator",
+      {
+        file: filepath,
+      },
+      {
+        headers: {
+          authorization: "Bearer " + token,
+        },
+      }
+    );
   };
 
   const generateReport = () => {
+    const token = sessionStorage.getItem('token');
     if (garage === "Atlantic Terrace") {
       if (inDate === null) {
         //default report (partial report)
@@ -192,12 +203,16 @@ function FilteredReportPage() {
               inDate: new Date().setHours(3, 0, 0, 0),
               outDate: new Date().getTime(),
             },
+            headers: {
+              authorization: 'Bearer ' + token
+          }
           })
           .then((res) => {
             setatlanticAllData(res.data);
           })
-          .catch(() => {
+          .catch((error) => {
             setFailedToLoad(true);
+            setErr(error.response.data)
           });
       } else {
         //filtered report
@@ -207,12 +222,16 @@ function FilteredReportPage() {
               inDate: new Date(`${inDate} 03:00:00`).getTime(),
               outDate: new Date(`${outDate} 03:00:00`).getTime(),
             },
+            headers: {
+              authorization: 'Bearer ' + token
+          }
           })
           .then((res) => {
             setatlanticAllData(res.data);
           })
-          .catch(() => {
+          .catch((error) => {
             setFailedToLoad(true);
+            setErr(error.response.data)
           });
       }
     }
@@ -229,7 +248,7 @@ function FilteredReportPage() {
       ) : (
         <div className="report">
           {failedToLoad ? (
-            <p>error loading data...</p>
+            <p>error: {err} <Link to='/login'>Login</Link></p>
           ) : (
             <div id="pdf-report">
               <section className="datepicker m-2">

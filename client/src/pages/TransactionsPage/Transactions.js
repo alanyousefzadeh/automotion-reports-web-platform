@@ -4,7 +4,7 @@ import DatePicker from "../../components/DatePicker/DatePicker";
 import { Button } from "react-bootstrap";
 import TransactionTable from "../../components/TransactionTable/TransactionTable";
 import ReactDOMServer from "react-dom/server";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import RateTable from '../../components/RateTable/RateTable';
 import OverParkedTable from "../../components/OverParked/OverParkedTable";
 
@@ -12,6 +12,8 @@ function Transactions(){
     const [inDate, setInDate] = useState(null)
     const [outDate, setOutDate] = useState(null)
     const [response, setResponse] = useState(null)
+    const [failedtoLoad, setFailedtoLoad ] = useState(false)
+    const [err, setErr] = useState(null)
     // const [rateData, setRateData] = useState(null);
 
     const [total, setTotal] = useState(0)
@@ -30,29 +32,45 @@ function Transactions(){
   
    
     const getData = async () => {
-
-        let data = null
-        if(inDate == null || outDate == null){
-            alert("in/out dates must be selected")
-        }
-        if(inDate != null && outDate != null){
-            const promise = await axios
-                .get("http://localhost:8080/garagedata/transactions", {
-                    params: {
-                        inDate: inDate,
-                        outDate: outDate,
-                        garage : garageName
-                    }
-                })
-            data = promise.data
-            console.log(data)                    
-            setResponse(data)
-            if(data.total[0].total != null){
-                setTotal(data.total[0].total)
+      const token = sessionStorage.getItem('token');
+      let data = null;
+      if (inDate == null || outDate == null) {
+        alert("in/out dates must be selected");
+      }
+      if (inDate != null && outDate != null) {
+        try {
+          const promise = await axios.get(
+            "http://localhost:8080/garagedata/transactions",
+            {
+              params: {
+                inDate: inDate,
+                outDate: outDate,
+                garage: garageName,
+              },
+              headers: {
+                authorization: 'Bearer ' + token
             }
-
+            }
+          );
+          data = promise.data;
+          console.log(data);
+          setResponse(data);
+          if (data.total[0].total != null) {
+            setTotal(data.total[0].total);
+          }
+        } catch (err) {
+          setFailedtoLoad(true);
+          setErr(err.response.data);
         }
+      }
     };
+
+    if (!!failedtoLoad){
+        return (
+            <p>{err} <Link to='/login'>login</Link></p>
+        )
+    }
+
     if(response != null){
         //console.log(response)
         response.tInDateTimes.forEach((hour) => {

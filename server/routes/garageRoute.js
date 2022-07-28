@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const garageController = require('../controllers/garageController');
+const authenticate = require('../middleware/authenticate');
+
 
 // router
 //     .route('/')
@@ -7,10 +9,10 @@ const garageController = require('../controllers/garageController');
 
 router
     .route('/atlanticClosed')
-    .get(garageController.atlanticClosed)
+    .get(authenticate, garageController.atlanticClosed)
 
 router
     .route('/transactions')
-    .get(garageController.transactions)
+    .get(authenticate, garageController.transactions)
 
 module.exports = router;  

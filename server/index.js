@@ -6,7 +6,10 @@ const axios = require("axios");
 
 const loginRoute = require('./routes/loginRoute');
 const garageRoute = require('./routes/garageRoute');
-const emailRoute = require('./routes/emailRoute')
+const emailRoute = require('./routes/emailRoute');
+const currentUserRoute = require('./routes/currentUserRoute');
+;
+
 const port = 8080;
 
 //middleware
@@ -19,6 +22,7 @@ app.use(express.json());
 app.use('/login', loginRoute);
 app.use('/garagedata', garageRoute);
 app.use('/emailGenerator', emailRoute);
+app.use('/currentUser', currentUserRoute);
 
 //port listener
 app.listen(port, () => {

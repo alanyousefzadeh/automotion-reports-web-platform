@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import AtlanticTable from '../../components/AtlanticTable/AtlanticTable';
 import ReportHeader from '../../components/ReportHeader/ReportHeader';
@@ -27,6 +27,7 @@ const DailyReportPage = () => {
   const [outDate, setOutDate] = useState(
     Math.floor(new Date().setHours(3, 0, 0, 0))
   );
+  const [err, setErr] = useState(null)
   ////////////////////////////////////////
   let atlanticTable = {
     "Default Rate - 1/2hr": {
@@ -188,26 +189,30 @@ const DailyReportPage = () => {
   };
 
   useEffect(() => {
+    const token = sessionStorage.getItem("token");
+
     if (garage === "Atlantic Terrace") {
-        async function fetchAtlanticData() {
-            try{
-                const res = await axios.get(
-                    "http://localhost:8080/garagedata/atlanticClosed",
-                    {
-                    params: {
-                        inDate: inDate,
-                        outDate: outDate,
-                    },
-                    }
-                );
-                setatlanticAllData(res.data);
-                
-            } catch (err) {
-                setFailedToLoad(true);
-                console.log("err", err);
+      async function fetchAtlanticData() {
+        try {
+          const res = await axios.get(
+            "http://localhost:8080/garagedata/atlanticClosed",
+            {
+              params: {
+                inDate: inDate,
+                outDate: outDate,
+              },
+              headers: {
+                authorization: "Bearer " + token,
+              },
             }
-          }
-          fetchAtlanticData();
+          );
+          setatlanticAllData(res.data);
+        } catch (err) {
+          setFailedToLoad(true);
+          setErr(err.response.data);
+        }
+      }
+      fetchAtlanticData();
     } else {
       axios
         .get("http://localhost:8080/garagedata")
@@ -225,7 +230,7 @@ const DailyReportPage = () => {
   return (
     <div className="report">
       {failedToLoad ? (
-        <p>error loading data...</p>
+        <p>error: {err}<Link to='/login'> Login</Link></p>
       ) : (
         <div id="pdf-report">
           <ReportHeader
