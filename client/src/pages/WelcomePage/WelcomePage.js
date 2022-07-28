@@ -28,17 +28,43 @@ const data = [
     },
   ]
 
-function WelcomePage(){
-    // const [garages, setGarages] = useState([]);
-    return (
+function WelcomePage() {
+  // const [garages, setGarages] = useState([]);
 
-        <div className="cards d-flex justify-content-center"> 
-            {data.map(garage =>(
-                <GarageCard key={garage.id} id={garage.id} title={garage.title} image={garage.image}/>    
-            ))}
-        </div>
-    );
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      setFailedAuth(true);
+      return;
+    }
+    // Get the data from the API
+    axios
+      .get("http://localhost:8080/authenticate", {
+        headers: {
+          authorization: "Bearer " + token,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        setCurrUser(response.data.name);
+      })
+      .catch(() => {
+        setFailedAuth(true);
+      });
+  }, []);
 
+  return (
+    <div className="cards d-flex justify-content-center">
+      {data.map((garage) => (
+        <GarageCard
+          key={garage.id}
+          id={garage.id}
+          title={garage.title}
+          image={garage.image}
+        />
+      ))}
+    </div>
+  );
 }
 
 export default WelcomePage;
