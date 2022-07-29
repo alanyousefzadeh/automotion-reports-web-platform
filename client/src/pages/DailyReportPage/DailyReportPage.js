@@ -6,6 +6,7 @@ import AtlanticTable from '../../components/AtlanticTable/AtlanticTable';
 import ReportHeader from '../../components/ReportHeader/ReportHeader';
 import html2canvas from 'html2canvas';
 import jsPDF from "jspdf";
+import Logout from '../../components/Logout/Logout';
 
 
 const DailyReportPage = () => {
@@ -229,10 +230,12 @@ const DailyReportPage = () => {
 
   return (
     <div className="report">
+      <Logout/>
       {failedToLoad ? (
         <p>error: {err}<Link to='/login'> Login</Link></p>
       ) : (
         <div id="pdf-report">
+          
           <ReportHeader
             start={start}
             closed={atlanticAllData.length}

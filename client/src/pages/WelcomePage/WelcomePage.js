@@ -6,6 +6,7 @@ import baxter from '../../assets/baxter.png';
 import vanvorst from '../../assets/vanvorst.png';
 import waverly from '../../assets/waverly.png';
 import atlanticTerrace from '../../assets/atlanticTerrace.png';
+import Logout from '../../components/Logout/Logout';
 
 const data = [
     {
@@ -69,7 +70,10 @@ function WelcomePage() {
 
   return (
     <div className="cards d-flex justify-content-center">
-      <h5>Welcome, {currUser}</h5>
+       <nav>
+            <h1>welcome, {currUser}</h1>
+            <Logout/>
+        </nav>
       {data.map((garage) => (
         <GarageCard
           key={garage.id}

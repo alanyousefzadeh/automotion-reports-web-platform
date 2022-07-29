@@ -9,6 +9,7 @@ import ReportHeader from "../../components/ReportHeader/ReportHeader";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import Transactions from "../TransactionsPage/Transactions";
+import Logout from '../../components/Logout/Logout'
 
 function FilteredReportPage() {
   const sortObjectByKeys = (o) => {
@@ -243,6 +244,7 @@ function FilteredReportPage() {
 
   return (
     <div>
+      <Logout/>
       {garage !== "Atlantic Terrace" ? (
         <Transactions />
       ) : (

@@ -7,6 +7,7 @@ import ReactDOMServer from "react-dom/server";
 import { useParams, Link } from "react-router-dom";
 import RateTable from '../../components/RateTable/RateTable';
 import OverParkedTable from "../../components/OverParked/OverParkedTable";
+import Logout from "../../components/Logout/Logout";
 
 function Transactions(){
     const [inDate, setInDate] = useState(null)
@@ -108,7 +109,7 @@ function Transactions(){
         <li>starting ticktet: {startTicket}</li>
         <li>ending ticket: {endTicket}</li>
         </ul> */}
-
+    
         <DatePicker label={'In-Date - 12:00AM'} setDate={setInDate}/>
         <DatePicker label={'Out-Date - 11:59PM'} setDate={setOutDate}/>
         <Button onClick={getData}>Generate Table </Button>
