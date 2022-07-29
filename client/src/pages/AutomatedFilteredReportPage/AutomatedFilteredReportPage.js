@@ -9,7 +9,7 @@ import RateTable from '../../components/RateTable/RateTable';
 import OverParkedTable from "../../components/OverParked/OverParkedTable";
 import Logout from "../../components/Logout/Logout";
 
-function Transactions(){
+function AutomatedFilteredReportPage(){
     const [inDate, setInDate] = useState(null)
     const [outDate, setOutDate] = useState(null)
     const [response, setResponse] = useState(null)
@@ -103,7 +103,7 @@ function Transactions(){
         
         <div className="report">
         {/* <ul>
-        <li>transactions</li>
+        <li>AutomatedFilteredReportPage</li>
         <li>tix issued: {ticketsIssued}</li>
         <li>open tix today: {openTixToday}</li>
         <li>starting ticktet: {startTicket}</li>
@@ -138,6 +138,6 @@ function Transactions(){
     
     )
 }
-const html = ReactDOMServer.renderToStaticMarkup(<Transactions/>);
+const html = ReactDOMServer.renderToStaticMarkup(<AutomatedFilteredReportPage/>);
 console.log(html.toString());
-export default Transactions
+export default AutomatedFilteredReportPage

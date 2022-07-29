@@ -2,9 +2,9 @@ import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import LoginPage from './pages/LoginPage/LoginPage';
 import WelcomePage from './pages/WelcomePage/WelcomePage';
 import ReportSelectPage from './pages/ReportSelectPage/ReportSelectPage';
-import FilteredReportPage from './pages/FilteredReportPage/FilteredReportPage';
-import DailyReportPage from './pages/DailyReportPage/DailyReportPage';
-import Transactions from './pages/TransactionsPage/Transactions';
+import FilteredReportPage from './pages/AtlanticFilteredReportPage/AtlanticFilteredReportPage';
+import AtlanticDailyReportPage from './pages/AtlanticDailyReportPage/AtlanticDailyReportPage';
+import AutomatedFilteredReportPage from './pages/AutomatedFilteredReportPage/AutomatedFilteredReportPage';
 
 function App() {
   return (
@@ -16,8 +16,8 @@ function App() {
           <Route path='/welcome' element={<WelcomePage/>}/>
           <Route path='/reportSelect/:garageName' element={<ReportSelectPage/>}/>  
           <Route path='/reportSelect/:garageName/filtered' element={<FilteredReportPage/>}/>  
-          <Route path='/reportSelect/:garageName/daily' element={<DailyReportPage/>}/>  
-          {/* <Route path='/reportSelect/:garageName/partial' element={<Transactions/>}/> */}
+          <Route path='/reportSelect/:garageName/daily' element={<AtlanticDailyReportPage/>}/>  
+          {/* <Route path='/reportSelect/:garageName/partial' element={<AutomatedFilteredReportPage/>}/> */}
         </Routes>
       </BrowserRouter>
     </div>

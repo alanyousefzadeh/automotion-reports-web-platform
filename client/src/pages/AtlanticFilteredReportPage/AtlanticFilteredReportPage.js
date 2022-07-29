@@ -1,15 +1,17 @@
-import React, { useState, useEffect} from 'react';
-import axios from 'axios';
-import { useParams, Link } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
-import AtlanticTable from '../../components/AtlanticTable/AtlanticTable';
-import ReportHeader from '../../components/ReportHeader/ReportHeader';
-import html2canvas from 'html2canvas';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./AtlanticFilteredReportPage.scss";
+import { useParams, Link} from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import AtlanticTable from "../../components/AtlanticTable/AtlanticTable";
+import DatePicker from "../../components/DatePicker/DatePicker";
+import ReportHeader from "../../components/ReportHeader/ReportHeader";
+import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import Logout from '../../components/Logout/Logout';
+import AutomatedFilteredReportPage from "../AutomatedFilteredReportPage/AutomatedFilteredReportPage";
+import Logout from '../../components/Logout/Logout'
 
-
-const DailyReportPage = () => {
+function FilteredReportPage() {
   const sortObjectByKeys = (o) => {
     return Object.keys(o)
       .sort()
@@ -21,14 +23,11 @@ const DailyReportPage = () => {
   //set the state variables
   const [atlanticAllData, setatlanticAllData] = useState([]);
   const [failedToLoad, setFailedToLoad] = useState(false);
-  const [garage, setGarage] = useState(params.garageName);
-  const [inDate, setInDate] = useState(
-    Math.floor(new Date().setHours(3, 0, 0, 0) - 24 * 60 * 60 * 1000)
-  );
-  const [outDate, setOutDate] = useState(
-    Math.floor(new Date().setHours(3, 0, 0, 0))
-  );
   const [err, setErr] = useState(null)
+  const [garage, setGarage] = useState(params.garageName);
+  const [inDate, setInDate] = useState(null);
+  const [outDate, setOutDate] = useState(null);
+
   ////////////////////////////////////////
   let atlanticTable = {
     "Default Rate - 1/2hr": {
@@ -39,7 +38,7 @@ const DailyReportPage = () => {
       tally: 0,
       totalPaid: 0,
     },
-    "Early": {
+    'Early': {
       tally: 0,
       totalPaid: 0,
     },
@@ -64,14 +63,8 @@ const DailyReportPage = () => {
     totalPaid: 0,
   };
 
-  let start = 0;
-  let inDateTimeStamp = new Date(`${inDate} 03:00:00`).getTime();
   //fill the tables with the closed API data
   atlanticAllData.forEach((payment) => {
-    let paymentTimestamp = new Date(payment.from_date).getTime();
-    if (paymentTimestamp < inDateTimeStamp) {
-      start += 1;
-    }
     if (
       payment.total_amount === payment.total_value &&
       payment.total_amount === 3
@@ -165,6 +158,8 @@ const DailyReportPage = () => {
     }
   });
 
+  console.log(atlanticMiscTable);
+  /////
   const genPDF = () => {
     let file = html2canvas(document.getElementById("pdf-report")).then(
       function (canvas) {
@@ -183,87 +178,105 @@ const DailyReportPage = () => {
   };
 
   const email = async () => {
+    const token = sessionStorage.getItem("token");
     let filepath = await genPDF();
-    axios.post("http://localhost:8080/emailGenerator", {
-      file: filepath,
-    });
+    axios.post(
+      "http://localhost:8080/emailGenerator",
+      {
+        file: filepath,
+      },
+      {
+        headers: {
+          authorization: "Bearer " + token,
+        },
+      }
+    );
+  };
+
+  const generateReport = () => {
+    const token = sessionStorage.getItem('token');
+    if (garage === "Atlantic Terrace") {
+      if (inDate === null) {
+        //default report (partial report)
+        axios
+          .get("http://localhost:8080/garagedata/atlanticClosed", {
+            params: {
+              inDate: new Date().setHours(3, 0, 0, 0),
+              outDate: new Date().getTime(),
+            },
+            headers: {
+              authorization: 'Bearer ' + token
+          }
+          })
+          .then((res) => {
+            setatlanticAllData(res.data);
+          })
+          .catch((error) => {
+            setFailedToLoad(true);
+            setErr(error.response.data)
+          });
+      } else {
+        //filtered report
+        axios
+          .get("http://localhost:8080/garagedata/atlanticClosed", {
+            params: {
+              inDate: new Date(`${inDate} 03:00:00`).getTime(),
+              outDate: new Date(`${outDate} 03:00:00`).getTime(),
+            },
+            headers: {
+              authorization: 'Bearer ' + token
+          }
+          })
+          .then((res) => {
+            setatlanticAllData(res.data);
+          })
+          .catch((error) => {
+            setFailedToLoad(true);
+            setErr(error.response.data)
+          });
+      }
+    }
   };
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
-
-    if (garage === "Atlantic Terrace") {
-      async function fetchAtlanticData() {
-        try {
-          const res = await axios.get(
-            "http://localhost:8080/garagedata/atlanticClosed",
-            {
-              params: {
-                inDate: inDate,
-                outDate: outDate,
-              },
-              headers: {
-                authorization: "Bearer " + token,
-              },
-            }
-          );
-          setatlanticAllData(res.data);
-        } catch (err) {
-          setFailedToLoad(true);
-          setErr(err.response.data);
-        }
-      }
-      fetchAtlanticData();
-    } else {
-      axios
-        .get("http://localhost:8080/garagedata")
-        .then((res) => {
-          console.log(res.data);
-          setatlanticAllData(res.data);
-        })
-        .catch((err) => {
-          setFailedToLoad(true);
-          console.log(err);
-        });
-    }
+    generateReport();
   }, []);
 
   return (
-    <div className="report">
+    <div>
       <Logout/>
-      {failedToLoad ? (
-        <p>error: {err}<Link to='/login'> Login</Link></p>
+      {garage !== "Atlantic Terrace" ? (
+        <AutomatedFilteredReportPage />
       ) : (
-        <div id="pdf-report">
-          
-          <ReportHeader
-            start={start}
-            closed={atlanticAllData.length}
-            startDate={new Date(inDate).toLocaleString("en-US", {
-              timeZone: "America/New_York",
-            })}
-            endDate={new Date(outDate).toLocaleString("en-US", {
-              timeZone: "America/New_York",
-            })}
-          />
-          <Button onClick={genPDF} className="button">
-            Download PDF
-          </Button>
-          <Button onClick={email} className="button">
-            Send as Email
-          </Button>
-          <AtlanticTable
-            atlanticTable={atlanticTable}
-            atlanticDiscountTable={sortObjectByKeys(atlanticDiscountTable)}
-            atlanticMiscTable={atlanticMiscTable}
-          />
+        <div className="report">
+          {failedToLoad ? (
+            <p>error: {err} <Link to='/login'>Login</Link></p>
+          ) : (
+            <div id="pdf-report">
+              <section className="datepicker m-2">
+                <DatePicker label={"In-Date - 3AM"} setDate={setInDate} />
+                <DatePicker label={"Out-Date - 3AM"} setDate={setOutDate} />
+              </section>
+              <Button onClick={generateReport} className="button">
+                Generate Report
+              </Button>
+              <Button onClick={genPDF} className="button">
+                Download PDF
+              </Button>
+              <Button onClick={email} className="button">
+                Send as Email
+              </Button>
+              <AtlanticTable
+                atlanticTable={atlanticTable}
+                atlanticDiscountTable={sortObjectByKeys(atlanticDiscountTable)}
+                atlanticMiscTable={atlanticMiscTable}
+              />
+            </div>
+          )}
         </div>
       )}
     </div>
   );
-};
+}
 
-// let html = ReactDOM.render(<DailyReportPage/>, document.getElementById('root'))
-// console.log(html);
-
-export default DailyReportPage; 
+export default FilteredReportPage;

@@ -41,7 +41,7 @@
 //     ,[LastRetrievalDateTime]
 //     ,[PayType]
    
-// FROM [dbo].[Transactions]`,
+// FROM [dbo].[AutomatedFilteredReportPage]`,
 //     (err, rowCount) => {
 //       if (err) {
 //         console.error(err.message);
