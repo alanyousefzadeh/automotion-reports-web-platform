@@ -8,6 +8,8 @@ import html2canvas from 'html2canvas';
 import jsPDF from "jspdf";
 import Logout from '../../components/Logout/Logout';
 import AutomatedDailyReportPage from '../../pages/AutomatedDailyReportPage/AutomatedDailyReportPage';
+import { automatedGarageAPI, formatDate, padTo2Digits } from './helpers';
+
 
 const AtlanticDailyReportPage = () => {
   const sortObjectByKeys = (o) => {
@@ -30,6 +32,16 @@ const AtlanticDailyReportPage = () => {
   );
   const [err, setErr] = useState(null)
   ////////////////////////////////////////
+  const [response, setResponse] = useState(null);
+  const [automatedFailedtoLoad, automatedSetFailedtoLoad] = useState(false);
+  const [automatedErr, automatedSetErr] = useState(null);
+  // const [rateData, setRateData] = useState(null);
+  const [total, setTotal] = useState(0);
+
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1)
+  const formattedDate = formatDate(yesterday)
+  /////////////////////
   let atlanticTable = {
     "Default Rate - 1/2hr": {
       tally: 0,
@@ -214,6 +226,8 @@ const AtlanticDailyReportPage = () => {
         }
       }
       fetchAtlanticData();
+    }else{
+      automatedGarageAPI(garage, automatedSetFailedtoLoad, automatedSetErr, setResponse, setTotal, formattedDate);
     } 
   }, []);
 
@@ -221,7 +235,13 @@ const AtlanticDailyReportPage = () => {
 
     <div>
       {garage !== 'Atlantic Terrace'? 
-      <AutomatedDailyReportPage/>:
+      <AutomatedDailyReportPage
+        response={response}
+        automatedFailedtoLoad={automatedFailedtoLoad}
+        automatedErr={automatedErr}
+        total={total}
+        formattedDate={formattedDate}
+      />:
       <div className="report">
         {failedToLoad ? (
           <p>error: {err}<Link to='/login'> Login</Link></p>
