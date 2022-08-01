@@ -10,10 +10,10 @@ const reports = [
           title: "Daily Report",
 
         },
-        {
-          id: 2, 
-          title: "Partial Report",
-        },
+        // {
+        //   id: 2, 
+        //   title: "Partial Report",
+        // },
         {
           id: 3, 
           title: "Filtered Report",
