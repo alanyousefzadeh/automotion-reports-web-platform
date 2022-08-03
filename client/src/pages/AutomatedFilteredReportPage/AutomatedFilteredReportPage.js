@@ -138,6 +138,6 @@ function AutomatedFilteredReportPage(){
     
     )
 }
-const html = ReactDOMServer.renderToStaticMarkup(<AutomatedFilteredReportPage/>);
-console.log(html.toString());
+// const html = ReactDOMServer.renderToStaticMarkup(<AutomatedFilteredReportPage/>);
+// console.log(html.toString());
 export default AutomatedFilteredReportPage
