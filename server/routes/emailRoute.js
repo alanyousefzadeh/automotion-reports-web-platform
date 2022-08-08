@@ -5,6 +5,6 @@ const authenticate = require('../middleware/authenticate');
 
 router
     .route('/')
-    .post(authenticate, emailController.sendEmail);
+    .post(emailController.sendEmail);
 
 module.exports = router;  

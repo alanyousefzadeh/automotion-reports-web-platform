@@ -23,7 +23,7 @@ app.use('/login', loginRoute);
 app.use('/garagedata', garageRoute);
 app.use('/emailGenerator', emailRoute);
 app.use('/currentUser', currentUserRoute);
-app.use('retrievalTime', retrievalTimeRoute);
+app.use('/retrievalTime', retrievalTimeRoute);
 //port listener
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

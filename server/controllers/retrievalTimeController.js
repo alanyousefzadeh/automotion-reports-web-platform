@@ -14,7 +14,8 @@ let db = {
 };
 
 exports.time = async (req, res) => {
-  const currentGarage = req.query.garage;
+    console.log("test")
+  const currentGarage = await req.query.garage;
   switch (currentGarage) {
     case "Baxter":
       db.connection.options.database = "BaxterSync";
@@ -26,7 +27,7 @@ exports.time = async (req, res) => {
       db.connection.options.database = "207VanvorstSync";
       break;
     default:
-      console.log("please provode a db name");
+      console.log("please provide a db name");
   }
   const knex = await require("knex")(db);
   const inDate = req.query.inDate
@@ -34,7 +35,7 @@ exports.time = async (req, res) => {
   const type = req.query.type
   const num = req.query.num
 
-  const data = knex.raw(
+  const data = await knex.raw(
     `SELECT 
     [Type]
    ,[InDateTime]
@@ -44,7 +45,9 @@ exports.time = async (req, res) => {
    ,[STOPAKey2]
    ,[TicketNum]
    ,[Oversize]
-    FROM [dbo].[Transactions]
-    WHERE indatetime between ${inDate} 00:00:00 and ${outDate} 00:00:00 and type = ${type} and stopakey2 = ${num}`
+   ,DATEDIFF(minute, LastRetrievalDateTime, OutDateTime) AS waitTime
+    FROM [Transactions]
+    WHERE indatetime between '${inDate} 00:00:00' and '${outDate} 23:59:59' and type = '${type}' and stopakey2 = ${num}`
   );
+  res.send(data)
 }; 

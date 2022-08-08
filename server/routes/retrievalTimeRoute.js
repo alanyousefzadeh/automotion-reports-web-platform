@@ -3,6 +3,6 @@ const retrievalTimeController = require('../controllers/retrievalTimeController'
 
 router
     .route('/')
-    .post(retrievalTimeController.time);
+    .get(retrievalTimeController.time);
 
 module.exports = router;
