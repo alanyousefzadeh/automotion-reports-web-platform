@@ -12,6 +12,11 @@ import Navigation from '../../components/Navigation/Navigation'
 
 const data = [
   {
+    id: 4,
+    title: "Atlantic Terrace",
+    image: atlanticTerrace,
+  },
+  {
     id: 1,
     title: "Baxter",
     image: baxter,
@@ -25,11 +30,6 @@ const data = [
     id: 3,
     title: "Waverly",
     image: waverly,
-  },
-  {
-    id: 4,
-    title: "Atlantic Terrace",
-    image: atlanticTerrace,
   },
 ];
 

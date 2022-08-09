@@ -10,6 +10,8 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import AutomatedFilteredReportPage from "../AutomatedFilteredReportPage/AutomatedFilteredReportPage";
 import Logout from '../../components/Logout/Logout'
+import Navigation from "../../components/Navigation/Navigation";
+import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
 
 function FilteredReportPage() {
   const sortObjectByKeys = (o) => {
@@ -27,6 +29,7 @@ function FilteredReportPage() {
   const [garage, setGarage] = useState(params.garageName);
   const [inDate, setInDate] = useState(null);
   const [outDate, setOutDate] = useState(null);
+  const [isLoading, setIsLoading] = useState(true)
 
   ////////////////////////////////////////
   let atlanticTable = {
@@ -210,6 +213,7 @@ function FilteredReportPage() {
           })
           .then((res) => {
             setatlanticAllData(res.data);
+            setIsLoading(false)
           })
           .catch((error) => {
             setFailedToLoad(true);
@@ -217,6 +221,7 @@ function FilteredReportPage() {
           });
       } else {
         //filtered report
+        setIsLoading(true)
         axios
           .get("http://localhost:8080/garagedata/atlanticClosed", {
             params: {
@@ -229,6 +234,7 @@ function FilteredReportPage() {
           })
           .then((res) => {
             setatlanticAllData(res.data);
+            setIsLoading(false)
           })
           .catch((error) => {
             setFailedToLoad(true);
@@ -244,7 +250,9 @@ function FilteredReportPage() {
 
   return (
     <div>
-      <Logout/>
+      {/* <Logout/> */}
+      <Navigation/>
+      <p className="atlantic__filtered">{garage} Garage Filtered Report</p>
       {garage !== "Atlantic Terrace" ? (
         <AutomatedFilteredReportPage />
       ) : (
@@ -266,11 +274,12 @@ function FilteredReportPage() {
               <Button onClick={email} className="button">
                 Send as Email
               </Button>
+              {isLoading ? <LoadingSpinner/> :
               <AtlanticTable
                 atlanticTable={atlanticTable}
                 atlanticDiscountTable={sortObjectByKeys(atlanticDiscountTable)}
                 atlanticMiscTable={atlanticMiscTable}
-              />
+              />}
             </div>
           )}
         </div>

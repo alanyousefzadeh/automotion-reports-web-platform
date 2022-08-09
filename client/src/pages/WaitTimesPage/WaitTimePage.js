@@ -45,8 +45,9 @@ function WaitTimePage() {
   }
   
   return (
+    <>{garageName === 'Atlantic Terrace' ? <p className="atlantic__wait">Wait Times Report Not Yet available for the Atlantic Terrace Garage</p> :
     <>
-      <DatePicker label={"In-Date 12:00AM"} setDate={setIndate} />
+      (<DatePicker label={"In-Date 12:00AM"} setDate={setIndate} />
       <DatePicker label={"Out-Date 11:59PM"} setDate={setOutDate} />
       <TypePicker label={"Type"} type={type} setType={setType} />
       <TicketSelect label={"Ticket Number"} num={num} setNum={setNum} />
@@ -78,7 +79,7 @@ function WaitTimePage() {
               );
             })}
         </tbody>
-      </Table>
+      </Table>)</>}
     </>
   );
 }
