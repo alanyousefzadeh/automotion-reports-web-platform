@@ -9,6 +9,8 @@ import jsPDF from "jspdf";
 import AutomatedDailyReportPage from "../../pages/AutomatedDailyReportPage/AutomatedDailyReportPage";
 import { automatedGarageAPI, formatDate, padTo2Digits } from "./helpers";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
+import './AtlanticDailyReportPage.scss';
+import Navigation from "../../components/Navigation/Navigation";
 
 const AtlanticDailyReportPage = () => {
   const sortObjectByKeys = (o) => {
@@ -206,6 +208,7 @@ const AtlanticDailyReportPage = () => {
 
     if (garage === "Atlantic Terrace") {
       async function fetchAtlanticData() {
+        setIsLoading(true)
         try {
           const res = await axios.get(
             "http://localhost:8080/garagedata/atlanticClosed",
@@ -267,6 +270,8 @@ const AtlanticDailyReportPage = () => {
                 <LoadingSpinner />
               ) : (
                 <>
+                <Navigation/>
+                <p className="daily__report">{garage} Daily Report Page</p>
                   <ReportHeader
                     start={start}
                     closed={atlanticAllData.length}

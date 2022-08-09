@@ -33,7 +33,7 @@ function AtlanticTable(props) {
                     <th>Revenue by Rate</th>
                     <th>Tickets</th>
                     {/* <th>Total</th> */}
-                    <th>Total w/ Tax</th>
+                    <th>w/ Tax</th>
                 </tr>
             </thead>
             <tbody>
