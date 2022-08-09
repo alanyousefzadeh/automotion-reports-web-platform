@@ -2,6 +2,8 @@ import React from 'react';
 import ReportCard from '../../components/ReportCard/ReportCard';
 import { useParams } from 'react-router-dom';
 import Logout from '../../components/Logout/Logout';
+import Navigation from '../../components/Navigation/Navigation';
+import './ReportSelectPage.scss';
 
 //make API call to get reports for each garage based on the garageName from URL, use sample data for now
 const reports = [
@@ -25,8 +27,8 @@ function ReportSelectPage(){
   let { garageName } = useParams();
   return (
     <>
-    <h1>{garageName}</h1>
-    <Logout/>
+    <Navigation/>
+    <h4 className='garage__title'>{garageName} Garage Reports</h4>
       <div className="cards d-flex justify-content-center"> 
           {reports.map(report =>(
               <ReportCard key={report.id} id={report.id} name={garageName} title={report.title}/>    

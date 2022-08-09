@@ -1,15 +1,14 @@
-import React, { useState, useEffect} from 'react';
-import axios from 'axios';
-import { useParams, Link } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
-import AtlanticTable from '../../components/AtlanticTable/AtlanticTable';
-import ReportHeader from '../../components/ReportHeader/ReportHeader';
-import html2canvas from 'html2canvas';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useParams, Link } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import AtlanticTable from "../../components/AtlanticTable/AtlanticTable";
+import ReportHeader from "../../components/ReportHeader/ReportHeader";
+import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import Logout from '../../components/Logout/Logout';
-import AutomatedDailyReportPage from '../../pages/AutomatedDailyReportPage/AutomatedDailyReportPage';
-import { automatedGarageAPI, formatDate, padTo2Digits } from './helpers';
-
+import AutomatedDailyReportPage from "../../pages/AutomatedDailyReportPage/AutomatedDailyReportPage";
+import { automatedGarageAPI, formatDate, padTo2Digits } from "./helpers";
+import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
 
 const AtlanticDailyReportPage = () => {
   const sortObjectByKeys = (o) => {
@@ -30,17 +29,18 @@ const AtlanticDailyReportPage = () => {
   const [outDate, setOutDate] = useState(
     Math.floor(new Date().setHours(3, 0, 0, 0))
   );
-  const [err, setErr] = useState(null)
+  const [err, setErr] = useState(null);
   ////////////////////////////////////////
   const [response, setResponse] = useState(null);
   const [automatedFailedtoLoad, automatedSetFailedtoLoad] = useState(false);
   const [automatedErr, automatedSetErr] = useState(null);
   // const [rateData, setRateData] = useState(null);
   const [total, setTotal] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1)
-  const formattedDate = formatDate(yesterday)
+  yesterday.setDate(yesterday.getDate() - 1);
+  const formattedDate = formatDate(yesterday);
   /////////////////////
   let atlanticTable = {
     "Default Rate - 1/2hr": {
@@ -51,7 +51,7 @@ const AtlanticDailyReportPage = () => {
       tally: 0,
       totalPaid: 0,
     },
-    "Early": {
+    Early: {
       tally: 0,
       totalPaid: 0,
     },
@@ -220,59 +220,82 @@ const AtlanticDailyReportPage = () => {
             }
           );
           setatlanticAllData(res.data);
+          setIsLoading(false);
         } catch (err) {
           setFailedToLoad(true);
           setErr(err.response.data);
         }
       }
       fetchAtlanticData();
-    }else{
-      automatedGarageAPI(garage, automatedSetFailedtoLoad, automatedSetErr, setResponse, setTotal, formattedDate);
-    } 
+    } else {
+      automatedGarageAPI(
+        garage,
+        automatedSetFailedtoLoad,
+        automatedSetErr,
+        setResponse,
+        setTotal,
+        formattedDate,
+        setIsLoading
+      );
+    }
   }, []);
 
   return (
-
     <div>
-      {garage !== 'Atlantic Terrace'? 
-      <AutomatedDailyReportPage
-        response={response}
-        automatedFailedtoLoad={automatedFailedtoLoad}
-        automatedErr={automatedErr}
-        total={total}
-        formattedDate={formattedDate}
-      />:
-      <div className="report">
-        {failedToLoad ? (
-          <p>error: {err}<Link to='/login'> Login</Link></p>
+      {garage !== "Atlantic Terrace" ? (
+        isLoading ? (
+          <LoadingSpinner />
         ) : (
-          <div id="pdf-report">
-            <Logout/>
-            <ReportHeader
-              start={start}
-              closed={atlanticAllData.length}
-              startDate={new Date(inDate).toLocaleString("en-US", {
-                timeZone: "America/New_York",
-              })}
-              endDate={new Date(outDate).toLocaleString("en-US", {
-                timeZone: "America/New_York",
-              })}
-            />
-            <Button onClick={genPDF} className="button">
-              Download PDF
-            </Button>
-            <Button onClick={email} className="button">
-              Send as Email
-            </Button>
-            <AtlanticTable
-              atlanticTable={atlanticTable}
-              atlanticDiscountTable={sortObjectByKeys(atlanticDiscountTable)}
-              atlanticMiscTable={atlanticMiscTable}
-            />
-          </div>
-        )}
-      </div>
-      }
+          <AutomatedDailyReportPage
+            response={response}
+            automatedFailedtoLoad={automatedFailedtoLoad}
+            automatedErr={automatedErr}
+            total={total}
+            formattedDate={formattedDate}
+          />
+        )
+      ) : (
+        <div className="report">
+          {failedToLoad ? (
+            <p>
+              error: {err}
+              <Link to="/login"> Login</Link>
+            </p>
+          ) : (
+            <div id="pdf-report">
+              {isLoading ? (
+                <LoadingSpinner />
+              ) : (
+                <>
+                  <ReportHeader
+                    start={start}
+                    closed={atlanticAllData.length}
+                    startDate={new Date(inDate).toLocaleString("en-US", {
+                      timeZone: "America/New_York",
+                    })}
+                    endDate={new Date(outDate).toLocaleString("en-US", {
+                      timeZone: "America/New_York",
+                    })}
+                  />
+                  <Button onClick={genPDF} className="button">
+                    Download PDF
+                  </Button>
+                  <Button onClick={email} className="button">
+                    Send as Email
+                  </Button>
+                  <AtlanticTable
+                    atlanticTable={atlanticTable}
+                    atlanticDiscountTable={sortObjectByKeys(
+                      atlanticDiscountTable
+                    )}
+                    atlanticMiscTable={atlanticMiscTable}
+                  />
+                </>
+              )}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
@@ -280,4 +303,4 @@ const AtlanticDailyReportPage = () => {
 // let html = ReactDOM.render(<AtlanticDailyReportPage/>, document.getElementById('root'))
 // console.log(html);
 
-export default AtlanticDailyReportPage; 
+export default AtlanticDailyReportPage;

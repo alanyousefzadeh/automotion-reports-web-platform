@@ -3,8 +3,11 @@ import TransactionTable from "../../components/TransactionTable/TransactionTable
 import { useParams, Link } from "react-router-dom";
 import RateTable from "../../components/RateTable/RateTable";
 import OverParkedTable from "../../components/OverParked/OverParkedTable";
+import Navigation from '../../components/Navigation/Navigation'
+import './AutomatedDailyReport.scss'
 
 function AutomatedDailyReportPage(props) {
+  
   const {
     response,
     automatedFailedToLoad,
@@ -65,7 +68,8 @@ function AutomatedDailyReportPage(props) {
         <li>ending ticket: {endTicket}</li>
         </ul> */}
       {/* <Button onClick={getData}>Generate Table </Button> */}
-      <p>Daily report for: yesterday {formattedDate} 12:00AM - 11:59 PM</p>
+      <Navigation/>
+      <p className="daily-report__header">{garageName} Daily Report for: Yesterday {formattedDate}, 12:00AM - 11:59PM</p>
       <TransactionTable
         monthlyInTable={monthlyInTable}
         monthlyOutTable={monthlyOutTable}

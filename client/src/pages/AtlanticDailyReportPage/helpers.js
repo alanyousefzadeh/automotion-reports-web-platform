@@ -1,5 +1,5 @@
 import axios from 'axios';
-const getData = async (garageName, automatedSetFailedtoLoad, automatedSetErr, setResponse, setTotal, formattedDate) => {
+const getData = async (garageName, automatedSetFailedtoLoad, automatedSetErr, setResponse, setTotal, formattedDate, setIsLoading) => {
   
 
   console.log(formattedDate);
@@ -24,6 +24,7 @@ const getData = async (garageName, automatedSetFailedtoLoad, automatedSetErr, se
     data = promise.data;
     console.log(data);
     setResponse(data);
+    setIsLoading(false)
     if (data.total[0].total != null) {
       setTotal(data.total[0].total);
     }

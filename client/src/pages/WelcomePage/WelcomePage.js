@@ -1,43 +1,44 @@
-import { Link } from 'react-router-dom';
-import React, { useState, useEffect} from 'react';
-import axios from 'axios';
-import GarageCard from '../../components/GarageCard/GarageCard';
-import baxter from '../../assets/baxter.png';
-import vanvorst from '../../assets/vanvorst.png';
-import waverly from '../../assets/waverly.png';
-import atlanticTerrace from '../../assets/atlanticTerrace.png';
-import Logout from '../../components/Logout/Logout';
+import { Link } from "react-router-dom";
+import './WelcomePage.scss'
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import GarageCard from "../../components/GarageCard/GarageCard";
+import baxter from "../../assets/baxter.png";
+import vanvorst from "../../assets/vanvorst.png";
+import waverly from "../../assets/waverly.png";
+import atlanticTerrace from "../../assets/atlanticTerrace.png";
+import Logout from "../../components/Logout/Logout";
+import Navigation from '../../components/Navigation/Navigation'
 
 const data = [
-    {
-      id: 1,
-      title: "Baxter",
-      image: baxter
-    },
-    {
-      id: 2,
-      title: "VanVorst",
-      image: vanvorst
-    },
-    {
-      id: 3,
-      title: "Waverly",
-      image: waverly
-    },
-    {
-      id: 4,
-      title: "Atlantic Terrace",
-      image: atlanticTerrace
-    },
-  ]
+  {
+    id: 1,
+    title: "Baxter",
+    image: baxter,
+  },
+  {
+    id: 2,
+    title: "VanVorst",
+    image: vanvorst,
+  },
+  {
+    id: 3,
+    title: "Waverly",
+    image: waverly,
+  },
+  {
+    id: 4,
+    title: "Atlantic Terrace",
+    image: atlanticTerrace,
+  },
+];
 
 function WelcomePage() {
   // const [garages, setGarages] = useState([]);
-  const [currUser, setCurrUser] = useState(null)
-  const [failedAuth, setFailedAuth] = useState(false)
+  const [currUser, setCurrUser] = useState(null);
+  const [failedAuth, setFailedAuth] = useState(false);
 
   useEffect(() => {
-
     const token = sessionStorage.getItem("token");
     if (!token) {
       setFailedAuth(true);
@@ -56,7 +57,7 @@ function WelcomePage() {
       })
       .catch((e) => {
         // setFailedAuth(true);
-        console.log(e)
+        console.log(e);
       });
   }, []);
 
@@ -69,11 +70,13 @@ function WelcomePage() {
   }
 
   return (
+    <>
+    <Navigation/>
     <div className="cards d-flex justify-content-center">
-       <nav>
-            <h1>welcome, {currUser}</h1>
-            <Logout/>
-        </nav>
+      {/* <nav>
+        <h1>welcome, {currUser}</h1>
+        <Logout />
+      </nav> */}
       {data.map((garage) => (
         <GarageCard
           key={garage.id}
@@ -83,6 +86,7 @@ function WelcomePage() {
         />
       ))}
     </div>
+    </>
   );
 }
 

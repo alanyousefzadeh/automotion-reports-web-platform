@@ -1,6 +1,7 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from "react-router-dom";
+import './ReportCard.scss'
 
 function ReportCard(props) {
 
@@ -12,16 +13,18 @@ function ReportCard(props) {
     }
 
     return (
+        <button className="report-card__button" onClick={clickHandler}>
         <Card className="m-3" style={{ width: '15rem'}}>
             <Card.Body>
                 <Card.Title>{title}</Card.Title>
-                <Card.Text>
+                {/* <Card.Text>
                 Some quick example text to build on the card title and make up the bulk of
                 the card's content.
-                </Card.Text>
-                <Button variant="primary" onClick={clickHandler}>See Report</Button>
+                </Card.Text> */}
+                {/* <Button variant="primary" onClick={clickHandler}>View Report</Button> */}
             </Card.Body>
         </Card>
+        </button>
     );
 }
 

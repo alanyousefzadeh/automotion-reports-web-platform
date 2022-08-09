@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Form from 'react-bootstrap/Form';
 import Button from "react-bootstrap/esm/Button";
 import axios from "axios";
+import loginLogo from '../../assets/loginLogo.png'
+import './Login.scss'
 
 function Login() {
 
@@ -65,6 +67,9 @@ function Login() {
     }
 
     return (
+
+        <div className="login">
+        <img className="logo" src={loginLogo}/>
         <Form className='my-5 mx-auto' style={{width: 300}}  noValidate onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email Address</Form.Label>
@@ -85,6 +90,7 @@ function Login() {
                 Log In
             </Button>
       </Form>
+      </div>
         
     );
 }
