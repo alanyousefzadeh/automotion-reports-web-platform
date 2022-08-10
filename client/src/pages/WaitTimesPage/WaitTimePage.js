@@ -74,13 +74,13 @@ function WaitTimePage() {
             <LoadingSpinner />
           ) : (
             <div className="wait-table">
-            <Table striped bordered className="table-sm">
+            <Table striped bordered className="table-sm table-font">
               <thead>
                 <tr className="table-warning">
                   <th>In</th>
                   <th>Out</th>
                   <th>Retrieval</th>
-                  <th>Wait Time</th>
+                  <th>Wait mins.</th>
                   <th>Sz</th>
                 </tr>
               </thead>

@@ -1,8 +1,12 @@
 .wait-time{
-    //margin: auto;
-    // max-width: 768px;
-    // max-width: 100vw;
-    width: 100%;
+    
+    max-width: 768px;
+    margin: auto;
+    
+}
+
+.table-font{
+    font-size: 14px;
 }
 
 .selectors{
@@ -26,24 +30,24 @@
 .orange{
     background: rgb(233, 159, 21, 0.8) !important;
 }
-// .atlantic__wait{
-//     margin: 5rem;
-    
-// }
+
 .wait-times-pickers{
     margin-left: 0.5rem;
     margin-bottom: 1rem;
     margin-right: 0.5rem;
+    max-width: 768px;
+    margin: auto;
 }
 .heading{
     margin: 0;
     padding: 0;
-    margin-left: 0.5rem;
+    display: flex;
+    justify-content: center;
 }
 
 .wait-table{
     max-width: 768px;
     min-width: 320px;
     margin: auto;
-
 }
+

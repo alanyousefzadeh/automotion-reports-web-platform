@@ -199,7 +199,7 @@ function FilteredReportPage() {
   const generateReport = () => {
     const token = sessionStorage.getItem('token');
     if (garage === "Atlantic Terrace") {
-      if (inDate === null) {
+      if (inDate === null || outDate === null) {
         //default report (partial report)
         axios
           .get("http://localhost:8080/garagedata/atlanticClosed", {
