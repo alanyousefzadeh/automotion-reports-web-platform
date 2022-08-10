@@ -17,6 +17,12 @@ a {
     color: black !important;
 }
 
+nav{
+    min-width: 320px;
+    max-width: 768px;
+    margin: auto;
+}
+
 .nav__button{
     background-color: #b9c6d3 ;
     border: none;

@@ -3,7 +3,7 @@ function OverParkedTable(props){
     const {overParkedData} = props
     return (
 
-        <Table striped bordered className='report' size='sm'>
+        <Table striped bordered className='report table-sm'>
         <thead>
             <tr className='table-warning'>
                 <th>Type</th>

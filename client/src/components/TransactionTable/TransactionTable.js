@@ -1,5 +1,6 @@
 // import './ReportHeader.scss';
 import Table from 'react-bootstrap/Table';
+import './TransactionTable.scss'
 function TransactionTable(props) {
     const {
         monthlyInTable,
@@ -30,15 +31,16 @@ function TransactionTable(props) {
 
     return(
             <>
-            <Table striped bordered className='report' size='sm'>
+            <p>  T = Transient, M = Monthly </p>
+            <Table striped bordered className='report table-sm'>
             <thead>
                 <tr className='table-warning'>
-                    <th>Hour</th>
-                    <th>Transient In</th>
-                    <th>Transient Out</th>
-                    <th>Monthly In</th>
-                    <th>Monthly Out</th>
-                    <th>Total</th>
+                    <th className='hours'>Hour</th>
+                    <th>T. In</th>
+                    <th>T. Out</th>
+                    <th>M. In</th>
+                    <th>M. Out</th>
+                    <th>Tot.</th>
                 </tr>
             </thead>
             <tbody>

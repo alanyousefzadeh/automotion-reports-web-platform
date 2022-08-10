@@ -8,6 +8,8 @@ import { useParams, Link } from "react-router-dom";
 import RateTable from '../../components/RateTable/RateTable';
 import OverParkedTable from "../../components/OverParked/OverParkedTable";
 import Logout from "../../components/Logout/Logout";
+import './AutomatedFiltered.scss'
+import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
 
 function AutomatedFilteredReportPage(){
     const [inDate, setInDate] = useState(null)
@@ -18,6 +20,7 @@ function AutomatedFilteredReportPage(){
     // const [rateData, setRateData] = useState(null);
 
     const [total, setTotal] = useState(0)
+    const [isLoading, setIsLoading] = useState(false)
     // const [startTicket, setStartTicket] = useState(null)
     // const [endTicket, setEndTicket] = useState(null)
     // const [ticketsIssued, setTicketsIssued] = useState(null)
@@ -38,8 +41,9 @@ function AutomatedFilteredReportPage(){
       if (inDate == null || outDate == null) {
         alert("in/out dates must be selected");
       }
-      if (inDate != null && outDate != null) {
+      if (inDate !== null && outDate !== null) {
         try {
+          setIsLoading(true)
           const promise = await axios.get(
             "http://localhost:8080/garagedata/transactions",
             {
@@ -56,6 +60,7 @@ function AutomatedFilteredReportPage(){
           data = promise.data;
           console.log(data);
           setResponse(data);
+          setIsLoading(false)
           if (data.total[0].total != null) {
             setTotal(data.total[0].total);
           }
@@ -109,10 +114,14 @@ function AutomatedFilteredReportPage(){
         <li>starting ticktet: {startTicket}</li>
         <li>ending ticket: {endTicket}</li>
         </ul> */}
-    
+        <div className="filtered-date-picker">
         <DatePicker label={'In-Date - 12:00AM'} setDate={setInDate}/>
         <DatePicker label={'Out-Date - 11:59PM'} setDate={setOutDate}/>
+        </div>
         <Button onClick={getData}>Generate Table </Button>
+        {isLoading ? <LoadingSpinner/>:
+    <>  
+    {response ?<>   
         <TransactionTable 
             monthlyInTable={monthlyInTable}
             monthlyOutTable={monthlyOutTable}
@@ -120,8 +129,8 @@ function AutomatedFilteredReportPage(){
             transientOutTable={transientOutTable}
             total={total}
         />
-        {response ? 
-        <>
+       
+        
          <RateTable
             // inDate={inDate}
             // outDate={outDate}
@@ -130,9 +139,8 @@ function AutomatedFilteredReportPage(){
          />
          <OverParkedTable
             overParkedData={response.overParked}
-         />
-         </>
-         : ''
+         /></>: ''}
+  </>
         }
         </div>
     

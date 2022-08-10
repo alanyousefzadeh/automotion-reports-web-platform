@@ -9,6 +9,7 @@ import TypePicker from "../../components/TypePicker/TypePicker";
 import TicketSelect from "../../components/TicketSelect/TicketSelect";
 import { Button } from "react-bootstrap";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
+import Navigation from "../../components/Navigation/Navigation";
 
 function WaitTimePage() {
   const [waitTimeData, setWaitTimeData] = useState(null);
@@ -22,7 +23,7 @@ function WaitTimePage() {
 
   async function fetchData() {
     let response = [];
-    if (inDate !== null || outDate !== null || num !== "") {
+    if (inDate !== null && outDate !== null && num !== "") {
       setIsLoading(true);
       response = await axios.get("http://localhost:8080/retrievalTime", {
         params: {
@@ -57,25 +58,33 @@ function WaitTimePage() {
           Wait Times Report Coming Soon for the Atlantic Terrace Garage
         </p>
       ) : (
-        <>
-          <DatePicker label={"In-Date 12:00AM"} setDate={setIndate} />
-          <DatePicker label={"Out-Date 11:59PM"} setDate={setOutDate} />
-          <TypePicker label={"Type"} type={type} setType={setType} />
-          <TicketSelect label={"Ticket Number"} num={num} setNum={setNum} />
-          <Button onClick={fetchData}>Generate Table</Button>
-          <Table striped bordered>
-            <thead>
-              <tr className="table-warning">
-                <th>In Date Time</th>
-                <th>Out Date Time</th>
-                <th>Out Retrieval Date Time</th>
-                <th>Waiting Time (Minutes)</th>
-                <th>Car Size</th>
-              </tr>
-            </thead>
-            {isLoading ? (
-              <LoadingSpinner />
-            ) : (
+        <div className="wait-time">
+          <Navigation />
+          <p className="heading">{garageName} Garage Wait Times Report</p>
+          <div className="wait-times-pickers">
+            <DatePicker label={"In-Date 12:00AM"} setDate={setIndate} />
+            <DatePicker label={"Out-Date 11:59PM"} setDate={setOutDate} />
+            <div className="selectors">
+              <TypePicker label={"Type"} type={type} setType={setType} />
+              <TicketSelect label={"Ticket Number"} num={num} setNum={setNum} />
+            </div>
+            <Button onClick={fetchData}>Generate Table</Button>
+          </div>
+          {isLoading ? (
+            <LoadingSpinner />
+          ) : (
+            <div className="wait-table">
+            <Table striped bordered className="table-sm">
+              <thead>
+                <tr className="table-warning">
+                  <th>In</th>
+                  <th>Out</th>
+                  <th>Retrieval</th>
+                  <th>Wait Time</th>
+                  <th>Sz</th>
+                </tr>
+              </thead>
+
               <tbody>
                 {waitTimeData &&
                   waitTimeData.map((data, index) => {
@@ -105,9 +114,10 @@ function WaitTimePage() {
                     );
                   })}
               </tbody>
-            )}
-          </Table>
-        </>
+            </Table>
+            </div>
+          )}
+        </div>
       )}
     </>
   );

@@ -27,13 +27,13 @@ function AtlanticTable(props) {
 
     return (
         <>
-        <Table striped bordered >
+        <Table striped bordered className='table-sm'>
             <thead>
                 <tr className='table-warning'>
                     <th>Revenue by Rate</th>
                     <th>Tickets</th>
                     {/* <th>Total</th> */}
-                    <th>w/ Tax</th>
+                    <th>Tot. w/ Tax</th>
                 </tr>
             </thead>
             <tbody>
