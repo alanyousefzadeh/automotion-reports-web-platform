@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import Table from "react-bootstrap/Table";
-
+import './ADH.scss'
 export default function AutomatedDailyHeader(props) {
     const {garageName} = useParams()
     let spaces;
@@ -14,15 +14,7 @@ export default function AutomatedDailyHeader(props) {
             break;
         case 'Waverly':
             spaces = 32
-
     }
-
-
-    // const spaces = {
-    //     Baxter: 67, 
-    //     VanVorst: 254, 
-    //     Waverly:32
-    // }
   const {
     currentMonthliesIn,
     openPrior,
@@ -32,7 +24,7 @@ export default function AutomatedDailyHeader(props) {
     closedTickets
   } = props;
   return (<>
-    <Table striped bordered className="table-sm">
+    <Table striped bordered className="table-sm header-mobile">
       <thead>
         <tr className="table-warning">
           <th>Ticket Start Num</th>
@@ -54,7 +46,7 @@ export default function AutomatedDailyHeader(props) {
         </tr>
       </tbody>
     </Table>
-    <Table striped bordered className="table-sm">
+    <Table striped bordered className="table-sm header-mobile">
     <thead>
       <tr className="table-warning">
         <th>Total Spaces</th>

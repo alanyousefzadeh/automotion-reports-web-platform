@@ -32,7 +32,7 @@ function TransactionTable(props) {
     return(
             <>
             <p>  T = Transient, M = Monthly </p>
-            <Table striped bordered className='report table-sm'>
+            <Table striped bordered className='table-sm'>
             <thead>
                 <tr className='table-warning'>
                     <th className='hours'>Hour</th>
