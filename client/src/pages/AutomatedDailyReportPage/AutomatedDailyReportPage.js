@@ -5,6 +5,7 @@ import RateTable from "../../components/RateTable/RateTable";
 import OverParkedTable from "../../components/OverParked/OverParkedTable";
 import Navigation from '../../components/Navigation/Navigation'
 import './AutomatedDailyReport.scss'
+import AutomatedDailyHeader from "../../components/AutomatedDailyHeader/AutomatedDailyHeader";
 
 function AutomatedDailyReportPage(props) {
   
@@ -70,6 +71,14 @@ function AutomatedDailyReportPage(props) {
       {/* <Button onClick={getData}>Generate Table </Button> */}
       <Navigation/>
       <p className="daily-report__header">{garageName} Daily Report for: Yesterday {formattedDate}, 12:00AM - 11:59PM</p>
+      <AutomatedDailyHeader
+        ticketStart={response.ticketStart.length > 0 ? response.ticketStart[0].TicketNum : ''}
+        ticketEnd={response.ticketEnd.length > 0 ? response.ticketEnd[0].TicketNum : ''}
+        currentMonthliesIn={response.currentMonthliesIn[0].monthliesIn}
+        openPrior={response.openPrior[0].openPrior}
+        openTicketsToday={response.openTicketsToday[0].openToday}
+        closedTickets={response.closedTickets[0].closedTickets}
+      />
       <TransactionTable
         monthlyInTable={monthlyInTable}
         monthlyOutTable={monthlyOutTable}

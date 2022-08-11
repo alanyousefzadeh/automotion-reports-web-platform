@@ -45,7 +45,13 @@ exports.transactions = async (req, res) => {
     allTickets: [],
     total: 0,
     rateTable: {},
-    overParked: []
+    overParked: [],
+    ticketStart: [],
+    ticketEnd: [],
+    openTicketsToday: [],
+    openPrior: [],
+    currentMonthliesIn:[],
+    closedTickets: []
   };
   //query for InDateTime type = M
   let query1 = await knex.raw(
@@ -85,7 +91,29 @@ exports.transactions = async (req, res) => {
   //query for over parked cars
   data.overParked = await knex.raw(helpers.overParkedQuery())
 
+  //query for starting ticket num
+   data.ticketStart = await knex.raw(helpers.ticketStartNum(inDate, outDate))
+  
+
+  //query for end ticket num
+  data.ticketEnd = await knex.raw(helpers.ticketEndNum(inDate, outDate))
+
+  //query for open tickets today
+  data.openTicketsToday = await knex.raw(helpers.openTicketsToday(inDate, outDate))
+
+  //query for open prior
+  data.openPrior = await knex.raw(helpers.openPrior(inDate))
+  
+  //query for current monthlies in
+  data.currentMonthliesIn = await knex.raw(helpers.currentMonthliesIn(inDate))
+
+  //query for closed tickets
+  data.closedTickets = await knex.raw(helpers.closedTickets(inDate, outDate))
+
+
+
   res.send(data);
+
 };
 
 exports.atlanticClosed = (req, res) => {
