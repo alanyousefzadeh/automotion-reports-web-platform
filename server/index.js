@@ -1,8 +1,8 @@
 require('dotenv').config();
 const express = require("express");
 const app = express();
-const cors = require("cors");
-const axios = require("axios");
+// const cors = require("cors");
+// const axios = require("axios");
 
 const loginRoute = require('./routes/loginRoute');
 const garageRoute = require('./routes/garageRoute');
