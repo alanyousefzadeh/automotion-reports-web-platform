@@ -1,14 +1,25 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import homeLogo from "../../assets/loginLogo.png";
 import "./Navigation.scss";
+import {useState} from 'react'
 import { useNavigate } from "react-router-dom";
+import { UserAuth } from '../Context/AuthContext';
+import {AuthContextProvider} from '../Context/AuthContext'
 
 export default function Navigation() {
+  const [error, setError] = useState("")
+  const {user, logout} = UserAuth()
   const nav = useNavigate();
-  const handleLogout = () => {
-    sessionStorage.removeItem("token");
-    nav("/login");
+ 
+  const handleLogout = async () => {
+    try {
+      console.log(user, 'still logged in ')
+      await logout();
+      nav('/login');
+      console.log('You are logged out')
+    } catch (e) {
+      setError(e.message)
+      console.log(e.message);
+    }
   };
   return (
     <nav>
@@ -19,12 +30,6 @@ export default function Navigation() {
         <li>
           <button className="nav__button" onClick={handleLogout}>Logout</button>
         </li>
-        {/* <li>
-          <a href="contact.asp">Contact</a>
-        </li>
-        <li>
-          <a href="about.asp">About</a>
-        </li> */}
       </ul>
     </nav>
   );

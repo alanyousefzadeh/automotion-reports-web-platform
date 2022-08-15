@@ -1,23 +1,25 @@
-import React, {useState} from "react";
+import React, {useState, useCallback} from "react";
 import { useNavigate } from "react-router-dom";
 import Form from 'react-bootstrap/Form';
 import Button from "react-bootstrap/esm/Button";
-import axios from "axios";
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import {UserAuth} from "../Context/AuthContext";
 import loginLogo from '../../assets/loginLogo.png'
 import './Login.scss'
+
 
 function Login() {
 
     const [ form, setForm ] = useState({})
     const [ errors, setErrors ] = useState({})
     const [serverSideErr, setServerSideErr] = useState(null)
-
+    const {signIn} = UserAuth();
     //function to update the state of the form
     const setField = (field, value) => {
         //This will update our state to keep all the current form values, then add the newest form value to the correct key location
         setForm({
-          ...form,
-          [field]: value
+            ...form,
+            [field]: value
         })
         // Check and see if errors exist, and remove them from the error object:
         if ( !!errors[field] ) setErrors({
@@ -27,32 +29,28 @@ function Login() {
     }
 
     const nav = useNavigate();
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         e.preventDefault()
         // get our new errors
         const newErrors = findFormErrors()
         // Conditional logic:
-        if ( Object.keys(newErrors).length > 0 ) {
-          // We got errors!
-          setErrors(newErrors)
+        if (Object.keys(newErrors).length > 0) {
+            // We got errors!
+            setErrors(newErrors)
         } else {
-          // No errors!
-          axios
-            .post('http://localhost:8080/login', {
-                email: form.email,
-                password: form.password
-            })
-            //if the credentials are valid, store them in session storage for later use
-            .then((response) => {
-                sessionStorage.setItem("token", response.data.token);
-                e.target.reset();
-                nav('/welcome');
-            })
-            .catch((error) => {
-                setServerSideErr(error.response.data);
-            });
+            // No errors!
+            const auth = getAuth();
+            try {
+                await signIn(form.email,form.password)
+                nav('/welcome')
+            } catch (e) {
+                setErrors(e.message)
+                console.log(e.message)
+                alert(e.message);
+            }
         }
     }
+
 
     const findFormErrors = () => {
         const { email, password} = form
@@ -62,12 +60,11 @@ function Login() {
         if ( !email || email === '' || !email.match(emailformat) ) newErrors.email = 'please provide a valid email address'
         //password errors
         if ( !password || password === '' ) newErrors.password = 'please provide a password'
-    
+
         return newErrors
     }
-
     return (
-
+        
         <div className="login">
         <img className="logo" src={loginLogo}/>
         <Form className='my-5 mx-auto' style={{width: 300}}  noValidate onSubmit={handleSubmit}>
@@ -90,8 +87,7 @@ function Login() {
                 Log In
             </Button>
       </Form>
-      </div>
-        
+    </div>
     );
 }
 

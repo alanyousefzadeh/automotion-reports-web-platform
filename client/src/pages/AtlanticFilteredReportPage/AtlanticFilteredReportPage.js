@@ -9,7 +9,6 @@ import ReportHeader from "../../components/ReportHeader/ReportHeader";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import AutomatedFilteredReportPage from "../AutomatedFilteredReportPage/AutomatedFilteredReportPage";
-import Logout from '../../components/Logout/Logout'
 import Navigation from "../../components/Navigation/Navigation";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
 

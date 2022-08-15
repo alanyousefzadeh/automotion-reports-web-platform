@@ -1,7 +1,6 @@
 import React from 'react';
 import ReportCard from '../../components/ReportCard/ReportCard';
 import { useParams } from 'react-router-dom';
-import Logout from '../../components/Logout/Logout';
 import Navigation from '../../components/Navigation/Navigation';
 import './ReportSelectPage.scss';
 
