@@ -68,7 +68,7 @@ function WaitTimePage() {
               <TypePicker label={"Type"} type={type} setType={setType} />
               <TicketSelect label={"Ticket Number"} num={num} setNum={setNum} />
             </div>
-            <Button onClick={fetchData}>Generate Table</Button>
+            <Button className ='report-button'onClick={fetchData}>Generate Table</Button>
           </div>
           {isLoading ? (
             <LoadingSpinner />
