@@ -9,7 +9,7 @@ const getData = async (garageName, automatedSetFailedtoLoad, automatedSetErr, se
 
   try {
     const promise = await axios.get(
-      "http://localhost:8080/garagedata/transactions",
+      "https://automotion-web-server.herokuapp.com/garagedata/transactions",
       {
         params: {
           inDate: formattedDate,

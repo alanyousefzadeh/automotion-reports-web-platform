@@ -198,37 +198,38 @@ const AtlanticDailyReportPage = () => {
 
   const email = async () => {
     let filepath = await genPDF();
-    axios.post("http://localhost:8080/emailGenerator", {
+    axios.post("https://automotion-web-server.herokuapp.com/emailGenerator", {
       file: filepath,
     });
   };
 
+  async function fetchAtlanticData() {
+    setIsLoading(true)
+    try {
+      const res = await axios.get(
+        "https://automotion-web-server.herokuapp.com/garagedata/atlanticClosed",
+        {
+          params: {
+            inDate: inDate,
+            outDate: outDate,
+          },
+          // headers: {
+          //   authorization: "Bearer " + token,
+          // },
+        }
+      );
+      setatlanticAllData(res.data);
+      setIsLoading(false);
+    } catch (err) {
+      setFailedToLoad(true);
+      setErr(err.response.data);
+    }
+  }
+
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
+    // const token = sessionStorage.getItem("token");
 
     if (garage === "Atlantic Terrace") {
-      async function fetchAtlanticData() {
-        setIsLoading(true)
-        try {
-          const res = await axios.get(
-            "http://localhost:8080/garagedata/atlanticClosed",
-            {
-              params: {
-                inDate: inDate,
-                outDate: outDate,
-              },
-              headers: {
-                authorization: "Bearer " + token,
-              },
-            }
-          );
-          setatlanticAllData(res.data);
-          setIsLoading(false);
-        } catch (err) {
-          setFailedToLoad(true);
-          setErr(err.response.data);
-        }
-      }
       fetchAtlanticData();
     } else {
       automatedGarageAPI(
