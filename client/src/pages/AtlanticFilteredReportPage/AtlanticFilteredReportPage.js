@@ -183,7 +183,7 @@ function FilteredReportPage() {
     const token = sessionStorage.getItem("token");
     let filepath = await genPDF();
     axios.post(
-      "https://automotion-web-server.herokuapp.com/emailGenerator",
+      "https://automotion-server.herokuapp.com/emailGenerator",
       {
         file: filepath,
       },
@@ -201,7 +201,7 @@ function FilteredReportPage() {
       if (inDate === null || outDate === null) {
         //default report (partial report)
         axios
-          .get("https://automotion-web-server.herokuapp.com/garagedata/atlanticClosed", {
+          .get("https://automotion-server.herokuapp.com/garagedata/atlanticClosed", {
             params: {
               inDate: new Date().setHours(3, 0, 0, 0),
               outDate: new Date().getTime(),
@@ -222,7 +222,7 @@ function FilteredReportPage() {
         //filtered report
         setIsLoading(true)
         axios
-          .get("https://automotion-web-server.herokuapp.com/garagedata/atlanticClosed", {
+          .get("https://automotion-server.herokuapp.com/garagedata/atlanticClosed", {
             params: {
               inDate: new Date(`${inDate} 03:00:00`).getTime(),
               outDate: new Date(`${outDate} 03:00:00`).getTime(),

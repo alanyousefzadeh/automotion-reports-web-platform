@@ -198,7 +198,7 @@ const AtlanticDailyReportPage = () => {
 
   const email = async () => {
     let filepath = await genPDF();
-    axios.post("https://automotion-web-server.herokuapp.com/emailGenerator", {
+    axios.post("https://automotion-server.herokuapp.com/emailGenerator", {
       file: filepath,
     });
   };
@@ -207,7 +207,7 @@ const AtlanticDailyReportPage = () => {
     setIsLoading(true)
     try {
       const res = await axios.get(
-        "https://automotion-web-server.herokuapp.com/garagedata/atlanticClosed",
+        "https://automotion-server.herokuapp.com/garagedata/atlanticClosed",
         {
           params: {
             inDate: inDate,
