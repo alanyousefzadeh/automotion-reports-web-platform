@@ -10,7 +10,7 @@ const emailRoute = require('./routes/emailRoute');
 const currentUserRoute = require('./routes/currentUserRoute');
 const retrievalTimeRoute = require('./routes/retrievalTimeRoute')
 
-const port = 8080;
+const port = process.env.PORT || 8080;
 
 //middleware
 app.use(cors());
