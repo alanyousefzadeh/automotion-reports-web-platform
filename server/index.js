@@ -17,8 +17,6 @@ app.use(cors());
 app.use(express.json());
 
 //Routes
-// app.use('/register', registerRoute);
-
 app.use('/login', loginRoute);
 app.use('/garagedata', garageRoute);
 app.use('/emailGenerator', emailRoute);
