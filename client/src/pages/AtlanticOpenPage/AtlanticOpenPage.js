@@ -10,7 +10,7 @@ export default function AtlanticOpenPage() {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const res = await axios.get("http://localhost:8080/atlanticOpenAPI", {
+      const res = await axios.get("https://automotion-server.herokuapp.com/atlanticOpenAPI", {
         params: {
           inDate: new Date().setHours(3, 0, 0, 0),
           outDate: Math.floor(Date.now() / 1000),

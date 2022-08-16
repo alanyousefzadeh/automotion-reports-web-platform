@@ -48,8 +48,7 @@ exports.time = async (req, res) => {
      ,[Oversize]
      ,DATEDIFF(minute, LastRetrievalDateTime, OutDateTime) AS waitTime
       FROM [Transactions]
-      WHERE indatetime between '${inDate} 00:00:00' and '${outDate} 23:59:59' and type = '${type}' and stopakey2 = ${num}
-      and [OutDateTime] IS NOT NULL and [LastRetrievalDateTime] IS NOT NULL`
+      WHERE (indatetime between '${inDate} 00:00:00' and '${outDate} 23:59:59' and type = '${type}') or (outdatetime between '${inDate} 00:00:00' and '${outDate} 23:59:59' and type = '${type}') and stopakey2 = ${num}`
     );
     res.send(data)
   } else {
@@ -65,8 +64,8 @@ exports.time = async (req, res) => {
      ,[Oversize]
      ,DATEDIFF(minute, LastRetrievalDateTime, OutDateTime) AS waitTime
       FROM [Transactions]
-      WHERE indatetime between '${inDate} 00:00:00' and '${outDate} 23:59:59' and type = '${type}' 
-      and [OutDateTime] IS NOT NULL and [LastRetrievalDateTime] IS NOT NULL`
+      WHERE (indatetime between '${inDate} 00:00:00' and '${outDate} 23:59:59' and type = '${type}') or (outdatetime between '${inDate} 00:00:00' and '${outDate} 23:59:59' and type = '${type}')`
+      
     );
     res.send(data);
   }

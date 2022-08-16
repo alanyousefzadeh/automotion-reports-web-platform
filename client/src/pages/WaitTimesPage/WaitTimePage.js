@@ -25,8 +25,7 @@ function WaitTimePage() {
     let response = [];
     if (inDate !== null && outDate !== null) {
       setIsLoading(true);
-      //"https://automotion-server.herokuapp.com/retrievalTime
-      response = await axios.get("http://localhost:8080/retrievalTime", {
+      response = await axios.get("https://automotion-server.herokuapp.com/retrievalTime", {
         params: {
           garage: garageName,
           inDate,
@@ -104,14 +103,14 @@ function WaitTimePage() {
                           ).toLocaleString()}
                         </td>
                         <td>
-                          {new Date(
+                          {data.OutDateTime ? new Date(
                             data.OutDateTime.slice(0, -1)
-                          ).toLocaleString()}
+                          ).toLocaleString(): ""}
                         </td>
                         <td>
-                          {new Date(
+                          {data.LastRetrievalDateTime ? new Date(
                             data.LastRetrievalDateTime.slice(0, -1)
-                          ).toLocaleString()}
+                          ).toLocaleString(): ""}
                         </td>
                         <td className={color}>{wait}</td>
                         <td>{data.Oversize}</td>
