@@ -32,6 +32,8 @@ function ReportSelectPage(){
           {reports.map(report =>(
               <ReportCard key={report.id} id={report.id} name={garageName} title={report.title}/>    
           ))}
+          {garageName === 'Atlantic Terrace'?
+          <ReportCard title='Open Tickets Report'/> : ''}
       </div>
     </>
   );

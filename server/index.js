@@ -9,6 +9,7 @@ const garageRoute = require('./routes/garageRoute');
 const emailRoute = require('./routes/emailRoute');
 const currentUserRoute = require('./routes/currentUserRoute');
 const retrievalTimeRoute = require('./routes/retrievalTimeRoute')
+const atlanticOpenAPIRoute = require('./routes/atlanticOpenAPI')
 
 const port = process.env.PORT || 8080;
 
@@ -39,6 +40,7 @@ app.use('/garagedata', garageRoute);
 app.use('/emailGenerator', emailRoute);
 app.use('/currentUser', currentUserRoute);
 app.use('/retrievalTime', retrievalTimeRoute);
+app.use('/atlanticOpenAPI', atlanticOpenAPIRoute)
 
 //port listener
 app.listen(port, () => {

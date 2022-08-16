@@ -7,6 +7,8 @@ import AtlanticDailyReportPage from './pages/AtlanticDailyReportPage/AtlanticDai
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import {AuthContextProvider} from "./components/Context/AuthContext";
 import WaitTimePage from './pages/WaitTimesPage/WaitTimePage'
+import AtlanticOpenPage from './pages/AtlanticOpenPage/AtlanticOpenPage';
+
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
             <Route path='/reportSelect/:garageName/filtered' element={<ProtectedRoute><FilteredReportPage/></ProtectedRoute>}/>
             <Route path='/reportSelect/:garageName/daily' element={<ProtectedRoute><AtlanticDailyReportPage/></ProtectedRoute>}/>
             <Route path='/reportSelect/:garageName/wait' element={<ProtectedRoute><WaitTimePage/></ProtectedRoute>}/>
+            <Route path='/reportSelect/:garageName/open' element={<ProtectedRoute><AtlanticOpenPage/></ProtectedRoute>}/>
           </Routes>
         </AuthContextProvider>
       </div>
