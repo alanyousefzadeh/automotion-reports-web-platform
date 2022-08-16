@@ -23,9 +23,10 @@ function WaitTimePage() {
 
   async function fetchData() {
     let response = [];
-    if (inDate !== null && outDate !== null && num !== "") {
+    if (inDate !== null && outDate !== null) {
       setIsLoading(true);
-      response = await axios.get("https://automotion-server.herokuapp.com/retrievalTime", {
+      //"https://automotion-server.herokuapp.com/retrievalTime
+      response = await axios.get("http://localhost:8080/retrievalTime", {
         params: {
           garage: garageName,
           inDate,
@@ -77,6 +78,7 @@ function WaitTimePage() {
             <Table striped bordered className="table-sm table-font">
               <thead>
                 <tr className="table-warning">
+                  <th>Num</th>
                   <th>In</th>
                   <th>Out</th>
                   <th>Retrieval</th>
@@ -93,6 +95,9 @@ function WaitTimePage() {
 
                     return (
                       <tr key={index}>
+                        <td>
+                          {data.STOPAKey2}
+                        </td>
                         <td>
                           {new Date(
                             data.InDateTime.slice(0, -1)
