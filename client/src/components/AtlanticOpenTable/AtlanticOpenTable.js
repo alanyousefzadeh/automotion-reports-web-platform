@@ -19,6 +19,8 @@ export default function AtlanticOpenTable(props) {
         </thead>
         <tbody>
           {(data).map((record) => {
+            //replace(/\s/, 'T')
+            //console.log(record.from_date.replace(/-/g, "/").replace(/\s/, 'T'))
             return (
               <tr key={record.gn_id} >
                 <td>{record.ticket_number}</td>

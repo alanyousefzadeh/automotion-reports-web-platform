@@ -224,8 +224,8 @@ function FilteredReportPage() {
         axios
           .get("https://automotion-server.herokuapp.com/garagedata/atlanticClosed", {
             params: {
-              inDate: new Date(`${inDate} 03:00:00`).getTime(),
-              outDate: new Date(`${outDate} 03:00:00`).getTime(),
+              inDate: new Date(`${inDate}T03:00:00`).getTime(),
+              outDate: new Date(`${outDate}T03:00:00`).getTime(),
             },
             headers: {
               authorization: 'Bearer ' + token
