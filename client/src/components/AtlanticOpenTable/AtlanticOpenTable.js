@@ -22,7 +22,7 @@ export default function AtlanticOpenTable(props) {
             return (
               <tr key={record.gn_id} >
                 <td>{record.ticket_number}</td>
-                <td>{new Date(record.from_date).toLocaleString()}</td>
+                <td>{new Date(record.from_date.replace(/\s/, 'T')).toLocaleString()}</td>
               </tr>
             );
           })}
