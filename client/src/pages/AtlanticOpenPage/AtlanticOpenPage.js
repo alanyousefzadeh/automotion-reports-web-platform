@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AtlanticOpenTable from '../../components/AtlanticOpenTable/AtlanticOpenTable';
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
+import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
 export default function AtlanticOpenPage() {
   const [atlanticOpenData, setAtlanticOpenData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);

@@ -10,6 +10,8 @@ import TicketSelect from "../../components/TicketSelect/TicketSelect";
 import { Button } from "react-bootstrap";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
 import Navigation from "../../components/Navigation/Navigation";
+import { EmailAuthCredential } from "firebase/auth";
+import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
 
 function WaitTimePage() {
   const [waitTimeData, setWaitTimeData] = useState(null);
@@ -69,6 +71,7 @@ function WaitTimePage() {
               <TicketSelect label={"Ticket Number"} num={num} setNum={setNum} />
             </div>
             <Button className ='report-button'onClick={fetchData}>Generate Table</Button>
+            <EmailFormDisplayToggler/>
           </div>
           {isLoading ? (
             <LoadingSpinner />

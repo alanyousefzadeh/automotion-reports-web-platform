@@ -4,15 +4,19 @@ import { useParams, Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import AtlanticTable from "../../components/AtlanticTable/AtlanticTable";
 import ReportHeader from "../../components/ReportHeader/ReportHeader";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
+import ReactDOM from "react-dom/client";
+import ReactDOMServer from 'react-dom/server'
+
 import AutomatedDailyReportPage from "../../pages/AutomatedDailyReportPage/AutomatedDailyReportPage";
 import { automatedGarageAPI, formatDate, padTo2Digits } from "./helpers";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
 import './AtlanticDailyReportPage.scss';
 import Navigation from "../../components/Navigation/Navigation";
+import EmailComponent from "../../components/EmailComponent/EmailComponent";
+import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
 
 const AtlanticDailyReportPage = () => {
+ 
   const sortObjectByKeys = (o) => {
     return Object.keys(o)
       .sort()
@@ -179,30 +183,6 @@ const AtlanticDailyReportPage = () => {
     }
   });
 
-  const genPDF = () => {
-    let file = html2canvas(document.getElementById("pdf-report")).then(
-      function (canvas) {
-        const doc = new jsPDF("p", "mm", "a4");
-        const img = canvas.toDataURL("image/png", 6.0);
-        doc.addImage(img, "PNG", 10, 10, 180, 150);
-        let date = new Date().toLocaleTimeString();
-        let saveInfo = `${
-          garage.split(" ")[0]
-        }-${outDate}-generated-${date}.pdf`;
-        doc.save(saveInfo);
-        return saveInfo;
-      }
-    );
-    return file;
-  };
-
-  const email = async () => {
-    let filepath = await genPDF();
-    axios.post("https://automotion-server.herokuapp.com/emailGenerator", {
-      file: filepath,
-    });
-  };
-
   async function fetchAtlanticData() {
     setIsLoading(true)
     try {
@@ -213,9 +193,6 @@ const AtlanticDailyReportPage = () => {
             inDate: inDate,
             outDate: outDate,
           },
-          // headers: {
-          //   authorization: "Bearer " + token,
-          // },
         }
       );
       setatlanticAllData(res.data);
@@ -225,6 +202,7 @@ const AtlanticDailyReportPage = () => {
       setErr(err.response.data);
     }
   }
+
 
   useEffect(() => {
     // const token = sessionStorage.getItem("token");
@@ -283,12 +261,7 @@ const AtlanticDailyReportPage = () => {
                       timeZone: "America/New_York",
                     })}
                   />
-                  <Button onClick={genPDF} className="button">
-                    Download PDF
-                  </Button>
-                  <Button onClick={email} className="button">
-                    Send as Email
-                  </Button>
+                  <EmailFormDisplayToggler/>
                   <AtlanticTable
                     atlanticTable={atlanticTable}
                     atlanticDiscountTable={sortObjectByKeys(
@@ -296,6 +269,7 @@ const AtlanticDailyReportPage = () => {
                     )}
                     atlanticMiscTable={atlanticMiscTable}
                   />
+
                 </>
               )}
             </div>
@@ -305,8 +279,8 @@ const AtlanticDailyReportPage = () => {
     </div>
   );
 };
-
-// let html = ReactDOM.render(<AtlanticDailyReportPage/>, document.getElementById('root'))
-// console.log(html);
+// let html = ReactDOMServer.renderToStaticMarkup(<AtlanticDailyReportPage/>);
+// // let html = ReactDOM.render(<AtlanticDailyReportPage/>, document.getElementById('root'))
+// console.log(html.toString());
 
 export default AtlanticDailyReportPage;

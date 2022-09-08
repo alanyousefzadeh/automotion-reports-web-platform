@@ -30,7 +30,7 @@ exports.transactions = async (req, res) => {
       db.connection.options.database = "207VanvorstSync";
       break;
     default:
-      console.log("please provode a db name");
+      console.log("please provide a db name");
   }
   console.log(db.connection.options.database)
   const knex = await require("knex")(db);
@@ -109,8 +109,6 @@ exports.transactions = async (req, res) => {
 
   //query for closed tickets
   data.closedTickets = await knex.raw(helpers.closedTickets(inDate, outDate))
-
-
 
   res.send(data);
 

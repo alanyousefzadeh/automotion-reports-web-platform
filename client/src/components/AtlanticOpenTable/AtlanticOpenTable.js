@@ -1,5 +1,6 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
+import EmailFormDisplayToggler from "../EmailFormDisplayToggler";
 import './AtlanticOpenTable.scss';
 
 export default function AtlanticOpenTable(props) {
@@ -10,6 +11,7 @@ export default function AtlanticOpenTable(props) {
   return (
     <div>
       <p className="atlantic_open_header">Atlantic Terrace Currently Open Tickets</p>
+      <EmailFormDisplayToggler/>
       <Table striped bordered className="report table-sm">
         <thead>
           <tr className="table-warning">

@@ -8,7 +8,8 @@ import RateTable from "../../components/RateTable/RateTable";
 import OverParkedTable from "../../components/OverParked/OverParkedTable";
 import "./AutomatedFiltered.scss";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
-
+import ReactDOMServer from 'react-dom/server'
+import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
 function AutomatedFilteredReportPage() {
   const [inDate, setInDate] = useState(null);
   const [outDate, setOutDate] = useState(null);
@@ -96,6 +97,7 @@ function AutomatedFilteredReportPage() {
         <DatePicker label={"Out-Date - 11:59PM"} setDate={setOutDate} />
       </div>
       <Button className='filtered-button' onClick={getData}>Generate Table </Button>
+      <EmailFormDisplayToggler/>
       {isLoading ? (
         <LoadingSpinner />
       ) : (

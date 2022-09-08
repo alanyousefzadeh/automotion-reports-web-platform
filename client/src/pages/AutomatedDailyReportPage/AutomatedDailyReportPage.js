@@ -6,6 +6,7 @@ import OverParkedTable from "../../components/OverParked/OverParkedTable";
 import Navigation from '../../components/Navigation/Navigation'
 import './AutomatedDailyReport.scss'
 import AutomatedDailyHeader from "../../components/AutomatedDailyHeader/AutomatedDailyHeader";
+import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
 
 function AutomatedDailyReportPage(props) {
   
@@ -52,25 +53,12 @@ function AutomatedDailyReportPage(props) {
     });
   }
 
-  // let openTixToday = 0
-  // response.forEach((ticket) => {
-  //     if(ticket.OutDateTime == null){
-  //         openTixToday += 1
-  //     }
-  // })
   return (
  
     <div className="report">
-      {/* <ul>
-        <li>AutomatedFilteredReportPage</li>
-        <li>tix issued: {ticketsIssued}</li>
-        <li>open tix today: {openTixToday}</li>
-        <li>starting ticktet: {startTicket}</li>
-        <li>ending ticket: {endTicket}</li>
-        </ul> */}
-      {/* <Button onClick={getData}>Generate Table </Button> */}
       <Navigation/>
       <p className="daily-report__header">{garageName} Daily Report for: Yesterday {formattedDate}, 12:00AM - 11:59PM</p>
+      <EmailFormDisplayToggler/>
       <AutomatedDailyHeader
         ticketStart={response.ticketStart.length > 0 ? response.ticketStart[0].TicketNum : ''}
         ticketEnd={response.ticketEnd.length > 0 ? response.ticketEnd[0].TicketNum : ''}

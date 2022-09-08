@@ -11,6 +11,7 @@ import jsPDF from "jspdf";
 import AutomatedFilteredReportPage from "../AutomatedFilteredReportPage/AutomatedFilteredReportPage";
 import Navigation from "../../components/Navigation/Navigation";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
+import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
 
 function FilteredReportPage() {
   const sortObjectByKeys = (o) => {
@@ -179,22 +180,6 @@ function FilteredReportPage() {
     return file;
   };
 
-  const email = async () => {
-    const token = sessionStorage.getItem("token");
-    let filepath = await genPDF();
-    axios.post(
-      "https://automotion-server.herokuapp.com/emailGenerator",
-      {
-        file: filepath,
-      },
-      {
-        headers: {
-          authorization: "Bearer " + token,
-        },
-      }
-    );
-  };
-
   const generateReport = () => {
     const token = sessionStorage.getItem('token');
     if (garage === "Atlantic Terrace") {
@@ -239,8 +224,8 @@ function FilteredReportPage() {
             setFailedToLoad(true);
             setErr(error.response.data)
           });
-      }
-    }
+      } 
+    } 
   };
 
   useEffect(() => {
@@ -253,7 +238,9 @@ function FilteredReportPage() {
       <Navigation/>
       <p className="atlantic__filtered">{garage} Garage Filtered Report</p>
       {garage !== "Atlantic Terrace" ? (
+        <>
         <AutomatedFilteredReportPage />
+        </>
       ) : (
         <div className="report">
           {failedToLoad ? (
@@ -267,12 +254,10 @@ function FilteredReportPage() {
               <Button onClick={generateReport} className="button">
                 Generate Report
               </Button>
-              <Button onClick={genPDF} className="button">
-                Download PDF
-              </Button>
-              <Button onClick={email} className="button">
-                Send as Email
-              </Button>
+              {/* <Button onClick={setDisplayForm(!displayForm)} className="button">
+                    {displayForm ? 'Hide Email Form': 'Open Email Form'}
+              </Button> */}
+              <EmailFormDisplayToggler/>
               {isLoading ? <LoadingSpinner/> :
               <AtlanticTable
                 atlanticTable={atlanticTable}
@@ -283,6 +268,7 @@ function FilteredReportPage() {
           )}
         </div>
       )}
+      
     </div>
   );
 }
