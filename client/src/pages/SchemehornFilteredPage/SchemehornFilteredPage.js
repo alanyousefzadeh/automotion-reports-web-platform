@@ -3,11 +3,13 @@ import axios from "axios";
 import Table from "react-bootstrap/Table";
 import "./SchemehornFilteredPage.scss";
 import Navigation from "../../components/Navigation/Navigation";
+import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
 
 function SchemehornFilteredPage() {
   const [inDate, setInDate] = useState("2022-09-01");
   const [outDate, setOutDate] = useState("2022-09-01");
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true)
 
   const getSchemehornData = async () => {
     let response = await axios.post("http://localhost:8080/schemehorn", {
@@ -17,20 +19,17 @@ function SchemehornFilteredPage() {
       outTime: "11:59:59 PM",
     });
     setData(response.data);
+    setLoading(false)
   };
 
   useEffect(() => {
     getSchemehornData();
   }, []);
-  let location = [];
+
   let rate = [];
   let count = [];
-  //parking
   let disc = [];
   let tax1 = [];
-  let tax4 = [];
-  let tip = [];
-  let convFee = [];
   let total = [];
 
   let totalCount = 0;
@@ -42,7 +41,7 @@ function SchemehornFilteredPage() {
   let xmlContent = data;
   let parser = new DOMParser();
   let xmlDOM = parser.parseFromString(xmlContent, "application/xml");
-  console.log(xmlDOM);
+  //console.log(xmlDOM);
   if (data !== null) {
     rows = xmlDOM.querySelectorAll("ResultingValue");
     console.log(rows);
@@ -68,9 +67,11 @@ function SchemehornFilteredPage() {
   return (
     
     <>
-    {console.log(rate, tax1, total)}
+    {loading ? <LoadingSpinner/> :
+    <>
       <Navigation/>
-      <Table striped bordered className="table-sm table-font schemehorn">
+      <p className="report">Schemehorn Revenue Summary</p>
+      <Table striped bordered className="table-sm table-font schemehorn report">
         <thead>
           <tr className="table-warning">
             <th>Rate</th>
@@ -106,6 +107,8 @@ function SchemehornFilteredPage() {
         </tbody>
       </Table>
     </>
+    }
+   </>
   );
 }
 

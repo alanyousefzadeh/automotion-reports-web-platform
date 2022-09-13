@@ -30,7 +30,9 @@ function ReportSelectPage(){
     <h4 className='garage__title'>{garageName} Garage Reports</h4>
       <div className="cards d-flex justify-content-center"> 
           {reports.map(report =>(
-              <ReportCard key={report.id} id={report.id} name={garageName} title={report.title}/>    
+              
+              garageName !== 'Schemehorn' ? <ReportCard key={report.id} id={report.id} name={garageName} title={report.title}/>    
+             : <ReportCard key={3} id={3} name={garageName} title={'Filtered Report'}/> 
           ))}
           {garageName === 'Atlantic Terrace'?
           <ReportCard title='Open Tickets Report'/> : ''}
