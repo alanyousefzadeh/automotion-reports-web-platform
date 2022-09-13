@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
 import "./SchemehornFilteredPage.scss";
+import Navigation from "../../components/Navigation/Navigation";
 
 function SchemehornFilteredPage() {
   const [inDate, setInDate] = useState("2022-09-01");
@@ -68,6 +69,7 @@ function SchemehornFilteredPage() {
     
     <>
     {console.log(rate, tax1, total)}
+      <Navigation/>
       <Table striped bordered className="table-sm table-font schemehorn">
         <thead>
           <tr className="table-warning">

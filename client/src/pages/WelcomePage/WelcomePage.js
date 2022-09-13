@@ -21,7 +21,7 @@ const data = [
   },
   {
     id: 5,
-    title: "schemehorn",
+    title: "Schemehorn",
     image: schemehorn
   },
 
