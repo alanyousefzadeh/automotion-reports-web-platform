@@ -203,14 +203,10 @@ const AtlanticDailyReportPage = () => {
   }
 
   useEffect(() => {
-    // const token = sessionStorage.getItem("token");
     
     if (garage === "Atlantic Terrace") {
       fetchAtlanticData();
-    }
-    // else if(garage === 'Schermerhorn'){
-    //   fetchSchermerhornData();
-    else{
+    }else{
       automatedGarageAPI(
         garage,
         automatedSetFailedtoLoad,
