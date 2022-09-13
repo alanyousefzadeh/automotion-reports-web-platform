@@ -5,6 +5,7 @@ import baxter from "../../assets/baxter.png";
 import vanvorst from "../../assets/vanvorst.png";
 import waverly from "../../assets/waverly.png";
 import atlanticTerrace from "../../assets/atlanticTerrace.png";
+import schemehorn from "../../assets/schemehorn.png"
 import Navigation from '../../components/Navigation/Navigation'
 
 const data = [
@@ -21,7 +22,7 @@ const data = [
   {
     id: 5,
     title: "schemehorn",
-    image: "schemehorn"
+    image: schemehorn
   },
 
   {
@@ -46,10 +47,7 @@ function WelcomePage() {
     <>
     <Navigation/>
     <div className="cards d-flex justify-content-center">
-      {/* <nav>
-        <h1>welcome, {currUser}</h1>
-        <Logout />
-      </nav> */}
+      
       {data.map((garage) => (
         <GarageCard
           key={garage.id}
