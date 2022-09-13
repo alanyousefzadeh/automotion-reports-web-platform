@@ -98,7 +98,7 @@ function AtlanticTable(props) {
                     <th>All Totals:</th>
                     <th>{totalDefaultTixSold + totalDiscountTixSold + totalMiscTixSold}</th>
                     {/* <th>$$$.$$</th> */}
-                    <th>{`$${(totalDefaultPaidWTax + totalDiscountPaidWTax + totalMiscPaidWTax).toFixed(2) }`}</th>
+                    <th>{`$${(totalDefaultPaidWTax + totalDiscountPaidWTax + totalMiscPaidWTax).toLocaleString(undefined, {minimumFractionDigits: 2} )}`}</th>
 
                 </tr>
             </thead>

@@ -3,14 +3,12 @@ import "./WaitTimePage.scss";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
-import { formatDate } from "./helpers";
 import DatePicker from "../../components/DatePicker/DatePicker";
 import TypePicker from "../../components/TypePicker/TypePicker";
 import TicketSelect from "../../components/TicketSelect/TicketSelect";
 import { Button } from "react-bootstrap";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
 import Navigation from "../../components/Navigation/Navigation";
-import { EmailAuthCredential } from "firebase/auth";
 import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
 
 function WaitTimePage() {
@@ -84,7 +82,7 @@ function WaitTimePage() {
                   <th>In</th>
                   <th>Out</th>
                   <th>Retrieval</th>
-                  <th>Wait mins.</th>
+                  <th>Wait time</th>
                   <th>Sz</th>
                 </tr>
               </thead>

@@ -1,57 +1,61 @@
-.wait-time{
-    
+.wait-time {
+
     max-width: 768px;
     margin: auto;
-    
+
 }
 
-.table-font{
-    font-size: 14px;
+.table-font {
+    font-size: 13px;
 }
 
-.selectors{
+.selectors {
     display: flex;
 
 }
 
-.type{
+.type {
     flex-grow: 2;
 }
 
-.num{
+.num {
     margin-left: 1rem;
 }
-.red{
+
+.red {
     background: rgba(221, 49, 49, 0.6) !important;
 }
-.green{
+
+.green {
     background: rgb(5, 156, 5, 0.6) !important;
 }
-.orange{
+
+.orange {
     background: rgb(233, 159, 21, 0.8) !important;
 }
 
-.wait-times-pickers{
+.wait-times-pickers {
     margin-left: 0.5rem;
     margin-bottom: 1rem;
     margin-right: 0.5rem;
     max-width: 768px;
     margin: auto;
 }
-.heading{
+
+.heading {
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
 }
 
-.wait-table{
+.wait-table {
     max-width: 768px;
     min-width: 320px;
     margin: auto;
 }
 
-.report-button{
+.report-button {
     margin: 0.5rem;
     margin-top: 0.5rem;
 }

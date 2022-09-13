@@ -77,8 +77,6 @@ function AutomatedDailyReportPage(props) {
       {response ? (
         <>
           <RateTable
-            // inDate={inDate}
-            // outDate={outDate}
             garageName={garageName}
             rateData={response.rateTable}
           />

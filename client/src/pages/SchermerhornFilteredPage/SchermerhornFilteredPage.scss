@@ -1,0 +1,16 @@
+.schermerhorn{
+    font-size: 12.75px;
+}
+
+.disc{
+    color: red !important;
+    
+}
+
+.disc::before{
+    content: "(";
+}
+
+.disc::after{
+    content: ")";
+}

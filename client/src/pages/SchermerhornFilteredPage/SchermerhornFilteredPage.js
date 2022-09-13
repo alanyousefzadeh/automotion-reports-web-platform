@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Table from "react-bootstrap/Table";
+import "./SchermerhornFilteredPage.scss";
 
 function SchermerhornFilteredPage() {
-  const [inDate, setInDate] = useState("09/01/2022");
-  const [outDate, setOutDate] = useState("09/01/2022");
+  const [inDate, setInDate] = useState("2022-09-01");
+  const [outDate, setOutDate] = useState("2022-09-01");
   const [data, setData] = useState(null);
 
   const getSchermerhornData = async () => {
@@ -19,92 +21,90 @@ function SchermerhornFilteredPage() {
   useEffect(() => {
     getSchermerhornData();
   }, []);
-  let location = []
-  let rate = []
-  let count = []
-  let disc = []
-  let tax1 = []
-  let tax4 = []
-  let tip = []
-  let total = []
-  let convFee = []
-  let xmlContent = data
+  let location = [];
+  let rate = [];
+  let count = [];
+  //parking
+  let disc = [];
+  let tax1 = [];
+  let tax4 = [];
+  let tip = [];
+  let convFee = [];
+  let total = [];
+
+  let totalCount = 0;
+  let totalDisc = 0;
+  let totalTax1 = 0;
+  let finalTotal = 0;
+
+  let rows = null;
+  let xmlContent = data;
   let parser = new DOMParser();
-  let xmlDOM = parser.parseFromString(xmlContent, 'application/xml');
-  console.log(xmlDOM)
-  if(data !== null){
-    let rows = xmlDOM.querySelectorAll('ResultingValue')
-    console.log(rows)
-    rows.forEach(row => {
-      console.log(row)
-      console.log('location',row.children[2].children[0].children[6])
-      location.push(row.children[2].children[0].children[6].innerHTML)
+  let xmlDOM = parser.parseFromString(xmlContent, "application/xml");
+  console.log(xmlDOM);
+  if (data !== null) {
+    rows = xmlDOM.querySelectorAll("ResultingValue");
+    console.log(rows);
+    rows.forEach((row) => {
+      
+      rate.push(row.children[2].children[1].children[6].innerHTML);
 
-      console.log('rate',row.children[2].children[1].children[6])
-      rate.push(row.children[2].children[1].children[6].innerHTML)
+      count.push(Number(row.children[2].children[2].children[2].innerHTML));
 
-      console.log('count',row.children[2].children[2].children[2])
-      count.push(row.children[2].children[2].children[2].innerHTML)
+      disc.push(Number(row.children[2].children[4].children[1].innerHTML));
 
-      console.log('Disc',row.children[2].children[4].children[1])
-      disc.push(row.children[2].children[4].children[1].innerHTML)
-
-      console.log('Tax1',row.children[2].children[6].children[1])
-      tax1.push(row.children[2].children[6].children[1].innerHTML)
-
-      console.log('Tax4',row.children[2].children[9].children[1])
-      tax4.push(row.children[2].children[9].children[1].innerHTML)
-
-      console.log('tip',row.children[2].children[19].children[1])
-      tip.push(row.children[2].children[19].children[1].innerHTML)
-
-      console.log('total',row.children[2].children[3].children[1])
-      total.push(row.children[2].children[3].children[1].innerHTML)
-
-      console.log('Convenience fee', row.children[2].children[34].children[4] ,row.children[2].children[34].children[1])
-      convFee.push(row.children[2].children[34].children[1].innerHTML)
-
-    })
+      tax1.push(Number(row.children[2].children[6].children[1].innerHTML));
+      
+      total.push(Number(row.children[2].children[3].children[1].innerHTML));
+    });
+    
+  totalCount = count.reduce((prev, curr) => prev + curr, 0);
+  totalDisc = disc.reduce((prev, curr) => prev + curr, 0)
+  totalTax1 = tax1.reduce((prev, curr) => prev + curr, 0)
+  finalTotal = total.reduce((prev, curr) => prev + curr, 0.00)
   }
 
   return (
+    
     <>
-    {
-      console.log(location, rate, count, disc, tax1, tax4, tip, total, convFee)
-    }
-    <table id='schermerhorn'>
-      <thead>
-        <tr>
-          <th>Location</th>
-          <th>Rate</th>
-          <th>Count</th>
-          <th>Parking</th>
-          <th>Disc</th>
-          <th>Tax1</th>
-          <th>Tax4</th>
-          <th>Tip</th>
-          <th>Conv. Fee</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        {/* {rows.map((row) => {
-         <tr>
-          <td>1</td>
-          <td>2</td>
-          <td>3</td>
-          <td>4</td>
-          <td>5</td>
-          <td>6</td>
-          <td>7</td>
-          <td>8</td>
-        </tr> 
-        })} */}
-      </tbody>
-    </table>
+    {console.log(rate, tax1, total)}
+      <Table striped bordered className="table-sm table-font schermerhorn">
+        <thead>
+          <tr className="table-warning">
+            <th>Rate</th>
+            <th>Count</th>
+            <th>Disc</th>
+            <th>Tax1</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rate.map((item, i) => {
+            return (
+              <tr key={i}>
+                <td>{rate[i]}</td>
+                <td>{count[i]}</td>
+                <td className={disc[i] > 0 ? "disc" : " "}>
+                  {disc[i].toFixed(2)}
+                </td>
+                <td>{tax1[i].toFixed(2)}</td>
+                <td>{total[i].toFixed(2)}</td>
+              </tr>
+            );
+          })}
+          <tr className="table-success">
+            <td>
+              <b>Totals:</b>
+            </td>
+            <td>{totalCount}</td>
+            <td className="disc">${totalDisc.toFixed(2)}</td>
+            <td>${totalTax1.toFixed(2)}</td>
+            <td>${finalTotal.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
+          </tr>
+        </tbody>
+      </Table>
     </>
-
-  )
+  );
 }
 
 export default SchermerhornFilteredPage;

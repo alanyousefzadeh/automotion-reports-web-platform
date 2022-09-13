@@ -67,7 +67,7 @@ function TransactionTable(props) {
                     <th>{transientInTotal+transientOutTotal+monthlyInTotal+monthlyOutTotal}</th>
                 </tr>
                 <tr className='table-success'>
-                    <th>Total: ${total.toFixed(2)}</th>
+                    <th>Total: ${total.toLocaleString(undefined, {minimumFractionDigits: 2})}</th>
                     
                 </tr>
             </tbody>

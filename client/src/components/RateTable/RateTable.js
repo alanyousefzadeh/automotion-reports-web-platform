@@ -110,7 +110,7 @@ function RateTable(props) {
                 <td>${prices[index]}</td>
                 <td className="table-success">{`$${ratesTable[
                   bucket
-                ].revenue.toFixed(2)}`}</td>
+                ].revenue.toLocaleString(undefined, {minimumFractionDigits: 2})}`}</td>
               </tr>
             );
           })}
