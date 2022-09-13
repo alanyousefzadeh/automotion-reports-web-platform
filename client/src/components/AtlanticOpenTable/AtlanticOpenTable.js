@@ -9,7 +9,7 @@ export default function AtlanticOpenTable(props) {
   data.sort(function(a, b) { return b.ticket_number - a.ticket_number  })
   
   return (
-    <div>
+    <div className="report">
       <p className="atlantic_open_header">Atlantic Terrace Currently Open Tickets</p>
       <EmailFormDisplayToggler/>
       <Table striped bordered className="report table-sm">

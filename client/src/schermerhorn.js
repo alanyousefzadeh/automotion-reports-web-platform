@@ -102,12 +102,7 @@ axios
     config
   )
   .then((res) => {
-    //parseString(res.data, function(err, results)
-      //console.log(JSON.stringify(res.data))
-    let parser =  new DOMParser();
-    let xmlDOM = parser.parseFromString(res.data, 'application/xml')
-    let fields = xmlDOM.querySelectorAll("Fields");
-    console.log(fields);
+    
+    console.log(JSON.stringify(res.data))
+
   })
-  
-// 

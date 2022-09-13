@@ -1,21 +1,15 @@
 const axios = require("axios");
 
-// const OPEN_API_URL = `https://ssl.garagenet.com/api/N2UwNjFi/woc/reports/allClosedInventoryData?from=1662436800&to=1662565135`
-//     axios
-//       .get(OPEN_API_URL, {
-//         auth: {
-//           username: "wocreports",
-//           password: "wqEsCg0LticrMNtG",
-//         },
-//       })
-//       .then((response) => console.log(response.data))
-//       .catch((err) => {
-//         res.send(err);
-//       });
+exports.data = (req, res) => {
+  let from = req.body.inDate;
+  let to = req.body.outDate;
+  let inTime = req.body.inTime;
+  let outTime = req.body.outTime;
 
-const parseString = require("xml2js").parseString;
-// exports.handler =
-// function(context, event, callback) {
+  console.log(req.body);
+  console.log("from", from);
+  console.log("to", to);
+
 var xmlBodyStr = `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
 <s:Body>
     <ExecuteReport xmlns="http://tempuri.org/">
@@ -30,25 +24,25 @@ var xmlBodyStr = `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/
                         <a:Id>1</a:Id>
                         <a:Name>StartDate</a:Name>
                         <a:ParameterType>String</a:ParameterType>
-                        <a:Value>09/01/2022</a:Value>
+                        <a:Value>${from}</a:Value>
                     </a:ReportParameterContract>
                     <a:ReportParameterContract>
                         <a:Id>2</a:Id>
                         <a:Name>StartTime</a:Name>
                         <a:ParameterType>String</a:ParameterType>
-                        <a:Value>12:00 AM</a:Value>
+                        <a:Value>${inTime}</a:Value>
                     </a:ReportParameterContract>
                     <a:ReportParameterContract>
                         <a:Id>3</a:Id>
                         <a:Name>EndDate</a:Name>
                         <a:ParameterType>String</a:ParameterType>
-                        <a:Value>09/01/2022</a:Value>
+                        <a:Value>${to}</a:Value>
                     </a:ReportParameterContract>
                     <a:ReportParameterContract>
                         <a:Id>4</a:Id>
                         <a:Name>EndTime</a:Name>
                         <a:ParameterType>String</a:ParameterType>
-                        <a:Value>11:59:59 PM</a:Value>
+                        <a:Value>${outTime}</a:Value>
                     </a:ReportParameterContract>
                  <a:ReportParameterContract>
                         <a:Id>5</a:Id>
@@ -72,7 +66,7 @@ var xmlBodyStr = `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/
                         <a:Id>8</a:Id>
                         <a:Name>RateIDs</a:Name>
                         <a:ParameterType>String</a:ParameterType>
-                        <a:Value>5,8,2,6,11,3,10,7,4,9</a:Value>
+                  
                     </a:ReportParameterContract>
                      <a:ReportParameterContract>
                         <a:Id>9</a:Id>
@@ -101,13 +95,10 @@ axios
     xmlBodyStr,
     config
   )
-  .then((res) => {
-    //parseString(res.data, function(err, results)
-      //console.log(JSON.stringify(res.data))
-    let parser =  new DOMParser();
-    let xmlDOM = parser.parseFromString(res.data, 'application/xml')
-    let fields = xmlDOM.querySelectorAll("Fields");
-    console.log(fields);
+  .then((response) => {
+    
+    //console.log(JSON.stringify(res.data))
+    res.send(response.data)
+
   })
-  
-// 
+}

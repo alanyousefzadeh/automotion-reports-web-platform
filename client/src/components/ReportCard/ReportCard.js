@@ -17,11 +17,6 @@ function ReportCard(props) {
         <Card className="m-3" style={{ width: '15rem'}}>
             <Card.Body>
                 <Card.Title>{title}</Card.Title>
-                {/* <Card.Text>
-                Some quick example text to build on the card title and make up the bulk of
-                the card's content.
-                </Card.Text> */}
-                {/* <Button variant="primary" onClick={clickHandler}>View Report</Button> */}
             </Card.Body>
         </Card>
         </button>

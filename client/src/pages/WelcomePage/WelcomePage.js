@@ -19,6 +19,12 @@ const data = [
     image: baxter,
   },
   {
+    id: 5,
+    title: "Schermerhorn",
+    image: "schermerhorn"
+  },
+
+  {
     id: 2,
     title: "VanVorst",
     image: vanvorst,

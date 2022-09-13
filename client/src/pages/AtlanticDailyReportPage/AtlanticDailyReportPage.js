@@ -6,7 +6,6 @@ import AtlanticTable from "../../components/AtlanticTable/AtlanticTable";
 import ReportHeader from "../../components/ReportHeader/ReportHeader";
 import ReactDOM from "react-dom/client";
 import ReactDOMServer from 'react-dom/server'
-
 import AutomatedDailyReportPage from "../../pages/AutomatedDailyReportPage/AutomatedDailyReportPage";
 import { automatedGarageAPI, formatDate, padTo2Digits } from "./helpers";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
@@ -203,13 +202,15 @@ const AtlanticDailyReportPage = () => {
     }
   }
 
-
   useEffect(() => {
     // const token = sessionStorage.getItem("token");
-
+    
     if (garage === "Atlantic Terrace") {
       fetchAtlanticData();
-    } else {
+    }
+    // else if(garage === 'Schermerhorn'){
+    //   fetchSchermerhornData();
+    else{
       automatedGarageAPI(
         garage,
         automatedSetFailedtoLoad,
@@ -236,7 +237,7 @@ const AtlanticDailyReportPage = () => {
             formattedDate={formattedDate}
           />
         )
-      ) : (
+      ) : ( 
         <div className="report">
           {failedToLoad ? (
             <p>

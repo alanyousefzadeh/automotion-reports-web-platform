@@ -46,5 +46,7 @@ function formatDate(date) {
   ].join('-');
 }
 
-export const automatedGarageAPI = getData;
+export {
+  getData as automatedGarageAPI,
+}
 export {formatDate, padTo2Digits}
