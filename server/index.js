@@ -10,7 +10,7 @@ const emailRoute = require('./routes/emailRoute');
 const currentUserRoute = require('./routes/currentUserRoute');
 const retrievalTimeRoute = require('./routes/retrievalTimeRoute')
 const atlanticOpenAPIRoute = require('./routes/atlanticOpenAPI')
-const schermerhornAPIRoute = require('./routes/schermerhornAPIRoute')
+const schemehornAPIRoute = require('./routes/schemehornAPIRoute')
 
 const port = process.env.PORT || 8080;
 
@@ -25,7 +25,7 @@ app.use('/emailGenerator', emailRoute);
 app.use('/currentUser', currentUserRoute);
 app.use('/retrievalTime', retrievalTimeRoute);
 app.use('/atlanticOpenAPI', atlanticOpenAPIRoute)
-app.use('/schermerhorn', schermerhornAPIRoute)
+app.use('/schemehorn', schemehornAPIRoute)
 
 //port listener
 app.listen(port, () => {

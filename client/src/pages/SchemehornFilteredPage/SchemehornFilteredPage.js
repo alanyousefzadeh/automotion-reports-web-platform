@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
-import "./SchermerhornFilteredPage.scss";
+import "./SchemehornFilteredPage.scss";
 
-function SchermerhornFilteredPage() {
+function SchemehornFilteredPage() {
   const [inDate, setInDate] = useState("2022-09-01");
   const [outDate, setOutDate] = useState("2022-09-01");
   const [data, setData] = useState(null);
 
-  const getSchermerhornData = async () => {
-    let response = await axios.post("http://localhost:8080/schermerhorn", {
+  const getSchemehornData = async () => {
+    let response = await axios.post("http://localhost:8080/schemehorn", {
       inDate,
       outDate,
       inTime: "12:00 AM",
@@ -19,7 +19,7 @@ function SchermerhornFilteredPage() {
   };
 
   useEffect(() => {
-    getSchermerhornData();
+    getSchemehornData();
   }, []);
   let location = [];
   let rate = [];
@@ -68,7 +68,7 @@ function SchermerhornFilteredPage() {
     
     <>
     {console.log(rate, tax1, total)}
-      <Table striped bordered className="table-sm table-font schermerhorn">
+      <Table striped bordered className="table-sm table-font schemehorn">
         <thead>
           <tr className="table-warning">
             <th>Rate</th>
@@ -107,4 +107,4 @@ function SchermerhornFilteredPage() {
   );
 }
 
-export default SchermerhornFilteredPage;
+export default SchemehornFilteredPage;

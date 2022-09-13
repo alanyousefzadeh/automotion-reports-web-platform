@@ -20,8 +20,8 @@ const data = [
   },
   {
     id: 5,
-    title: "Schermerhorn",
-    image: "schermerhorn"
+    title: "schemehorn",
+    image: "schemehorn"
   },
 
   {
