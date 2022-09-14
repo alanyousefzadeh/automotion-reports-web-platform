@@ -254,9 +254,6 @@ function FilteredReportPage() {
               <Button onClick={generateReport} className="button">
                 Generate Report
               </Button>
-              {/* <Button onClick={setDisplayForm(!displayForm)} className="button">
-                    {displayForm ? 'Hide Email Form': 'Open Email Form'}
-              </Button> */}
               <EmailFormDisplayToggler/>
               {isLoading ? <LoadingSpinner/> :
               <AtlanticTable

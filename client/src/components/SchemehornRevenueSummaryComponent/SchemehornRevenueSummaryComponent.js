@@ -4,12 +4,14 @@ import Table from "react-bootstrap/Table";
 import "./SchemehornRevenueSummaryComponent.scss";
 import Navigation from "../Navigation/Navigation";
 import LoadingSpinner from "../LoadingWheel/LoadingWheel";
+import DatePicker from "../DatePicker/DatePicker";
+import { Button } from "react-bootstrap";
 
 function SchemehornFilteredPage() {
-  const [inDate, setInDate] = useState("2022-09-01");
-  const [outDate, setOutDate] = useState("2022-09-01");
+  const [inDate, setInDate] = useState(null);
+  const [outDate, setOutDate] = useState(null);
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
 
   const getSchemehornData = async () => {
     let response = await axios.post("http://localhost:8080/schemehorn", {
@@ -22,9 +24,14 @@ function SchemehornFilteredPage() {
     setLoading(false)
   };
 
-  useEffect(() => {
-    getSchemehornData();
-  }, []);
+  const getData = () => {
+    if(inDate !== null && outDate !== null) {
+      getSchemehornData();
+      setLoading(true)
+    }else{
+      alert("please provide in and out dates")
+    }
+  };
 
   let rate = [];
   let count = [];
@@ -66,11 +73,21 @@ function SchemehornFilteredPage() {
 
   return (
     
-    <>
-    {loading ? <LoadingSpinner/> :
-    <>
+    
+    <div className="report">
       <Navigation/>
-      <p className="report">Schemehorn Revenue Summary</p>
+      <DatePicker
+      label={'In-Date'}
+      setDate={setInDate}
+      />
+      <DatePicker
+      label={'Out-Date'}
+      setDate={setOutDate}
+      />
+      <Button className="button" onClick={getData}>Generate Report</Button>
+      {loading ? <LoadingSpinner/> :
+      <>
+      <p className="report">Schemehorn Revenue Summary <b>From:</b> {inDate}, 12AM <b>To:</b> {outDate}, 11:59PM</p>
       <Table striped bordered className="table-sm table-font schemehorn report">
         <thead>
           <tr className="table-warning">
@@ -91,7 +108,7 @@ function SchemehornFilteredPage() {
                   {disc[i].toFixed(2)}
                 </td>
                 <td>{tax1[i].toFixed(2)}</td>
-                <td>{total[i].toFixed(2)}</td>
+                <td>{total[i].toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
               </tr>
             );
           })}
@@ -99,16 +116,16 @@ function SchemehornFilteredPage() {
             <td>
               <b>Totals:</b>
             </td>
-            <td>{totalCount}</td>
-            <td className="disc">${totalDisc.toFixed(2)}</td>
-            <td>${totalTax1.toFixed(2)}</td>
-            <td>${finalTotal.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
+            <th>{totalCount}</th>
+            <th className="disc">${totalDisc.toFixed(2)}</th>
+            <th>${totalTax1.toFixed(2)}</th>
+            <th>${finalTotal.toLocaleString(undefined, {minimumFractionDigits: 2})}</th>
           </tr>
         </tbody>
       </Table>
-    </>
-    }
-   </>
+      </>
+      }
+    </div>
   );
 }
 
