@@ -6,11 +6,13 @@ import Navigation from "../Navigation/Navigation";
 import LoadingSpinner from "../LoadingWheel/LoadingWheel";
 import DatePicker from "../DatePicker/DatePicker";
 import { Button } from "react-bootstrap";
+import SchemehornDiscountComponent from "../SchemehornDiscountComponent/SchemehornDiscountComponent";
 
 function SchemehornFilteredPage() {
   const [inDate, setInDate] = useState(null);
   const [outDate, setOutDate] = useState(null);
   const [data, setData] = useState(null);
+  const [discounts, setDiscounts] = useState(null)
   const [loading, setLoading] = useState(false)
 
   const getSchemehornData = async () => {
@@ -21,12 +23,19 @@ function SchemehornFilteredPage() {
       outTime: "11:59:59 PM",
     });
     setData(response.data);
+    let discountResponse = await axios.post('http://localhost:8080/schemehorn/discounts', {
+      inDate,
+      outDate,
+      inTime: "12:00 AM",
+      outTime: "11:59:59 PM",
+    })
+    setDiscounts(discountResponse.data)
     setLoading(false)
   };
 
   const getData = () => {
     if(inDate !== null && outDate !== null) {
-      getSchemehornData();
+      getSchemehornData();  
       setLoading(true)
     }else{
       alert("please provide in and out dates")
@@ -123,6 +132,8 @@ function SchemehornFilteredPage() {
           </tr>
         </tbody>
       </Table>
+      <SchemehornDiscountComponent
+      discounts={discounts}/>
       </>
       }
     </div>
