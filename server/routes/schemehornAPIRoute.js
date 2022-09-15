@@ -13,4 +13,8 @@ router
     .route('/tickets')
         .post(schemehornController.tickets)
 
+        router
+        .route('/payments')
+            .post(schemehornController.payments)
+
 module.exports = router;
