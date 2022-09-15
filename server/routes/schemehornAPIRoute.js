@@ -9,4 +9,8 @@ router
     .route('/discounts')
         .post(schemehornController.discountData)
 
+router
+    .route('/tickets')
+        .post(schemehornController.tickets)
+
 module.exports = router;
