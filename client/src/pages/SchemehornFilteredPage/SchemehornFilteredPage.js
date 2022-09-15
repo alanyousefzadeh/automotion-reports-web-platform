@@ -6,15 +6,18 @@ import DatePicker from "../../components/DatePicker/DatePicker";
 import { Button } from "react-bootstrap";
 import SchemehornRevenueSummaryComponent from "../../components/SchemehornRevenueSummaryComponent/SchemehornRevenueSummaryComponent";
 import SchemehornDiscountComponent from "../../components/SchemehornDiscountComponent/SchemehornDiscountComponent";
+import TicketRangesComponent from "../../components/TicketRangesComponent/TicketRangesComponent";
 
 function SchemehornFilteredPage() {
   const [inDate, setInDate] = useState(null);
   const [outDate, setOutDate] = useState(null);
   const [data, setData] = useState(null);
   const [discounts, setDiscounts] = useState(null);
+  const [ticketRanges, setTicketRanges] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const getSchemehornData = async () => {
+    //revenue summary API call
     let response = await axios.post("http://localhost:8080/schemehorn", {
       inDate,
       outDate,
@@ -22,6 +25,8 @@ function SchemehornFilteredPage() {
       outTime: "11:59:59 PM",
     });
     setData(response.data);
+
+    //discount table API call
     let discountResponse = await axios.post(
       "http://localhost:8080/schemehorn/discounts",
       {
@@ -32,6 +37,18 @@ function SchemehornFilteredPage() {
       }
     );
     setDiscounts(discountResponse.data);
+
+    //ticket ranges API call
+    let ticketRangesResponse = await axios.post(
+      "http://localhost:8080/schemehorn/tickets",
+      {
+        inDate,
+        outDate,
+        inTime: "12:00 AM",
+        outTime: "11:59:59 PM",
+      }
+    );
+    setTicketRanges(ticketRangesResponse.data);
     setLoading(false);
   };
 
@@ -62,6 +79,8 @@ function SchemehornFilteredPage() {
             data={data}
           />
           <SchemehornDiscountComponent discounts={discounts} />
+
+          <TicketRangesComponent ticketRanges={ticketRanges} />
         </>
       )}
     </div>
