@@ -51,7 +51,7 @@ export default function TicketRangesComponent(props) {
             <th>Left Over</th>
             <th>Issued</th>
             <th>Redeemed</th>
-            <th>Out- standing</th>
+            <th>Out - Standing</th>
           </tr>
         </thead>
         <tbody>

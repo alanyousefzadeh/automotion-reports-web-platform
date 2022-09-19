@@ -204,24 +204,24 @@ const AtlanticDailyReportPage = () => {
 
   useEffect(() => {
     
-    if (garage === "Atlantic Terrace") {
+    // if (garage === "Atlantic Terrace") {
       fetchAtlanticData();
-    }else{
-      automatedGarageAPI(
-        garage,
-        automatedSetFailedtoLoad,
-        automatedSetErr,
-        setResponse,
-        setTotal,
-        formattedDate,
-        setIsLoading
-      );
-    }
+    // }else{
+    //   automatedGarageAPI(
+    //     garage,
+    //     automatedSetFailedtoLoad,
+    //     automatedSetErr,
+    //     setResponse,
+    //     setTotal,
+    //     formattedDate,
+    //     setIsLoading
+    //   );
+    // }
   }, []);
 
   return (
     <div>
-      {garage !== "Atlantic Terrace" ? (
+      {/* {garage !== "Atlantic Terrace" ? (
         isLoading ? (
           <LoadingSpinner />
         ) : (
@@ -233,7 +233,7 @@ const AtlanticDailyReportPage = () => {
             formattedDate={formattedDate}
           />
         )
-      ) : ( 
+      ) : (  */}
         <div className="report">
           {failedToLoad ? (
             <p>
@@ -272,7 +272,7 @@ const AtlanticDailyReportPage = () => {
             </div>
           )}
         </div>
-      )}
+      {/* )} */}
     </div>
   );
 };

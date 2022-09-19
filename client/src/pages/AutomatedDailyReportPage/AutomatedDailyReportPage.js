@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import TransactionTable from "../../components/TransactionTable/TransactionTable";
 import { useParams, Link } from "react-router-dom";
 import RateTable from "../../components/RateTable/RateTable";
@@ -7,16 +7,23 @@ import Navigation from '../../components/Navigation/Navigation'
 import './AutomatedDailyReport.scss'
 import AutomatedDailyHeader from "../../components/AutomatedDailyHeader/AutomatedDailyHeader";
 import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
-
-function AutomatedDailyReportPage(props) {
+import {automatedGarageAPI} from './AutomatedDailyReportHelpers';
+function AutomatedDailyReportPage() {
   
-  const {
-    response,
-    automatedFailedToLoad,
-    automatedErr,
-    total,
-    formattedDate,
-  } = props;
+  const [response, setResponse] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [failedToLoad, setFailedToLoad] = useState(false)
+  const [err, setErr] = useState(null)
+  const [total, setTotal] = useState(null)
+  const [formattedDate, setFormattedDate] = useState(null)
+
+  // const {
+  //   response,
+  //   automatedFailedToLoad,
+  //   automatedErr,
+  //   total,
+  //   formattedDate,
+  // } = props;
 
   let transientInTable = new Array(24).fill(0);
   let transientOutTable = new Array(24).fill(0);
@@ -26,10 +33,23 @@ function AutomatedDailyReportPage(props) {
   const { garageName } = useParams();
   console.log("db", garageName);
 
-  if (!!automatedFailedToLoad) {
+  useEffect(() => {
+    automatedGarageAPI(
+          garageName,
+          setFailedToLoad,
+          setErr,
+          setResponse,
+          setTotal,
+          formattedDate,
+          setIsLoading
+        );
+  }, [])
+  
+
+  if (!!failedToLoad) {
     return (
       <p>
-        {automatedErr} <Link to="/login">login</Link>
+        {err} <Link to="/login">login</Link>
       </p>
     );
   }

@@ -44,9 +44,9 @@ function SchemehornRevenueSummaryComponent(props) {
   return (
     <div className="report">
       <p className="report">
-        Schemehorn Revenue Summary<br></br>
         <b>From:</b>{" "}{inDate}, 12:00AM<br></br> 
-        <b>To:</b>{" "}{outDate}, 11:59PM
+        <b>To:</b>{" "}{outDate}, 11:59PM<br></br>
+        Schemehorn Revenue Summary
       </p>
       <Table striped bordered className="table-sm table-font schemehorn report">
         <thead>

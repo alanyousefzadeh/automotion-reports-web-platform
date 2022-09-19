@@ -113,17 +113,17 @@ export default function PaymentTypes(props) {
         <tbody>
           <tr>
             <th>Cash</th>
-            <td>{cashCount}</td>
-            <td>${cashTotal.toLocaleString(undefined, {
+            <th>{cashCount}</th>
+            <th>${cashTotal.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
-              })}</td>
+              })}</th>
           </tr>
           <tr>
             <th>Credit Card</th>
-            <td>{ccTotalCount}</td>
-            <td>${ccTotalAmount.toLocaleString(undefined, {
+            <th>{ccTotalCount}</th>
+            <th>${ccTotalAmount.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
-              })}</td>
+              })}</th>
           </tr>
           <tr>
             <td>AMEX</td>
@@ -155,38 +155,37 @@ export default function PaymentTypes(props) {
           </tr>
           <tr>
             <th>EFTPOS</th>
-            <td>{eftpos[0]}</td>
-            <td>${eftpos[1].toLocaleString(undefined, {
+            <th>{eftpos[0]}</th>
+            <th>${eftpos[1].toLocaleString(undefined, {
                 minimumFractionDigits: 2,
-              })}</td>
+              })}</th>
           </tr>
           <tr>
             <th>No Fee Due</th>
-            <td>{noFeeCount}</td>
-            <td>$0.00</td>
+            <th>{noFeeCount}</th>
+            <th>$0.00</th>
           </tr>
           <tr>
             <th>Totals:</th>
-            <td>{totals[0]}</td>
-            <td>${totals[1].toLocaleString(undefined, {
+            <th>{totals[0]}</th>
+            <th>${totals[1].toLocaleString(undefined, {
                 minimumFractionDigits: 2,
-              })}</td>
+              })}</th>
           </tr>
           <tr>
             <th>Comps:</th>
-            <td>{comps[0]}</td>
-            <td>${comps[1].toLocaleString(undefined, {
+            <th>{comps[0]}</th>
+            <th>${comps[1].toLocaleString(undefined, {
                 minimumFractionDigits: 2,
-              })}</td>
+              })}</th>
           </tr>
           <tr>
             <th>Totals w/ Comps:</th>
-            <td>{totWComps[0]}</td>
-            <td>${totWComps[1].toLocaleString(undefined, {
+            <th>{totWComps[0]}</th>
+            <th>${totWComps[1].toLocaleString(undefined, {
                 minimumFractionDigits: 2,
-              })}</td>
+              })}</th>
           </tr>
-
         </tbody>
       </Table>
     </div>

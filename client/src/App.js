@@ -9,6 +9,7 @@ import {AuthContextProvider} from "./components/Context/AuthContext";
 import WaitTimePage from './pages/WaitTimesPage/WaitTimePage'
 import AtlanticOpenPage from './pages/AtlanticOpenPage/AtlanticOpenPage';
 import SchemehornFilteredPage from './pages/SchemehornFilteredPage/SchemehornFilteredPage';
+import AutomatedDailyReportPage from './pages/AutomatedDailyReportPage/AutomatedDailyReportPage';
 
 
 function App() {
@@ -24,7 +25,8 @@ function App() {
             {/* <Route exact path='/reportSelect/schemehorn/daily' element={<ProtectedRoute><schemehornDailyPage/></ProtectedRoute>}/> */}
             <Route exact path='/reportSelect/schemehorn/filtered' element={<ProtectedRoute><SchemehornFilteredPage/></ProtectedRoute>}/>
             <Route path='/reportSelect/:garageName/filtered' element={<ProtectedRoute><FilteredReportPage/></ProtectedRoute>}/>
-            <Route path='/reportSelect/:garageName/daily' element={<ProtectedRoute><AtlanticDailyReportPage/></ProtectedRoute>}/>
+            <Route path='/reportSelect/Atlantic Terrace/daily' element={<ProtectedRoute><AtlanticDailyReportPage/></ProtectedRoute>}/>
+            <Route path='/reportSelect/:garageName/daily' element={<ProtectedRoute><AutomatedDailyReportPage/></ProtectedRoute>}/>
             <Route path='/reportSelect/:garageName/wait' element={<ProtectedRoute><WaitTimePage/></ProtectedRoute>}/>
             <Route path='/reportSelect/:garageName/open' element={<ProtectedRoute><AtlanticOpenPage/></ProtectedRoute>}/>
           </Routes>
