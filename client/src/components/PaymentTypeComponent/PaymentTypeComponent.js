@@ -112,14 +112,14 @@ export default function PaymentTypes(props) {
         </thead>
         <tbody>
           <tr>
-            <td>Cash</td>
+            <th>Cash</th>
             <td>{cashCount}</td>
             <td>${cashTotal.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
               })}</td>
           </tr>
           <tr>
-            <td>Credit Card</td>
+            <th>Credit Card</th>
             <td>{ccTotalCount}</td>
             <td>${ccTotalAmount.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
@@ -154,33 +154,33 @@ export default function PaymentTypes(props) {
               })}</td>
           </tr>
           <tr>
-            <td>EFTPOS</td>
+            <th>EFTPOS</th>
             <td>{eftpos[0]}</td>
             <td>${eftpos[1].toLocaleString(undefined, {
                 minimumFractionDigits: 2,
               })}</td>
           </tr>
           <tr>
-            <td>No Fee Due</td>
+            <th>No Fee Due</th>
             <td>{noFeeCount}</td>
             <td>$0.00</td>
           </tr>
           <tr>
-            <td>Totals:</td>
+            <th>Totals:</th>
             <td>{totals[0]}</td>
             <td>${totals[1].toLocaleString(undefined, {
                 minimumFractionDigits: 2,
               })}</td>
           </tr>
           <tr>
-            <td>Comps</td>
+            <th>Comps:</th>
             <td>{comps[0]}</td>
             <td>${comps[1].toLocaleString(undefined, {
                 minimumFractionDigits: 2,
               })}</td>
           </tr>
           <tr>
-            <td>Totals w/ Comps:</td>
+            <th>Totals w/ Comps:</th>
             <td>{totWComps[0]}</td>
             <td>${totWComps[1].toLocaleString(undefined, {
                 minimumFractionDigits: 2,

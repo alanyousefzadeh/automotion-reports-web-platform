@@ -20,7 +20,7 @@ function SchemehornFilteredPage() {
 
   const getSchemehornData = async () => {
     //revenue summary API call
-    let response = await axios.post("http://localhost:8080/schemehorn", {
+    let response = await axios.post("https://automotion-server.herokuapp.com/schemehorn", {
       inDate,
       outDate,
       inTime: "12:00 AM",
@@ -30,7 +30,7 @@ function SchemehornFilteredPage() {
 
     //discount table API call
     let discountResponse = await axios.post(
-      "http://localhost:8080/schemehorn/discounts",
+      "https://automotion-server.herokuapp.com/schemehorn/discounts",
       {
         inDate,
         outDate,
@@ -42,7 +42,7 @@ function SchemehornFilteredPage() {
 
     //ticket ranges API call
     let ticketRangesResponse = await axios.post(
-      "http://localhost:8080/schemehorn/tickets",
+      "https://automotion-server.herokuapp.com/schemehorn/tickets",
       {
         inDate,
         outDate,
@@ -55,7 +55,7 @@ function SchemehornFilteredPage() {
 
     //payment type API call
     let paymentTypesResponse = await axios.post(
-      "http://localhost:8080/schemehorn/payments",
+      "https://automotion-server.herokuapp.com/schemehorn/payments",
       {
         inDate,
         outDate,
