@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams, Link } from "react-router-dom";
-import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 import AtlanticTable from "../../components/AtlanticTable/AtlanticTable";
 import ReportHeader from "../../components/ReportHeader/ReportHeader";
 import ReactDOM from "react-dom/client";
 import ReactDOMServer from "react-dom/server";
-import { formatDate } from "./helpers";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
 import "./AtlanticDailyReportPage.scss";
 import Navigation from "../../components/Navigation/Navigation";
@@ -19,13 +17,10 @@ const AtlanticDailyReportPage = () => {
       .sort()
       .reduce((r, k) => ((r[k] = o[k]), r), {});
   };
-  //access the URL parameters to know which record and garage we are currently on
-  let params = useParams();
 
   //set the state variables
   const [atlanticAllData, setatlanticAllData] = useState([]);
   const [failedToLoad, setFailedToLoad] = useState(false);
-  const [garage, setGarage] = useState(params.garageName);
   const [inDate, setInDate] = useState(
     Math.floor(new Date().setHours(3, 0, 0, 0) - 24 * 60 * 60 * 1000)
   );
@@ -209,7 +204,7 @@ const AtlanticDailyReportPage = () => {
           ) : (
             <>
               <Navigation />
-              <p className="daily__report">{garage} Daily Report Page</p>
+              <p className="daily__report">Atlantic Terrace Daily Report Page</p>
               <ReportHeader
                 start={start}
                 closed={atlanticAllData.length}

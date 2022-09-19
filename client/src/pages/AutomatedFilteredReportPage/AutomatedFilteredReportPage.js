@@ -10,6 +10,7 @@ import "./AutomatedFiltered.scss";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
 import ReactDOMServer from 'react-dom/server'
 import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
+import Navigation from "../../components/Navigation/Navigation";
 
 function AutomatedFilteredReportPage() {
   const [inDate, setInDate] = useState(null);
@@ -93,6 +94,8 @@ function AutomatedFilteredReportPage() {
 
   return (
     <div className="report">
+      <Navigation/>
+      <p className="report_title">{garageName} Garage Filtered Report</p>
       <div className="filtered-date-picker">
         <DatePicker label={"In-Date - 12:00AM"} setDate={setInDate} />
         <DatePicker label={"Out-Date - 11:59PM"} setDate={setOutDate} />

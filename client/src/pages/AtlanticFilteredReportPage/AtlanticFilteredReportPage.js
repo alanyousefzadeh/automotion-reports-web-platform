@@ -5,7 +5,6 @@ import { useParams, Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import AtlanticTable from "../../components/AtlanticTable/AtlanticTable";
 import DatePicker from "../../components/DatePicker/DatePicker";
-import AutomatedFilteredReportPage from "../AutomatedFilteredReportPage/AutomatedFilteredReportPage";
 import Navigation from "../../components/Navigation/Navigation";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
 import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
@@ -23,7 +22,6 @@ function FilteredReportPage() {
   const [atlanticAllData, setatlanticAllData] = useState([]);
   const [failedToLoad, setFailedToLoad] = useState(false);
   const [err, setErr] = useState(null);
-  const [garage, setGarage] = useState(params.garageName);
   const [inDate, setInDate] = useState(null);
   const [outDate, setOutDate] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -159,56 +157,47 @@ function FilteredReportPage() {
   });
 
   const generateReport = () => {
-    const token = sessionStorage.getItem("token");
-    if (garage === "Atlantic Terrace") {
-      if (inDate === null || outDate === null) {
-        //default report (partial report)
-        axios
-          .get(
-            "https://automotion-server.herokuapp.com/garagedata/atlanticClosed",
-            {
-              params: {
-                inDate: new Date().setHours(3, 0, 0, 0),
-                outDate: new Date().getTime(),
-              },
-              headers: {
-                authorization: "Bearer " + token,
-              },
+    if (inDate === null || outDate === null) {
+      //default report (partial report)
+      axios
+        .get(
+          "https://automotion-server.herokuapp.com/garagedata/atlanticClosed",
+          {
+            params: {
+              inDate: new Date().setHours(3, 0, 0, 0),
+              outDate: new Date().getTime(),
             }
-          )
-          .then((res) => {
-            setatlanticAllData(res.data);
-            setIsLoading(false);
-          })
-          .catch((error) => {
-            setFailedToLoad(true);
-            setErr(error.response.data);
-          });
-      } else {
-        //filtered report
-        setIsLoading(true);
-        axios
-          .get(
-            "https://automotion-server.herokuapp.com/garagedata/atlanticClosed",
-            {
-              params: {
-                inDate: new Date(`${inDate}T03:00:00`).getTime(),
-                outDate: new Date(`${outDate}T03:00:00`).getTime(),
-              },
-              headers: {
-                authorization: "Bearer " + token,
-              },
+          }
+        )
+        .then((res) => {
+          setatlanticAllData(res.data);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          setFailedToLoad(true);
+          setErr(error.response.data);
+        });
+    } else {
+      //filtered report
+      setIsLoading(true);
+      axios
+        .get(
+          "https://automotion-server.herokuapp.com/garagedata/atlanticClosed",
+          {
+            params: {
+              inDate: new Date(`${inDate}T03:00:00`).getTime(),
+              outDate: new Date(`${outDate}T03:00:00`).getTime(),
             }
-          )
-          .then((res) => {
-            setatlanticAllData(res.data);
-            setIsLoading(false);
-          })
-          .catch((error) => {
-            setFailedToLoad(true);
-            setErr(error.response.data);
-          });
-      }
+          }
+        )
+        .then((res) => {
+          setatlanticAllData(res.data);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          setFailedToLoad(true);
+          setErr(error.response.data);
+        });
     }
   };
 
@@ -219,42 +208,34 @@ function FilteredReportPage() {
   return (
     <div>
       <Navigation />
-      <p className="atlantic__filtered">{garage} Garage Filtered Report</p>
-      {garage !== "Atlantic Terrace" ? (
-        <>
-          <AutomatedFilteredReportPage />
-        </>
-      ) : (
-        <div className="report">
-          {failedToLoad ? (
-            <p>
-              error: {err} <Link to="/login">Login</Link>
-            </p>
-          ) : (
-            <div id="pdf-report">
-              <section className="datepicker m-2">
-                <DatePicker label={"In-Date - 3AM"} setDate={setInDate} />
-                <DatePicker label={"Out-Date - 3AM"} setDate={setOutDate} />
-              </section>
-              <Button onClick={generateReport} className="button">
-                Generate Report
-              </Button>
-              <EmailFormDisplayToggler />
-              {isLoading ? (
-                <LoadingSpinner />
-              ) : (
-                <AtlanticTable
-                  atlanticTable={atlanticTable}
-                  atlanticDiscountTable={sortObjectByKeys(
-                    atlanticDiscountTable
-                  )}
-                  atlanticMiscTable={atlanticMiscTable}
-                />
-              )}
-            </div>
-          )}
-        </div>
-      )}
+      <p className="atlantic__filtered">Atlantic Terrace Filtered Report</p>
+      <div className="report">
+        {failedToLoad ? (
+          <p>
+            error: {err} <Link to="/login">Login</Link>
+          </p>
+        ) : (
+          <div id="pdf-report">
+            <section className="datepicker m-2">
+              <DatePicker label={"In-Date - 3AM"} setDate={setInDate} />
+              <DatePicker label={"Out-Date - 3AM"} setDate={setOutDate} />
+            </section>
+            <Button onClick={generateReport} className="button">
+              Generate Report
+            </Button>
+            <EmailFormDisplayToggler />
+            {isLoading ? (
+              <LoadingSpinner />
+            ) : (
+              <AtlanticTable
+                atlanticTable={atlanticTable}
+                atlanticDiscountTable={sortObjectByKeys(atlanticDiscountTable)}
+                atlanticMiscTable={atlanticMiscTable}
+              />
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
