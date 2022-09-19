@@ -1,29 +1,21 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import TransactionTable from "../../components/TransactionTable/TransactionTable";
 import { useParams, Link } from "react-router-dom";
 import RateTable from "../../components/RateTable/RateTable";
 import OverParkedTable from "../../components/OverParked/OverParkedTable";
-import Navigation from '../../components/Navigation/Navigation'
-import './AutomatedDailyReport.scss'
+import Navigation from "../../components/Navigation/Navigation";
+import "./AutomatedDailyReport.scss";
 import AutomatedDailyHeader from "../../components/AutomatedDailyHeader/AutomatedDailyHeader";
 import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
-import {automatedGarageAPI} from './AutomatedDailyReportHelpers';
-function AutomatedDailyReportPage() {
-  
-  const [response, setResponse] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [failedToLoad, setFailedToLoad] = useState(false)
-  const [err, setErr] = useState(null)
-  const [total, setTotal] = useState(null)
-  const [formattedDate, setFormattedDate] = useState(null)
+import { automatedGarageAPI, formatDate } from "./AutomatedDailyReportHelpers";
+import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
 
-  // const {
-  //   response,
-  //   automatedFailedToLoad,
-  //   automatedErr,
-  //   total,
-  //   formattedDate,
-  // } = props;
+function AutomatedDailyReportPage() {
+  const [response, setResponse] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [failedToLoad, setFailedToLoad] = useState(false);
+  const [err, setErr] = useState(null);
+  const [total, setTotal] = useState(0);
 
   let transientInTable = new Array(24).fill(0);
   let transientOutTable = new Array(24).fill(0);
@@ -33,18 +25,21 @@ function AutomatedDailyReportPage() {
   const { garageName } = useParams();
   console.log("db", garageName);
 
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const formattedDate = formatDate(yesterday);
+
   useEffect(() => {
     automatedGarageAPI(
-          garageName,
-          setFailedToLoad,
-          setErr,
-          setResponse,
-          setTotal,
-          formattedDate,
-          setIsLoading
-        );
-  }, [])
-  
+      garageName,
+      setFailedToLoad,
+      setErr,
+      setResponse,
+      setTotal,
+      formattedDate,
+      setIsLoading
+    );
+  }, []);
 
   if (!!failedToLoad) {
     return (
@@ -74,14 +69,23 @@ function AutomatedDailyReportPage() {
   }
 
   return (
- 
+    isLoading ? <LoadingSpinner/> :
     <div className="report">
-      <Navigation/>
-      <p className="daily-report__header">{garageName} Daily Report for: Yesterday {formattedDate}, 12:00AM - 11:59PM</p>
-      <EmailFormDisplayToggler/>
+      <Navigation />
+      <p className="daily-report__header">
+        {garageName} Daily Report for: Yesterday {formattedDate}, 12:00AM -
+        11:59PM
+      </p>
+      <EmailFormDisplayToggler />
       <AutomatedDailyHeader
-        ticketStart={response.ticketStart.length > 0 ? response.ticketStart[0].TicketNum : ''}
-        ticketEnd={response.ticketEnd.length > 0 ? response.ticketEnd[0].TicketNum : ''}
+        ticketStart={
+          response.ticketStart.length > 0
+            ? response.ticketStart[0].TicketNum
+            : ""
+        }
+        ticketEnd={
+          response.ticketEnd.length > 0 ? response.ticketEnd[0].TicketNum : ""
+        }
         currentMonthliesIn={response.currentMonthliesIn[0].monthliesIn}
         openPrior={response.openPrior[0].openPrior}
         openTicketsToday={response.openTicketsToday[0].openToday}
@@ -96,10 +100,7 @@ function AutomatedDailyReportPage() {
       />
       {response ? (
         <>
-          <RateTable
-            garageName={garageName}
-            rateData={response.rateTable}
-          />
+          <RateTable garageName={garageName} rateData={response.rateTable} />
           <OverParkedTable overParkedData={response.overParked} />
         </>
       ) : (

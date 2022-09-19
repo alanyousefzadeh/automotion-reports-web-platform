@@ -5,17 +5,15 @@ import Button from "react-bootstrap/Button";
 import AtlanticTable from "../../components/AtlanticTable/AtlanticTable";
 import ReportHeader from "../../components/ReportHeader/ReportHeader";
 import ReactDOM from "react-dom/client";
-import ReactDOMServer from 'react-dom/server'
-import AutomatedDailyReportPage from "../../pages/AutomatedDailyReportPage/AutomatedDailyReportPage";
-import { automatedGarageAPI, formatDate, padTo2Digits } from "./helpers";
+import ReactDOMServer from "react-dom/server";
+import { formatDate } from "./helpers";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
-import './AtlanticDailyReportPage.scss';
+import "./AtlanticDailyReportPage.scss";
 import Navigation from "../../components/Navigation/Navigation";
 import EmailComponent from "../../components/EmailComponent/EmailComponent";
 import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
 
 const AtlanticDailyReportPage = () => {
- 
   const sortObjectByKeys = (o) => {
     return Object.keys(o)
       .sort()
@@ -35,17 +33,8 @@ const AtlanticDailyReportPage = () => {
     Math.floor(new Date().setHours(3, 0, 0, 0))
   );
   const [err, setErr] = useState(null);
-  ////////////////////////////////////////
-  const [response, setResponse] = useState(null);
-  const [automatedFailedtoLoad, automatedSetFailedtoLoad] = useState(false);
-  const [automatedErr, automatedSetErr] = useState(null);
-  // const [rateData, setRateData] = useState(null);
-  const [total, setTotal] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  const formattedDate = formatDate(yesterday);
   /////////////////////
   let atlanticTable = {
     "Default Rate - 1/2hr": {
@@ -183,7 +172,7 @@ const AtlanticDailyReportPage = () => {
   });
 
   async function fetchAtlanticData() {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       const res = await axios.get(
         "https://automotion-server.herokuapp.com/garagedata/atlanticClosed",
@@ -203,76 +192,44 @@ const AtlanticDailyReportPage = () => {
   }
 
   useEffect(() => {
-    
-    // if (garage === "Atlantic Terrace") {
-      fetchAtlanticData();
-    // }else{
-    //   automatedGarageAPI(
-    //     garage,
-    //     automatedSetFailedtoLoad,
-    //     automatedSetErr,
-    //     setResponse,
-    //     setTotal,
-    //     formattedDate,
-    //     setIsLoading
-    //   );
-    // }
+    fetchAtlanticData();
   }, []);
 
   return (
-    <div>
-      {/* {garage !== "Atlantic Terrace" ? (
-        isLoading ? (
-          <LoadingSpinner />
-        ) : (
-          <AutomatedDailyReportPage
-            response={response}
-            automatedFailedtoLoad={automatedFailedtoLoad}
-            automatedErr={automatedErr}
-            total={total}
-            formattedDate={formattedDate}
-          />
-        )
-      ) : (  */}
-        <div className="report">
-          {failedToLoad ? (
-            <p>
-              error: {err}
-              <Link to="/login"> Login</Link>
-            </p>
+    <div className="report">
+      {failedToLoad ? (
+        <p>
+          error: {err}
+          <Link to="/login"> Login</Link>
+        </p>
+      ) : (
+        <div id="pdf-report">
+          {isLoading ? (
+            <LoadingSpinner />
           ) : (
-            <div id="pdf-report">
-              {isLoading ? (
-                <LoadingSpinner />
-              ) : (
-                <>
-                <Navigation/>
-                <p className="daily__report">{garage} Daily Report Page</p>
-                  <ReportHeader
-                    start={start}
-                    closed={atlanticAllData.length}
-                    startDate={new Date(inDate).toLocaleString("en-US", {
-                      timeZone: "America/New_York",
-                    })}
-                    endDate={new Date(outDate).toLocaleString("en-US", {
-                      timeZone: "America/New_York",
-                    })}
-                  />
-                  <EmailFormDisplayToggler/>
-                  <AtlanticTable
-                    atlanticTable={atlanticTable}
-                    atlanticDiscountTable={sortObjectByKeys(
-                      atlanticDiscountTable
-                    )}
-                    atlanticMiscTable={atlanticMiscTable}
-                  />
-
-                </>
-              )}
-            </div>
+            <>
+              <Navigation />
+              <p className="daily__report">{garage} Daily Report Page</p>
+              <ReportHeader
+                start={start}
+                closed={atlanticAllData.length}
+                startDate={new Date(inDate).toLocaleString("en-US", {
+                  timeZone: "America/New_York",
+                })}
+                endDate={new Date(outDate).toLocaleString("en-US", {
+                  timeZone: "America/New_York",
+                })}
+              />
+              <EmailFormDisplayToggler />
+              <AtlanticTable
+                atlanticTable={atlanticTable}
+                atlanticDiscountTable={sortObjectByKeys(atlanticDiscountTable)}
+                atlanticMiscTable={atlanticMiscTable}
+              />
+            </>
           )}
         </div>
-      {/* )} */}
+      )}
     </div>
   );
 };

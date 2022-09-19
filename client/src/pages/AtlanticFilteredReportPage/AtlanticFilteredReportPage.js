@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./AtlanticFilteredReportPage.scss";
-import { useParams, Link} from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import AtlanticTable from "../../components/AtlanticTable/AtlanticTable";
 import DatePicker from "../../components/DatePicker/DatePicker";
-import ReportHeader from "../../components/ReportHeader/ReportHeader";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
 import AutomatedFilteredReportPage from "../AutomatedFilteredReportPage/AutomatedFilteredReportPage";
 import Navigation from "../../components/Navigation/Navigation";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
@@ -25,11 +22,11 @@ function FilteredReportPage() {
   //set the state variables
   const [atlanticAllData, setatlanticAllData] = useState([]);
   const [failedToLoad, setFailedToLoad] = useState(false);
-  const [err, setErr] = useState(null)
+  const [err, setErr] = useState(null);
   const [garage, setGarage] = useState(params.garageName);
   const [inDate, setInDate] = useState(null);
   const [outDate, setOutDate] = useState(null);
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
   ////////////////////////////////////////
   let atlanticTable = {
@@ -41,7 +38,7 @@ function FilteredReportPage() {
       tally: 0,
       totalPaid: 0,
     },
-    'Early': {
+    Early: {
       tally: 0,
       totalPaid: 0,
     },
@@ -161,71 +158,58 @@ function FilteredReportPage() {
     }
   });
 
-  console.log(atlanticMiscTable);
-  /////
-  const genPDF = () => {
-    let file = html2canvas(document.getElementById("pdf-report")).then(
-      function (canvas) {
-        const doc = new jsPDF("p", "mm", "a4");
-        const img = canvas.toDataURL("image/png", 6.0);
-        doc.addImage(img, "PNG", 10, 10, 180, 150);
-        let date = new Date().toLocaleTimeString();
-        let saveInfo = `${
-          garage.split(" ")[0]
-        }-${outDate}-generated-${date}.pdf`;
-        doc.save(saveInfo);
-        return saveInfo;
-      }
-    );
-    return file;
-  };
-
   const generateReport = () => {
-    const token = sessionStorage.getItem('token');
+    const token = sessionStorage.getItem("token");
     if (garage === "Atlantic Terrace") {
       if (inDate === null || outDate === null) {
         //default report (partial report)
         axios
-          .get("https://automotion-server.herokuapp.com/garagedata/atlanticClosed", {
-            params: {
-              inDate: new Date().setHours(3, 0, 0, 0),
-              outDate: new Date().getTime(),
-            },
-            headers: {
-              authorization: 'Bearer ' + token
-          }
-          })
+          .get(
+            "https://automotion-server.herokuapp.com/garagedata/atlanticClosed",
+            {
+              params: {
+                inDate: new Date().setHours(3, 0, 0, 0),
+                outDate: new Date().getTime(),
+              },
+              headers: {
+                authorization: "Bearer " + token,
+              },
+            }
+          )
           .then((res) => {
             setatlanticAllData(res.data);
-            setIsLoading(false)
+            setIsLoading(false);
           })
           .catch((error) => {
             setFailedToLoad(true);
-            setErr(error.response.data)
+            setErr(error.response.data);
           });
       } else {
         //filtered report
-        setIsLoading(true)
+        setIsLoading(true);
         axios
-          .get("https://automotion-server.herokuapp.com/garagedata/atlanticClosed", {
-            params: {
-              inDate: new Date(`${inDate}T03:00:00`).getTime(),
-              outDate: new Date(`${outDate}T03:00:00`).getTime(),
-            },
-            headers: {
-              authorization: 'Bearer ' + token
-          }
-          })
+          .get(
+            "https://automotion-server.herokuapp.com/garagedata/atlanticClosed",
+            {
+              params: {
+                inDate: new Date(`${inDate}T03:00:00`).getTime(),
+                outDate: new Date(`${outDate}T03:00:00`).getTime(),
+              },
+              headers: {
+                authorization: "Bearer " + token,
+              },
+            }
+          )
           .then((res) => {
             setatlanticAllData(res.data);
-            setIsLoading(false)
+            setIsLoading(false);
           })
           .catch((error) => {
             setFailedToLoad(true);
-            setErr(error.response.data)
+            setErr(error.response.data);
           });
-      } 
-    } 
+      }
+    }
   };
 
   useEffect(() => {
@@ -234,17 +218,18 @@ function FilteredReportPage() {
 
   return (
     <div>
-      {/* <Logout/> */}
-      <Navigation/>
+      <Navigation />
       <p className="atlantic__filtered">{garage} Garage Filtered Report</p>
       {garage !== "Atlantic Terrace" ? (
         <>
-        <AutomatedFilteredReportPage />
+          <AutomatedFilteredReportPage />
         </>
       ) : (
         <div className="report">
           {failedToLoad ? (
-            <p>error: {err} <Link to='/login'>Login</Link></p>
+            <p>
+              error: {err} <Link to="/login">Login</Link>
+            </p>
           ) : (
             <div id="pdf-report">
               <section className="datepicker m-2">
@@ -254,18 +239,22 @@ function FilteredReportPage() {
               <Button onClick={generateReport} className="button">
                 Generate Report
               </Button>
-              <EmailFormDisplayToggler/>
-              {isLoading ? <LoadingSpinner/> :
-              <AtlanticTable
-                atlanticTable={atlanticTable}
-                atlanticDiscountTable={sortObjectByKeys(atlanticDiscountTable)}
-                atlanticMiscTable={atlanticMiscTable}
-              />}
+              <EmailFormDisplayToggler />
+              {isLoading ? (
+                <LoadingSpinner />
+              ) : (
+                <AtlanticTable
+                  atlanticTable={atlanticTable}
+                  atlanticDiscountTable={sortObjectByKeys(
+                    atlanticDiscountTable
+                  )}
+                  atlanticMiscTable={atlanticMiscTable}
+                />
+              )}
             </div>
           )}
         </div>
       )}
-      
     </div>
   );
 }

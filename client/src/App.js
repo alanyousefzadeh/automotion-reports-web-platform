@@ -25,7 +25,7 @@ function App() {
             {/* <Route exact path='/reportSelect/schemehorn/daily' element={<ProtectedRoute><schemehornDailyPage/></ProtectedRoute>}/> */}
             <Route exact path='/reportSelect/schemehorn/filtered' element={<ProtectedRoute><SchemehornFilteredPage/></ProtectedRoute>}/>
             <Route path='/reportSelect/:garageName/filtered' element={<ProtectedRoute><FilteredReportPage/></ProtectedRoute>}/>
-            <Route path='/reportSelect/Atlantic Terrace/daily' element={<ProtectedRoute><AtlanticDailyReportPage/></ProtectedRoute>}/>
+            <Route exact path='/reportSelect/Atlantic%20Terrace/daily' element={<ProtectedRoute><AtlanticDailyReportPage/></ProtectedRoute>}/>
             <Route path='/reportSelect/:garageName/daily' element={<ProtectedRoute><AutomatedDailyReportPage/></ProtectedRoute>}/>
             <Route path='/reportSelect/:garageName/wait' element={<ProtectedRoute><WaitTimePage/></ProtectedRoute>}/>
             <Route path='/reportSelect/:garageName/open' element={<ProtectedRoute><AtlanticOpenPage/></ProtectedRoute>}/>

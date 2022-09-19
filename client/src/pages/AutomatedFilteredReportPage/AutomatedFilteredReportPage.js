@@ -10,6 +10,7 @@ import "./AutomatedFiltered.scss";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
 import ReactDOMServer from 'react-dom/server'
 import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
+
 function AutomatedFilteredReportPage() {
   const [inDate, setInDate] = useState(null);
   const [outDate, setOutDate] = useState(null);
