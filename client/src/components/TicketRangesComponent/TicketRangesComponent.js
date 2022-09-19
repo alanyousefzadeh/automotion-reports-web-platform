@@ -12,7 +12,7 @@ export default function TicketRangesComponent(props) {
   let totalIssued;
   let redeemed = [];
   let totalRedeemed;
-  let outStanding;
+  let totalOutStanding;
 
   let rows = null;
   let xmlContent = ticketRanges;
@@ -37,7 +37,7 @@ export default function TicketRangesComponent(props) {
     totalLeftOver = leftOver.reduce((prev, curr) => prev + curr, 0);
     totalIssued = issued.reduce((prev, curr) => prev + curr, 0);
     totalRedeemed = redeemed.reduce((prev, curr) => prev + curr, 0);
-    //outStanding = total.reduce((prev, curr) => prev + curr, 0.0);
+    totalOutStanding = 0
   }
 
   return (
@@ -56,6 +56,7 @@ export default function TicketRangesComponent(props) {
         </thead>
         <tbody>
           {start.map((item, i) => {
+            totalOutStanding += leftOver[i] - redeemed[i] + issued[i]
             return (
               <tr key={i}>
                 <td>{start[i]}</td>
@@ -63,7 +64,7 @@ export default function TicketRangesComponent(props) {
                 <td>{leftOver[i]}</td>
                 <td>{issued[i]}</td>
                 <td>{redeemed[i]}</td>
-                <td>###</td>
+                <td>{leftOver[i] - redeemed[i] + issued[i]}</td>
               </tr>
             );
           })}
@@ -75,7 +76,7 @@ export default function TicketRangesComponent(props) {
             <th>{totalLeftOver}</th>
             <th>{totalIssued}</th>
             <th>{totalRedeemed}</th>
-            <th>###</th>
+            <th>{totalOutStanding}</th>
           </tr>
         </tbody>
       </Table>
