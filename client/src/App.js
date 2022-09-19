@@ -9,6 +9,7 @@ import { AuthContextProvider } from "./components/Context/AuthContext";
 import WaitTimePage from "./pages/WaitTimesPage/WaitTimePage";
 import AtlanticOpenPage from "./pages/AtlanticOpenPage/AtlanticOpenPage";
 import SchemehornFilteredPage from "./pages/SchemehornFilteredPage/SchemehornFilteredPage";
+import SchemehornDailyPage from "./pages/SchemehornDailyPage/SchemehornDailyPage";
 import AutomatedFilteredReportPage from "./pages/AutomatedFilteredReportPage/AutomatedFilteredReportPage";
 import AutomatedDailyReportPage from "./pages/AutomatedDailyReportPage/AutomatedDailyReportPage";
 
@@ -42,6 +43,15 @@ function App() {
               element={
                 <ProtectedRoute>
                   <SchemehornFilteredPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              exact
+              path="/reportSelect/schemehorn/daily"
+              element={
+                <ProtectedRoute>
+                  <SchemehornDailyPage />
                 </ProtectedRoute>
               }
             />

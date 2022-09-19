@@ -12,11 +12,11 @@ const reports = [
   },
   {
     id: 2,
-    title: "Wait Times Report",
+    title: "Filtered Report",
   },
   {
     id: 3,
-    title: "Filtered Report",
+    title: "Wait Times Report",
   },
 ];
 
@@ -28,11 +28,17 @@ function ReportSelectPage() {
       <h4 className="garage__title">{garageName} Garage Reports</h4>
       <div className="cards d-flex justify-content-center">
         {garageName === "Schemehorn" ? (
+          <>
+          <ReportCard
+            key={1}
+            name={garageName}
+            title={"Daily Report"}
+          />
           <ReportCard
             key={3}
             name={garageName}
             title={"Filtered Report"}
-          />
+          /></>
         ) : (
           reports.map((report) => (
             <ReportCard

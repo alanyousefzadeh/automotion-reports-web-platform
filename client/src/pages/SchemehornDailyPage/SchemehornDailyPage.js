@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Navigation from "../../components/Navigation/Navigation";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
-import DatePicker from "../../components/DatePicker/DatePicker";
-import { Button } from "react-bootstrap";
 import SchemehornRevenueSummaryComponent from "../../components/SchemehornRevenueSummaryComponent/SchemehornRevenueSummaryComponent";
 import SchemehornDiscountComponent from "../../components/SchemehornDiscountComponent/SchemehornDiscountComponent";
 import SchemehornTicketRangesComponent from "../../components/SchemehornTicketRangesComponent/SchemehornTicketRangesComponent";
 import SchemehornPaymentTypeComponent from "../../components/SchemehornPaymentTypeComponent/SchemehornPaymentTypeComponent";
 
-function SchemehornFilteredPage() {
-  const [inDate, setInDate] = useState(null);
-  const [outDate, setOutDate] = useState(null);
+function SchemehornDailyPage() {
+const [inDate, setInDate] = useState(
+    new Date(new Date().setHours(-1,0,0,0)).toLocaleDateString() 
+    );
+    const [outDate, setOutDate] = useState(
+        new Date(new Date().setHours(-1,0,0,0)).toLocaleDateString() 
+    );
   const [data, setData] = useState(null);
   const [discounts, setDiscounts] = useState(null);
   const [ticketRanges, setTicketRanges] = useState(null);
@@ -69,23 +71,21 @@ function SchemehornFilteredPage() {
     setPaymentTypes(paymentTypesResponse.data);
     setLoading(false);
   };
+
   const getData = () => {
-    if ((inDate !== null && outDate !== null) && outDate >= inDate) {
+    
       getSchemehornData();
       setLoading(true);
-    } else {
-      alert("please provide proper in and out dates");
-    }
   };
+
+  useEffect(() => {
+    getData()
+  }, [])
+  
 
   return (
     <div className="report">
       <Navigation />
-      <DatePicker label={"In-Date 12:00AM"} setDate={setInDate} />
-      <DatePicker label={"Out-Date 11:59PM"} setDate={setOutDate} />
-      <Button className="button" onClick={getData}>
-        Generate Report
-      </Button>
       {loading ? (
         <LoadingSpinner />
       ) : (
@@ -105,4 +105,4 @@ function SchemehornFilteredPage() {
   );
 }
 
-export default SchemehornFilteredPage;
+export default SchemehornDailyPage;
