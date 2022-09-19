@@ -6,8 +6,8 @@ import DatePicker from "../../components/DatePicker/DatePicker";
 import { Button } from "react-bootstrap";
 import SchemehornRevenueSummaryComponent from "../../components/SchemehornRevenueSummaryComponent/SchemehornRevenueSummaryComponent";
 import SchemehornDiscountComponent from "../../components/SchemehornDiscountComponent/SchemehornDiscountComponent";
-import TicketRangesComponent from "../../components/TicketRangesComponent/TicketRangesComponent";
-import PaymentTypeComponent from "../../components/PaymentTypeComponent/PaymentTypeComponent";
+import SchemehornTicketRangesComponent from "../../components/SchemehornTicketRangesComponent/SchemehornTicketRangesComponent";
+import SchemehornPaymentTypeComponent from "../../components/SchemehornPaymentTypeComponent/SchemehornPaymentTypeComponent";
 
 function SchemehornFilteredPage() {
   const [inDate, setInDate] = useState(null);
@@ -20,12 +20,15 @@ function SchemehornFilteredPage() {
 
   const getSchemehornData = async () => {
     //revenue summary API call
-    let response = await axios.post("https://automotion-server.herokuapp.com/schemehorn", {
-      inDate,
-      outDate,
-      inTime: "12:00 AM",
-      outTime: "11:59:59 PM",
-    });
+    let response = await axios.post(
+      "https://automotion-server.herokuapp.com/schemehorn",
+      {
+        inDate,
+        outDate,
+        inTime: "12:00 AM",
+        outTime: "11:59:59 PM",
+      }
+    );
     setData(response.data);
 
     //discount table API call
@@ -67,19 +70,19 @@ function SchemehornFilteredPage() {
     setLoading(false);
   };
   const getData = () => {
-    if (inDate !== null && outDate !== null) {
+    if ((inDate !== null && outDate !== null) && outDate > inDate) {
       getSchemehornData();
       setLoading(true);
     } else {
-      alert("please provide in and out dates");
+      alert("please provide proper in and out dates");
     }
   };
 
   return (
     <div className="report">
       <Navigation />
-      <DatePicker label={"In-Date"} setDate={setInDate} />
-      <DatePicker label={"Out-Date"} setDate={setOutDate} />
+      <DatePicker label={"In-Date 12:00AM"} setDate={setInDate} />
+      <DatePicker label={"Out-Date 11:59PM"} setDate={setOutDate} />
       <Button className="button" onClick={getData}>
         Generate Report
       </Button>
@@ -94,8 +97,8 @@ function SchemehornFilteredPage() {
           />
           <SchemehornDiscountComponent discounts={discounts} />
 
-          <TicketRangesComponent ticketRanges={ticketRanges} />
-          <PaymentTypeComponent paymentTypes={paymentTypes} />
+          <SchemehornTicketRangesComponent ticketRanges={ticketRanges} />
+          <SchemehornPaymentTypeComponent paymentTypes={paymentTypes} />
         </>
       )}
     </div>
