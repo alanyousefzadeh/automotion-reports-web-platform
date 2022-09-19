@@ -229,7 +229,6 @@ const AtlanticDailyReportPage = () => {
   );
 };
 // let html = ReactDOMServer.renderToStaticMarkup(<AtlanticDailyReportPage/>);
-// // let html = ReactDOM.render(<AtlanticDailyReportPage/>, document.getElementById('root'))
 // console.log(html.toString());
 
 export default AtlanticDailyReportPage;

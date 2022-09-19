@@ -8,7 +8,7 @@ import RateTable from "../../components/RateTable/RateTable";
 import OverParkedTable from "../../components/OverParked/OverParkedTable";
 import "./AutomatedFiltered.scss";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
-import ReactDOMServer from 'react-dom/server'
+import ReactDOMServer from "react-dom/server";
 import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
 import Navigation from "../../components/Navigation/Navigation";
 
@@ -94,42 +94,36 @@ function AutomatedFilteredReportPage() {
 
   return (
     <div className="report">
-      <Navigation/>
+      <Navigation />
       <p className="report_title">{garageName} Garage Filtered Report</p>
       <div className="filtered-date-picker">
         <DatePicker label={"In-Date - 12:00AM"} setDate={setInDate} />
         <DatePicker label={"Out-Date - 11:59PM"} setDate={setOutDate} />
       </div>
-      <Button className='filtered-button' onClick={getData}>Generate Table </Button>
-      <EmailFormDisplayToggler/>
+      <Button className="filtered-button" onClick={getData}>
+        Generate Table{" "}
+      </Button>
+      <EmailFormDisplayToggler />
       {isLoading ? (
         <LoadingSpinner />
       ) : (
         <>
-          {response ? (
-            <>
-              <TransactionTable
-                monthlyInTable={monthlyInTable}
-                monthlyOutTable={monthlyOutTable}
-                transientInTable={transientInTable}
-                transientOutTable={transientOutTable}
-                total={total}
-              />
+          <TransactionTable
+            monthlyInTable={monthlyInTable}
+            monthlyOutTable={monthlyOutTable}
+            transientInTable={transientInTable}
+            transientOutTable={transientOutTable}
+            total={total}
+          />
 
-              <RateTable
-                garageName={garageName}
-                rateData={response.rateTable}
-              />
-              <OverParkedTable overParkedData={response.overParked} />
-            </>
-          ) : (
-            ""
-          )}
+          <RateTable garageName={garageName} rateData={response.rateTable} />
+          <OverParkedTable overParkedData={response.overParked} />
         </>
       )}
     </div>
   );
 }
+
 // const html = ReactDOMServer.renderToStaticMarkup(<AutomatedFilteredReportPage/>);
 // console.log(html.toString());
 export default AutomatedFilteredReportPage;
