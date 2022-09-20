@@ -177,7 +177,7 @@ export default function PaymentTypes(props) {
           <tr>
             <td>Visa</td>
             <td>{visa[0]}</td>
-            <td>
+            <td>$
               {visa[1].toLocaleString(undefined, {
                 minimumFractionDigits: 2,
               })}
