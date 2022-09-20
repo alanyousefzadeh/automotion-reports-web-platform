@@ -4,9 +4,13 @@ import Table from "react-bootstrap/Table";
 export default function PaymentTypes(props) {
   const { paymentTypes } = props;
 
-  function findNodeByInnerHTML(nodelist, innerHTML) {
+  function findNodeByInnerHTML(nodelist, text, childIndex) {
     for (let i = 0; i < nodelist.length; i++) {
-      if (nodelist[i].children[4].innerHTML === innerHTML) return nodelist[i];
+      if (nodelist[i].children[4].innerHTML === text){
+        return nodelist[i].children[childIndex].innerHTML;
+      }else{
+        return 0
+      } 
     }
   }
   //[count, total]
@@ -17,8 +21,7 @@ export default function PaymentTypes(props) {
 
   let mobilePayment = [0, 0];
 
-  let cashCount = 0;
-  let cashTotal = 0;
+  let cash = [0,0];
 
   let ccTotalCount = 0;
   let ccTotalAmount = 0;
@@ -27,7 +30,7 @@ export default function PaymentTypes(props) {
 
   let eftpos = [0, 0];
 
-  let noFeeCount = 0;
+  let noFee = [0, 0];
 
   let comps = [0, 0];
 
@@ -38,77 +41,79 @@ export default function PaymentTypes(props) {
   let parser = new DOMParser();
   let xmlDOM = parser.parseFromString(xmlContent, "application/xml");
   //console.log(xmlDOM);
+  
   if (paymentTypes !== null) {
     rows = xmlDOM.querySelectorAll("ResultingValueField");
 
     amex[0] = Number(
-      findNodeByInnerHTML(rows, "AMEXCount").children[2].innerHTML
+      findNodeByInnerHTML(rows, "AMEXCount",2)
     );
     amex[1] = Number(
-      findNodeByInnerHTML(rows, "AMEXTotal").children[1].innerHTML
+      findNodeByInnerHTML(rows, "AMEXTotal", 1)
     );
 
     mobilePayment[0] = Number(
-      findNodeByInnerHTML(rows, "MobilePaymentCount").children[2].innerHTML
+      findNodeByInnerHTML(rows, "MobilePaymentCount", 2)
     );
     mobilePayment[1] = Number(
-      findNodeByInnerHTML(rows, "MobilePaymentTotal").children[1].innerHTML
+      findNodeByInnerHTML(rows, "MobilePaymentTotal", 1)
     );
 
-    mc[0] = Number(findNodeByInnerHTML(rows, "MCCount").children[2].innerHTML);
-    mc[1] = Number(findNodeByInnerHTML(rows, "MCTotal").children[1].innerHTML);
+    mc[0] = Number(findNodeByInnerHTML(rows, "MCCount", 2));
+    mc[1] = Number(findNodeByInnerHTML(rows, "MCTotal", 1));
 
     discover[0] = Number(
-      findNodeByInnerHTML(rows, "DiscoverCount").children[2].innerHTML
+      findNodeByInnerHTML(rows, "DiscoverCount", 2)
     );
     discover[1] = Number(
-      findNodeByInnerHTML(rows, "DiscoverTotal").children[1].innerHTML
+      findNodeByInnerHTML(rows, "DiscoverTotal", 1)
     );
 
     visa[0] = Number(
-      findNodeByInnerHTML(rows, "VISACount").children[2].innerHTML
+      findNodeByInnerHTML(rows, "VISACount", 2)
     );
     visa[1] = Number(
-      findNodeByInnerHTML(rows, "VISATotal").children[1].innerHTML
+      findNodeByInnerHTML(rows, "VISATotal", 1)
     );
 
-    cashCount = Number(
-      findNodeByInnerHTML(rows, "CashCount").children[2].innerHTML
+    cash[0] = Number(
+      findNodeByInnerHTML(rows, "CashCount", 2)
     );
-    cashTotal = Number(
-      findNodeByInnerHTML(rows, "CashTotal").children[1].innerHTML
+    cash[1] = Number(
+      findNodeByInnerHTML(rows, "CashTotal", 1)
     );
 
     ccTotalCount = amex[0] + mc[0] + discover[0] + visa[0];
     ccTotalAmount = amex[1] + mc[1] + discover[1] + visa[1];
 
     eftpos[0] = Number(
-      findNodeByInnerHTML(rows, "EftposCount").children[2].innerHTML
+      findNodeByInnerHTML(rows, "EftposCount", 2)
     );
 
     eftpos[1] = Number(
-      findNodeByInnerHTML(rows, "EftposTotal").children[1].innerHTML
+      findNodeByInnerHTML(rows, "EftposTotal", 1)
     );
 
-    noFeeCount = Number(
-      findNodeByInnerHTML(rows, "NoFeeCount").children[2].innerHTML
+    noFee[0] = Number(
+      findNodeByInnerHTML(rows, "NoFeeCount", 2)
     );
 
     comps[0] = Number(
-      findNodeByInnerHTML(rows, "CompCount").children[2].innerHTML
+      findNodeByInnerHTML(rows, "CompCount", 2)
     );
 
     comps[1] = Number(
-      findNodeByInnerHTML(rows, "CompTotal").children[1].innerHTML
+      findNodeByInnerHTML(rows, "CompTotal", 1)
     );
     totals[0] =
-      cashCount + ccTotalCount + eftpos[0] + noFeeCount + mobilePayment[0];
-    totals[1] = cashTotal + ccTotalAmount + eftpos[1] + mobilePayment[1];
+      cash[0] + ccTotalCount + eftpos[0] + noFee[0] + mobilePayment[0];
+    totals[1] = cash[1] + ccTotalAmount + eftpos[1] + mobilePayment[1];
     totWComps[0] = totals[0] + comps[0];
     totWComps[1] = totals[1] + comps[1];
   }
 
   return (
+    paymentTypes &&
     <div className="report">
       <p className="report">Payment Types</p>
       <Table striped bordered className="table-sm table-font schemehorn report">
@@ -122,10 +127,10 @@ export default function PaymentTypes(props) {
         <tbody>
           <tr>
             <th>Cash</th>
-            <th>{cashCount}</th>
+            <th>{cash[0]}</th>
             <th>
               $
-              {cashTotal.toLocaleString(undefined, {
+              {cash[1].toLocaleString(undefined, {
                 minimumFractionDigits: 2,
               })}
             </th>
@@ -201,7 +206,7 @@ export default function PaymentTypes(props) {
           </tr>
           <tr>
             <th>No Fee Due</th>
-            <th>{noFeeCount}</th>
+            <th>{noFee[0]}</th>
             <th>$0.00</th>
           </tr>
           <tr>

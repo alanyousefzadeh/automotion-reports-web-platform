@@ -6,14 +6,16 @@ import SchemehornRevenueSummaryComponent from "../../components/SchemehornRevenu
 import SchemehornDiscountComponent from "../../components/SchemehornDiscountComponent/SchemehornDiscountComponent";
 import SchemehornTicketRangesComponent from "../../components/SchemehornTicketRangesComponent/SchemehornTicketRangesComponent";
 import SchemehornPaymentTypeComponent from "../../components/SchemehornPaymentTypeComponent/SchemehornPaymentTypeComponent";
+import { formatDate } from "../AutomatedDailyReportPage/AutomatedDailyReportHelpers";
 
 function SchemehornDailyPage() {
-const [inDate, setInDate] = useState(
-    new Date(new Date().setHours(-1,0,0,0)).toLocaleDateString() 
-    );
-    const [outDate, setOutDate] = useState(
-        new Date(new Date().setHours(-1,0,0,0)).toLocaleDateString() 
-    );
+  
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const formattedDate = formatDate(yesterday);
+
+  const inDate = formattedDate;
+  const outDate = formattedDate;
   const [data, setData] = useState(null);
   const [discounts, setDiscounts] = useState(null);
   const [ticketRanges, setTicketRanges] = useState(null);
@@ -21,6 +23,7 @@ const [inDate, setInDate] = useState(
   const [loading, setLoading] = useState(false);
 
   const getSchemehornData = async () => {
+    setLoading(true);
     //revenue summary API call
     let response = await axios.post(
       "https://automotion-server.herokuapp.com/schemehorn",
@@ -56,7 +59,6 @@ const [inDate, setInDate] = useState(
       }
     );
     setTicketRanges(ticketRangesResponse.data);
-    setLoading(false);
 
     //payment type API call
     let paymentTypesResponse = await axios.post(
@@ -73,15 +75,12 @@ const [inDate, setInDate] = useState(
   };
 
   const getData = () => {
-    
-      getSchemehornData();
-      setLoading(true);
+    getSchemehornData();
   };
 
   useEffect(() => {
-    getData()
-  }, [])
-  
+    getData();
+  }, []);
 
   return (
     <div className="report">

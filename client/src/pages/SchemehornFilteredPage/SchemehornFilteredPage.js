@@ -19,6 +19,8 @@ function SchemehornFilteredPage() {
   const [loading, setLoading] = useState(false);
 
   const getSchemehornData = async () => {
+
+    setLoading(true);
     //revenue summary API call
     let response = await axios.post(
       "https://automotion-server.herokuapp.com/schemehorn",
@@ -54,7 +56,6 @@ function SchemehornFilteredPage() {
       }
     );
     setTicketRanges(ticketRangesResponse.data);
-    setLoading(false);
 
     //payment type API call
     let paymentTypesResponse = await axios.post(
@@ -72,7 +73,6 @@ function SchemehornFilteredPage() {
   const getData = () => {
     if ((inDate !== null && outDate !== null) && outDate >= inDate) {
       getSchemehornData();
-      setLoading(true);
     } else {
       alert("please provide proper in and out dates");
     }
