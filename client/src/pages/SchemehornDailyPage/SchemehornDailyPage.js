@@ -20,10 +20,10 @@ function SchemehornDailyPage() {
   const [discounts, setDiscounts] = useState(null);
   const [ticketRanges, setTicketRanges] = useState(null);
   const [paymentTypes, setPaymentTypes] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const getSchemehornData = async () => {
-    setLoading(true);
+    
     //revenue summary API call
     let response = await axios.post(
       "https://automotion-server.herokuapp.com/schemehorn",
