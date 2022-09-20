@@ -8,10 +8,9 @@ export default function PaymentTypes(props) {
     for (let i = 0; i < nodelist.length; i++) {
       if (nodelist[i].children[4].innerHTML === text){
         return nodelist[i].children[childIndex].innerHTML;
-      }else{
-        return 0
-      } 
+      }
     }
+    return 0
   }
   //[count, total]
   let amex = [0, 0];
