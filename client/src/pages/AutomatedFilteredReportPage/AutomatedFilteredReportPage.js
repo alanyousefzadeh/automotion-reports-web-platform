@@ -106,7 +106,7 @@ function AutomatedFilteredReportPage() {
       <EmailFormDisplayToggler />
       {isLoading ? (
         <LoadingSpinner />
-      ) : (
+      ) : response ? (
         <>
           <TransactionTable
             monthlyInTable={monthlyInTable}
@@ -119,7 +119,8 @@ function AutomatedFilteredReportPage() {
           <RateTable garageName={garageName} rateData={response.rateTable} />
           <OverParkedTable overParkedData={response.overParked} />
         </>
-      )}
+      ) : ""
+      }
     </div>
   );
 }
