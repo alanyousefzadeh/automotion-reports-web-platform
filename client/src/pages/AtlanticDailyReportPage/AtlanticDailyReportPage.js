@@ -170,7 +170,7 @@ const AtlanticDailyReportPage = () => {
     setIsLoading(true);
     try {
       const res = await axios.get(
-        "https://automotion-server.herokuapp.com/garagedata/atlanticClosed",
+        process.env.REACT_APP_ATLANTIC_CLOSED_URL,
         {
           params: {
             inDate: inDate,

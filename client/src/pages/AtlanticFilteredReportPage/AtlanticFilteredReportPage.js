@@ -161,7 +161,7 @@ function FilteredReportPage() {
       //default report (partial report)
       axios
         .get(
-          "https://automotion-server.herokuapp.com/garagedata/atlanticClosed",
+          process.env.REACT_APP_ATLANTIC_CLOSED_URL,
           {
             params: {
               inDate: new Date().setHours(3, 0, 0, 0),
@@ -182,7 +182,7 @@ function FilteredReportPage() {
       setIsLoading(true);
       axios
         .get(
-          "https://automotion-server.herokuapp.com/garagedata/atlanticClosed",
+          process.env.REACT_APP_ATLANTIC_CLOSED_URL,
           {
             params: {
               inDate: new Date(`${inDate}T03:00:00`).getTime(),
