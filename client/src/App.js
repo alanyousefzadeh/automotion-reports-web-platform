@@ -12,6 +12,7 @@ import SchemehornFilteredPage from "./pages/SchemehornFilteredPage/SchemehornFil
 import SchemehornDailyPage from "./pages/SchemehornDailyPage/SchemehornDailyPage";
 import AutomatedFilteredReportPage from "./pages/AutomatedFilteredReportPage/AutomatedFilteredReportPage";
 import AutomatedDailyReportPage from "./pages/AutomatedDailyReportPage/AutomatedDailyReportPage";
+import AutomatedFilteredByRate from "./pages/AutomatedFilteredByRate/AutomatedFilteredByRate";
 
 function App() {
   return (
@@ -103,6 +104,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <AtlanticOpenPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/reportSelect/:garageName/filterrate"
+              element={
+                <ProtectedRoute>
+                  <AutomatedFilteredByRate />
                 </ProtectedRoute>
               }
             />

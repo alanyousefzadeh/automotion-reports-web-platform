@@ -11,6 +11,10 @@ const reports = [
     title: "Daily Report",
   },
   {
+    id:4,
+    title: "FilterRate"
+  },
+  {
     id: 2,
     title: "Filtered Report",
   },
