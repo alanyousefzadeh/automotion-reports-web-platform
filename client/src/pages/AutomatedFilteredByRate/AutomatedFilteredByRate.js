@@ -4,6 +4,7 @@ import DatePicker from '../../components/DatePicker/DatePicker'
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import axios from 'axios'
+import RatePicker from '../../components/RatePicker/RatePicker';
 
 
 export default function AutomatedFilteredByRate() {
@@ -28,16 +29,9 @@ export default function AutomatedFilteredByRate() {
         <div className='report'>
             <DatePicker label={'Starting Date'} setDate={setStartDate} />
             <DatePicker label={'Ending Date'} setDate={setEndDate} />
-            <select onChange={(e) => setRate(e.target.value)}>
-                <option value="25">Early Bird - $25</option>
-                <option value="15">Up to 1/2 Hr - $15</option>
-                <option value="25">Up to 1 - $25</option>
-                <option value="32">Up to 2 - $32</option>
-                <option value="42">Up to 3 - $42</option>
-                <option value="46">Up to 12 - $46</option>
-                <option value="45">Up to 24 - $55</option>
-                {/* <option value="">Other</option> */}
-            </select>
+            <RatePicker
+            garage={garageName}
+            />
             <Button onClick={clickHandler} className="button">
                 Submit
             </Button>
@@ -50,8 +44,7 @@ export default function AutomatedFilteredByRate() {
         </thead>
         <tbody>
           {data && (data).map((record, index) => {
-            //replace(/\s/, 'T')
-            //console.log(record.from_date.replace(/-/g, "/").replace(/\s/, 'T'))
+            
             return (
               <tr key={index} >
                 <td>{record.count}</td>
