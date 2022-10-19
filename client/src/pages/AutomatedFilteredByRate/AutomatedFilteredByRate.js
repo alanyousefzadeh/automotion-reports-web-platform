@@ -11,7 +11,12 @@ export default function AutomatedFilteredByRate() {
 
     const [startDate, setStartDate] = useState(null)
     const [endDate, setEndDate] = useState(null)
+
+    //rate = the rate that was selected, but before the submit button was clicked
     const [rate, setRate] = useState(null)
+
+    //currRate = the rate the table is showing (after the submit button was clicked)
+    const [currRate, setCurrRate] = useState(null)
     const [data, setData] = useState(null)
 
     const { garageName } = useParams()
@@ -25,7 +30,9 @@ export default function AutomatedFilteredByRate() {
                         rate, startDate, endDate, garageName
                     }
                 })
+            setCurrRate(rate)
             setData(promise.data)
+            
         } else {
             alert("please select a rate and start/end date")
         }
@@ -56,7 +63,7 @@ export default function AutomatedFilteredByRate() {
                             <tr key={index} >
                                 <td>{record.count}</td>
                                 <td>{record.date.split('T')[0]}</td>
-                                <td>${record.count * rate}</td>
+                                <td>${record.count * currRate}</td>
                             </tr>
                         );
                     })}
