@@ -16,48 +16,52 @@ export default function AutomatedFilteredByRate() {
 
     const { garageName } = useParams()
     console.log(garageName)
+
     const clickHandler = async () => {
-    const promise = await axios
-        .get('http://localhost:8080/filterByRate', {
-            params: {
-                rate, startDate, endDate, garageName
-            }
-        })
-        setData(promise.data)
+        if (rate && startDate && endDate) {
+            const promise = await axios
+                .get('http://localhost:8080/filterByRate', {
+                    params: {
+                        rate, startDate, endDate, garageName
+                    }
+                })
+            setData(promise.data)
+        } else {
+            alert("please select a rate and start/end date")
+        }
     }
     return (
         <div className='report'>
             <DatePicker label={'Starting Date'} setDate={setStartDate} />
             <DatePicker label={'Ending Date'} setDate={setEndDate} />
             <RatePicker
-            garage={garageName}
+                garage={garageName}
+                setRate={setRate}
             />
             <Button onClick={clickHandler} className="button">
                 Submit
             </Button>
             <Table striped bordered className="report table-sm">
-        <thead>
-          <tr className="table-warning">
-            <th>Count</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data && (data).map((record, index) => {
-            
-            return (
-              <tr key={index} >
-                <td>{record.count}</td>
-                <td>{record.date}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-        
-      </Table>
-            
+                <thead>
+                    <tr className="table-warning">
+                        <th>Count</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {data && (data).map((record, index) => {
 
-
+                        return (
+                            <tr key={index} >
+                                <td>{record.count}</td>
+                                <td>{record.date.split('T')[0]}</td>
+                                <td>${record.count * rate}</td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </Table>
         </div>
     )
 }
