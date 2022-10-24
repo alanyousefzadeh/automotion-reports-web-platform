@@ -21,7 +21,11 @@ function App() {
         <AuthContextProvider>
           <Routes>
             <Route exact path="/" element={<Navigate to="/login" />} />
+
+            {/* login page */}
             <Route path="/login" element={<LoginPage />} />
+            
+            {/* list of garages to select*/}
             <Route
               path="/welcome"
               element={
@@ -30,6 +34,8 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            
+            {/* list of available reports for each garage */}
             <Route
               path="/reportSelect/:garageName"
               element={
@@ -38,6 +44,8 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            
+            {/* schemehorn filtered report */}
             <Route
               exact
               path="/reportSelect/schemehorn/filtered"
@@ -47,6 +55,8 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            
+            {/* schemehorn daily report  (24 hour report)*/}
             <Route
               exact
               path="/reportSelect/schemehorn/daily"
@@ -56,6 +66,8 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            
+            {/* atlantic terrace filtered report */}
             <Route
               exact
               path="/reportSelect/Atlantic%20Terrace/filtered"
@@ -65,6 +77,8 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            
+            {/* all automated garages (baxter, vanvorst, waverly) filtered reports */}
             <Route
               path="/reportSelect/:garageName/filtered"
               element={
@@ -73,7 +87,8 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
+            
+            {/* atlantic terrace daily report (24 hour report) */}
             <Route
               exact
               path="/reportSelect/Atlantic%20Terrace/daily"
@@ -83,6 +98,8 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            
+            {/* daily report (24 hours) */}
             <Route
               path="/reportSelect/:garageName/daily"
               element={
@@ -91,6 +108,8 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            
+            {/* wait times report */}
             <Route
               path="/reportSelect/:garageName/wait"
               element={
@@ -99,6 +118,8 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            
+            {/* open tickets report */}
             <Route
               path="/reportSelect/:garageName/open"
               element={
@@ -107,8 +128,10 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            
+            {/* filter by rate report */}
             <Route
-              path="/reportSelect/:garageName/filterrate"
+              path="/reportSelect/:garageName/filter"
               element={
                 <ProtectedRoute>
                   <AutomatedFilteredByRate />

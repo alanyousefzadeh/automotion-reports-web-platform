@@ -12,7 +12,7 @@ const reports = [
   },
   {
     id:4,
-    title: "FilterRate"
+    title: "Filter By Rate"
   },
   {
     id: 2,
