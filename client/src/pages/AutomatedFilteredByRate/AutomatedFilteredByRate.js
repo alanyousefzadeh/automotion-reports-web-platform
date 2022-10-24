@@ -25,8 +25,8 @@ export default function AutomatedFilteredByRate() {
     console.log(garageName)
 
     const clickHandler = async () => {
-        setLoading(true)
         if (rate && startDate && endDate) {
+            setLoading(true)
             const promise = await axios
                 .get('http://localhost:8080/filterByRate', {
                     params: {
