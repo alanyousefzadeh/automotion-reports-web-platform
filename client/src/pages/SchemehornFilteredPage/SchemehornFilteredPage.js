@@ -23,7 +23,7 @@ function SchemehornFilteredPage() {
     setLoading(true);
     //revenue summary API call
     let response = await axios.post(
-      "https://automotion-server.herokuapp.com/schemehorn",
+      process.env.REACT_APP_SCHEMEHORN_URL,
       {
         inDate,
         outDate,
@@ -35,7 +35,7 @@ function SchemehornFilteredPage() {
 
     //discount table API call
     let discountResponse = await axios.post(
-      "https://automotion-server.herokuapp.com/schemehorn/discounts",
+      process.env.REACT_APP_SCHEMEHORN_DISCOUNTS_URL,
       {
         inDate,
         outDate,
@@ -47,7 +47,7 @@ function SchemehornFilteredPage() {
 
     //ticket ranges API call
     let ticketRangesResponse = await axios.post(
-      "https://automotion-server.herokuapp.com/schemehorn/tickets",
+      process.env.REACT_APP_SCHEMEHORN_TICKETS_URL,
       {
         inDate,
         outDate,
@@ -59,7 +59,7 @@ function SchemehornFilteredPage() {
 
     //payment type API call
     let paymentTypesResponse = await axios.post(
-      "https://automotion-server.herokuapp.com/schemehorn/payments",
+      process.env.REACT_APP_SCHEMEHORN_PAYMENTS_URL,
       {
         inDate,
         outDate,

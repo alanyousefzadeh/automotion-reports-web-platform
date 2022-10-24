@@ -25,7 +25,7 @@ function WaitTimePage() {
     let response = [];
     if (inDate !== null && outDate !== null) {
       setIsLoading(true);
-      response = await axios.get("https://automotion-server.herokuapp.com/retrievalTime", {
+      response = await axios.get(process.env.REACT_APP_RETRIEVAL_TIME_URL, {
         params: {
           garage: garageName,
           inDate,
