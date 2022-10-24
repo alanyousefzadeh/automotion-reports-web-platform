@@ -1,9 +1,9 @@
 import React from 'react'
-
+import './RatePicker.scss'
 export default function RatePicker(props) {
     const { garage, setRate } = props
     return (
-        <>
+        <div className='ratePicker'>
             {garage === "Baxter" ?
                 <select onChange={(e) => setRate(e.target.value)}>
                     <option value="">--</option>
@@ -39,6 +39,6 @@ export default function RatePicker(props) {
                     </select>
 
             }
-        </>
+        </div>
     )
 }
