@@ -5,13 +5,15 @@ import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import axios from 'axios'
 import RatePicker from '../../components/RatePicker/RatePicker';
-
+import LoadingSpinner from '../../components/LoadingWheel/LoadingWheel';
+import Navigation from '../../components/Navigation/Navigation';
 
 export default function AutomatedFilteredByRate() {
 
     const [startDate, setStartDate] = useState(null)
     const [endDate, setEndDate] = useState(null)
-
+    const [loading, setLoading] = useState(false)
+    
     //rate = the rate that was selected, but before the submit button was clicked
     const [rate, setRate] = useState(null)
 
@@ -23,6 +25,7 @@ export default function AutomatedFilteredByRate() {
     console.log(garageName)
 
     const clickHandler = async () => {
+        setLoading(true)
         if (rate && startDate && endDate) {
             const promise = await axios
                 .get('http://localhost:8080/filterByRate', {
@@ -32,13 +35,14 @@ export default function AutomatedFilteredByRate() {
                 })
             setCurrRate(rate)
             setData(promise.data)
-            
+            setLoading(false)
         } else {
             alert("please select a rate and start/end date")
         }
     }
     return (
         <div className='report'>
+            <Navigation/>
             <DatePicker label={'Starting Date'} setDate={setStartDate} />
             <DatePicker label={'Ending Date'} setDate={setEndDate} />
             <RatePicker
@@ -48,6 +52,7 @@ export default function AutomatedFilteredByRate() {
             <Button onClick={clickHandler} className="button">
                 Submit
             </Button>
+            {loading ? <LoadingSpinner/> : 
             <Table striped bordered className="report table-sm">
                 <thead>
                     <tr className="table-warning">
@@ -69,6 +74,7 @@ export default function AutomatedFilteredByRate() {
                     })}
                 </tbody>
             </Table>
+            }
         </div>
     )
 }
