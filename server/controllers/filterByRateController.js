@@ -60,7 +60,7 @@ exports.filterByRate = async (req, res) => {
             and DATEDIFF(mi, InDateTime, outDateTime) > 120
             GROUP BY CAST(outdatetime AS DATE)`
         )
-        
+
     //all other non-early bird charges
     } else {
         filterByRateData = await knex.raw(

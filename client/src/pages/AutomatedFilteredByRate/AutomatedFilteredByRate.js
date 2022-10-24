@@ -28,7 +28,7 @@ export default function AutomatedFilteredByRate() {
         if (rate && startDate && endDate) {
             setLoading(true)
             const promise = await axios
-                .get('http://localhost:8080/filterByRate', {
+                .get(process.env.REACT_APP_FILTER_BY_RATE_URL, {
                     params: {
                         rate, startDate, endDate, garageName
                     }
