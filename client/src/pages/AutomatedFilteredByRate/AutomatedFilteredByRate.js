@@ -13,7 +13,7 @@ export default function AutomatedFilteredByRate() {
     const [startDate, setStartDate] = useState(null)
     const [endDate, setEndDate] = useState(null)
     const [loading, setLoading] = useState(false)
-    
+
     //rate = the rate that was selected, but before the submit button was clicked
     const [rate, setRate] = useState(null)
 
@@ -42,7 +42,7 @@ export default function AutomatedFilteredByRate() {
     }
     return (
         <div className='report'>
-            <Navigation/>
+            <Navigation />
             <DatePicker label={'Starting Date'} setDate={setStartDate} />
             <DatePicker label={'Ending Date'} setDate={setEndDate} />
             <RatePicker
@@ -52,28 +52,30 @@ export default function AutomatedFilteredByRate() {
             <Button onClick={clickHandler} className="button">
                 Submit
             </Button>
-            {loading ? <LoadingSpinner/> : 
-            <Table striped bordered className="report table-sm">
-                <thead>
-                    <tr className="table-warning">
-                        <th>Count</th>
-                        <th>Date</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data && (data).map((record, index) => {
+            {loading ? <LoadingSpinner /> :
+                <Table striped bordered className="report table-sm">
+                    <thead>
+                        <tr className="table-warning">
+                            <th>Count</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data && (data).map((record, index) => {
 
-                        return (
-                            <tr key={index} >
-                                <td>{record.count}</td>
-                                <td>{record.date.split('T')[0]}</td>
-                                <td>${record.count * currRate}</td>
-                            </tr>
-                        );
-                    })}
-                </tbody>
-            </Table>
+                            return (
+
+                                <tr key={index} >
+                                    <td>{record.count}</td>
+                                    <td>{record.date.split('T')[0]}</td>
+                                    <td>${record.count * currRate}</td>
+                                </tr>
+
+                            );
+                        })}
+                    </tbody>
+                </Table>
             }
         </div>
     )
