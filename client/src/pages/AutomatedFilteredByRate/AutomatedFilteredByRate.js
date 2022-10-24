@@ -28,7 +28,7 @@ export default function AutomatedFilteredByRate() {
         if (rate && startDate && endDate) {
             setLoading(true)
             const promise = await axios
-                .get("https://automotion-server.herokuapp.com/filterByRate", {
+                .get("http://localhost:8080/filterByRate", {
                     params: {
                         rate, startDate, endDate, garageName
                     }
