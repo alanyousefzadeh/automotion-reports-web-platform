@@ -11,10 +11,6 @@ const reports = [
     title: "Daily Report",
   },
   {
-    id:4,
-    title: "Filter By Rate"
-  },
-  {
     id: 2,
     title: "Filtered Report",
   },
@@ -26,11 +22,13 @@ const reports = [
 
 function ReportSelectPage() {
   let { garageName } = useParams();
+
   return (
     <>
       <Navigation />
       <h4 className="garage__title">{garageName} Garage Reports</h4>
       <div className="cards d-flex justify-content-center">
+     
         {garageName === "Schemehorn" ? (
           <>
           <ReportCard
@@ -57,6 +55,10 @@ function ReportSelectPage() {
         ) : (
           ""
         )}
+        {
+          garageName !== "Atlantic Terrace" && garageName !== "Schemehorn" ?
+          <ReportCard title="Filter By Rate" />: ""
+        }
       </div>
     </>
   );
