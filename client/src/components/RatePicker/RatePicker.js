@@ -1,11 +1,15 @@
 import React from 'react'
 import './RatePicker.scss'
 export default function RatePicker(props) {
-    const { garage, setRate } = props
+    const { garage, setRate, setData } = props
+    const setVals = (e) => {
+        setData(null)
+        setRate(e.target.value)
+    }
     return (
         <div className='ratePicker'>
             {garage === "Baxter" ?
-                <select onChange={(e) => setRate(e.target.value)}>
+                <select onChange={(e) => setVals(e)}>
                     <option value="">--</option>
                     <option value="25">Early Bird - $25</option>
                     <option value="15">Up to 1/2 Hr - $15</option>
@@ -18,7 +22,7 @@ export default function RatePicker(props) {
                     <option value="NC/0">NC/0</option>
                 </select> :
                 garage === "VanVorst" ?
-                    <select onChange={(e) => setRate(e.target.value)}>
+                    <select onChange={(e) => setVals(e)}>
                         <option value="">--</option>
                         <option value="3.56">Up to 1/2 Hr - $3.56</option>
                         <option value="10.67">Up to 1 Hr - $10.67</option>
@@ -29,7 +33,7 @@ export default function RatePicker(props) {
                         <option value="Other">Other</option>
                         <option value="NC/0">NC/0</option>
                     </select> :
-                    <select onChange={(e) => setRate(e.target.value)}>
+                    <select onChange={(e) => setVals(e)}>
                         <option value="">--</option>
                         <option value="15">Early Bird - $15</option>
                         <option value="5">Up to 1/2 Hr - $5</option>

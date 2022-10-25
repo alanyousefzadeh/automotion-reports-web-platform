@@ -7,6 +7,8 @@ import axios from 'axios'
 import RatePicker from '../../components/RatePicker/RatePicker';
 import LoadingSpinner from '../../components/LoadingWheel/LoadingWheel';
 import Navigation from '../../components/Navigation/Navigation';
+import NoChargeTable from '../../components/NoChargeTable/NoChargeTable';
+import RegularRateTable from '../../components/RegularRateTable/RegularRateTable';
 
 export default function AutomatedFilteredByRate() {
 
@@ -48,6 +50,7 @@ export default function AutomatedFilteredByRate() {
             <RatePicker
                 garage={garageName}
                 setRate={setRate}
+                setData={setData}
             />
             <Button onClick={clickHandler} className="button">
                 Submit
@@ -55,48 +58,16 @@ export default function AutomatedFilteredByRate() {
             {loading ? <LoadingSpinner /> :
                 <>
                 {rate === "NC/0" ?
-                    <Table striped bordered className="report table-sm">
-                        <thead>
-                            <tr className="table-warning">
-                                <th>In</th>
-                                <th>Out</th>
-                                <th>Charge</th>
-                                <th>Ticket Num</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {data && (data).map((record, index) => {
-                                return (
-                                    <tr key={index} >
-                                        <td>{record.InDateTime.split('T')[0]}</td>
-                                        <td>{record.OutDateTime.split('T')[0]}</td>
-                                        <td>${record.Total}</td>
-                                        <td>${record.TicketNum}</td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </Table> :
-                    <Table striped bordered className="report table-sm">
-                        <thead>
-                            <tr className="table-warning">
-                                <th>Count</th>
-                                <th>Date</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {data && (data).map((record, index) => {
-                                return (
-                                    <tr key={index} >
-                                        <td>{record.count}</td>
-                                        <td>{record.date.split('T')[0]}</td>
-                                        <td>${record.count * currRate}</td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </Table>}
+                    <NoChargeTable
+                    data={data}/> :
+
+                    rate === "Other" ? 
+                    "":
+                    
+                    <RegularRateTable
+                    data={data}
+                    currRate={currRate}/>
+                }
                 </>
             }
         </div>
