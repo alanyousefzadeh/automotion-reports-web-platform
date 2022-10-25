@@ -60,7 +60,35 @@ exports.filterByRate = async (req, res) => {
             and DATEDIFF(mi, InDateTime, outDateTime) > 120
             GROUP BY CAST(outdatetime AS DATE)`
         )
+    } else if (rate === "NC/0") {
+        filterByRateData = await knex.raw(
+        `SELECT paytype, Total, TicketNum, InDateTime, OutDateTime
+        FROM Transactions
+        where (paytype = 'NC' or total = 0) and outDateTime between '${startDate}' and '${endDate}'`)
 
+    } else if(rate === "Other") {
+
+        switch(currentGarage){
+            case("Baxter"):
+            filterByRateData = await knex.raw(
+                `SELECT Total, TicketNum, InDateTime, OutDateTime
+                FROM Transactions
+                where outDateTime between '${startDate}' and '${endDate}' and Total NOT IN (0, 15, 25, 32, 42, 46, 55)`)
+            break;
+            case("VanVorst"):
+            filterByRateData = await knex.raw(
+                `SELECT Total, TicketNum, InDateTime, OutDateTime
+                FROM Transactions
+                where outDateTime between '${startDate}' and '${endDate}' and Total NOT IN (0, 3.56, 10.67, 13.04, 17.78, 20.15, 20.44)`)
+            break;
+            case("Waverly"):
+            filterByRateData = await knex.raw(
+                `SELECT Total, TicketNum, InDateTime, OutDateTime
+                FROM Transactions
+                where outDateTime between '${startDate}' and '${endDate}' and Total NOT IN (0, 5, 15, 20, 25, 35)`)
+            break;
+            
+        }
     //all other non-early bird charges
     } else {
         filterByRateData = await knex.raw(
