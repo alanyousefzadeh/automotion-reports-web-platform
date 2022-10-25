@@ -53,29 +53,51 @@ export default function AutomatedFilteredByRate() {
                 Submit
             </Button>
             {loading ? <LoadingSpinner /> :
-                <Table striped bordered className="report table-sm">
-                    <thead>
-                        <tr className="table-warning">
-                            <th>Count</th>
-                            <th>Date</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data && (data).map((record, index) => {
-
-                            return (
-
-                                <tr key={index} >
-                                    <td>{record.count}</td>
-                                    <td>{record.date.split('T')[0]}</td>
-                                    <td>${record.count * currRate}</td>
-                                </tr>
-
-                            );
-                        })}
-                    </tbody>
-                </Table>
+                <>
+                {rate === "NC/0" ?
+                    <Table striped bordered className="report table-sm">
+                        <thead>
+                            <tr className="table-warning">
+                                <th>In</th>
+                                <th>Out</th>
+                                <th>Charge</th>
+                                <th>Ticket Num</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {data && (data).map((record, index) => {
+                                return (
+                                    <tr key={index} >
+                                        <td>{record.InDateTime.split('T')[0]}</td>
+                                        <td>{record.OutDateTime.split('T')[0]}</td>
+                                        <td>${record.Total}</td>
+                                        <td>${record.TicketNum}</td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </Table> :
+                    <Table striped bordered className="report table-sm">
+                        <thead>
+                            <tr className="table-warning">
+                                <th>Count</th>
+                                <th>Date</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {data && (data).map((record, index) => {
+                                return (
+                                    <tr key={index} >
+                                        <td>{record.count}</td>
+                                        <td>{record.date.split('T')[0]}</td>
+                                        <td>${record.count * currRate}</td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </Table>}
+                </>
             }
         </div>
     )
