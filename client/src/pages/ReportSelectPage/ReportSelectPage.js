@@ -57,7 +57,10 @@ function ReportSelectPage() {
         )}
         {
           garageName !== "Atlantic Terrace" && garageName !== "Schemehorn" ?
-          <ReportCard title="Filter By Rate" />: ""
+          <>
+          <ReportCard title="Filter By Rate" />
+          <ReportCard title="Monthlies"/>
+          </>: ""
         }
       </div>
     </>
