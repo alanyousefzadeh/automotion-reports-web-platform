@@ -7,7 +7,7 @@ import axios from 'axios'
 import RatePicker from '../../components/RatePicker/RatePicker';
 import LoadingSpinner from '../../components/LoadingWheel/LoadingWheel';
 import Navigation from '../../components/Navigation/Navigation';
-import NoChargeTable from '../../components/NoChargeTable/NoChargeTable';
+import NonRegularChargeTable from '../../components/NonRegularChargeTable/NonRegularChargeTable';
 import RegularRateTable from '../../components/RegularRateTable/RegularRateTable';
 
 export default function AutomatedFilteredByRate() {
@@ -57,12 +57,9 @@ export default function AutomatedFilteredByRate() {
             </Button>
             {loading ? <LoadingSpinner /> :
                 <>
-                {rate === "NC/0" ?
-                    <NoChargeTable
+                {rate === "NC/0" || rate === "Other" ?
+                    <NonRegularChargeTable
                     data={data}/> :
-
-                    rate === "Other" ? 
-                    "":
                     
                     <RegularRateTable
                     data={data}

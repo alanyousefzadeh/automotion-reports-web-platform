@@ -1,7 +1,7 @@
 import React from 'react'
 import Table from "react-bootstrap/Table";
 
-export default function NoChargeTable(props) {
+export default function NonRegularChargeTable(props) {
   
   const {data} = props  
     
@@ -11,7 +11,7 @@ export default function NoChargeTable(props) {
             <tr className="table-warning">
                 <th>In</th>
                 <th>Out</th>
-                <th>Charge</th>
+                <th>Amount</th>
                 <th>Ticket</th>
             </tr>
         </thead>
@@ -21,7 +21,7 @@ export default function NoChargeTable(props) {
                     <tr key={index} >
                         <td>{new Date(record.InDateTime).toLocaleString()}</td>
                         <td>{new Date(record.OutDateTime).toLocaleString()}</td>
-                        <td>${record.Total}</td>
+                        <td>${record.Total.toFixed(2)}</td>
                         <td>{record.TicketNum}</td>
                     </tr>
                 );
