@@ -4,15 +4,16 @@ import axios from 'axios'
 import ActiveMonthlies from '../../components/ActiveMonthlies/ActiveMonthlies'
 import InActiveMonthlies from '../../components/InActiveMonthlies/InActiveMonthlies'
 import RepoMonthlies from '../../components/RepoMonthlies/RepoMonthlies'
+import LoadingSpinner from '../../components/LoadingWheel/LoadingWheel';
 
 export default function Monthlies() {
 
 const [monthliesData, setMonthliesData] = useState(null)
-const [isLoading, setIsLoading] = useState(false)
+const [isLoading, setIsLoading] = useState(true)
 
 const {garageName} = useParams()
 async function fetchMonthliesData() {
-    setIsLoading(true);
+    //setIsLoading(true);
     try {
       const res = await axios.get(
         process.env.REACT_APP_MONTHLIES);
@@ -29,7 +30,7 @@ async function fetchMonthliesData() {
 
   return (
     
-    monthliesData &&  
+    isLoading ? <LoadingSpinner/> : 
     <div className='report'>
       <ActiveMonthlies
       data={monthliesData.monthliesInUse}
