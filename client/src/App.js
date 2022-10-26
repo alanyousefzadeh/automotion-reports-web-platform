@@ -13,6 +13,7 @@ import SchemehornDailyPage from "./pages/SchemehornDailyPage/SchemehornDailyPage
 import AutomatedFilteredReportPage from "./pages/AutomatedFilteredReportPage/AutomatedFilteredReportPage";
 import AutomatedDailyReportPage from "./pages/AutomatedDailyReportPage/AutomatedDailyReportPage";
 import AutomatedFilteredByRate from "./pages/AutomatedFilteredByRate/AutomatedFilteredByRate";
+import Monthlies from "./pages/MonthliesPage/Monthlies";
 
 function App() {
   return (
@@ -135,6 +136,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <AutomatedFilteredByRate />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/reportSelect/:garageName/monthlies"
+              element={
+                <ProtectedRoute>
+                  <Monthlies />
                 </ProtectedRoute>
               }
             />
