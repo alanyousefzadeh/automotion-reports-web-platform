@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import { useParams } from "react-router-dom";
 import axios from 'axios'
 import ActiveMonthlies from '../../components/ActiveMonthlies/ActiveMonthlies'
 import InActiveMonthlies from '../../components/InActiveMonthlies/InActiveMonthlies'
@@ -9,6 +10,7 @@ export default function Monthlies() {
 const [monthliesData, setMonthliesData] = useState(null)
 const [isLoading, setIsLoading] = useState(false)
 
+const {garageName} = useParams()
 async function fetchMonthliesData() {
     setIsLoading(true);
     try {
@@ -26,13 +28,19 @@ async function fetchMonthliesData() {
   }, []);
 
   return (
+    
+    monthliesData &&  
     <div className='report'>
       <ActiveMonthlies
-      data={monthliesData.monthliesInUse}/>
+      data={monthliesData.monthliesInUse}
+      garage={garageName}/>
       <InActiveMonthlies
-      data={monthliesData.monthliesExpired}/>
+      data={monthliesData.monthliesExpired}
+      garage={garageName}/>
       <RepoMonthlies
-      data={monthliesData.monthliesRepo}/>
+      data={monthliesData.monthliesRepo}
+      garage={garageName}/>
     </div>
+    
   )
 }
