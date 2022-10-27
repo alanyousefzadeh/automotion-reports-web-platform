@@ -12,6 +12,7 @@ const retrievalTimeRoute = require('./routes/retrievalTimeRoute')
 const atlanticOpenAPIRoute = require('./routes/atlanticOpenAPI')
 const schemehornAPIRoute = require('./routes/schemehornAPIRoute')
 const filterByRateRoute = require('./routes/filterByRateRoute')
+const monthliesRoute = require('./routes/monthliesRoute')
 
 const port = process.env.PORT || 8080;
 
@@ -28,6 +29,8 @@ app.use('/retrievalTime', retrievalTimeRoute);
 app.use('/atlanticOpenAPI', atlanticOpenAPIRoute)
 app.use('/schemehorn', schemehornAPIRoute)
 app.use('/filterByRate', filterByRateRoute)
+app.use('/monthlies', monthliesRoute)
+
 //port listener
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
