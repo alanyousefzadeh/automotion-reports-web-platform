@@ -16,7 +16,7 @@ const monthliesRoute = require('./routes/monthliesRoute')
 
 const port = process.env.PORT || 8080;
 
-//middleware
+//middleware 
 app.use(cors());
 app.use(express.json());
 
