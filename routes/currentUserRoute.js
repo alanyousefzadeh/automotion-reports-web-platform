@@ -7,6 +7,6 @@ const authenticate = require('../middleware/authenticate');
 
 router
     .route('/')
-    .get(currentUserController.currentUser);
+    .get(authenticate, currentUserController.currentUser);
 
 module.exports = router;

@@ -7,6 +7,6 @@ const authenticate = require('../middleware/authenticate');
 
 router
     .route('/')
-    .get(atlanticOpenAPIController.atlanticOpenAPI);
+    .get(authenticate, atlanticOpenAPIController.atlanticOpenAPI);
 
 module.exports = router;

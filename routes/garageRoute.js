@@ -9,10 +9,10 @@ const authenticate = require('../middleware/authenticate');
 
 router
     .route('/atlanticClosed')
-    .get(garageController.atlanticClosed)
+    .get(authenticate, garageController.atlanticClosed)
 
 router
     .route('/transactions')
-    .get(garageController.transactions)
+    .get(authenticate, garageController.transactions)
 
 module.exports = router;  
