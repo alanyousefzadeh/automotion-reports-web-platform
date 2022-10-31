@@ -19,7 +19,7 @@ export default function Monthlies() {
     setIsLoading(true);
     try {
       const res = await axios.get(
-        "https://automotion-server.herokuapp.com/monthlies",
+        "https://automotion-heroku-server.herokuapp.com/monthlies",
         {
           params: {
             garageName
