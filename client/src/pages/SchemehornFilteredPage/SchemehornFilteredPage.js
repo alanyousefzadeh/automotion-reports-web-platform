@@ -70,7 +70,7 @@ function SchemehornFilteredPage() {
 
     //payment type API call
     let paymentTypesResponse = await axios.post(
-      process.env.REACT_APP_SCHEMEHORN_PAYMENTS_URL, {
+      process.env.REACT_APP_SCHEMEHORN_PAYMENTS_URL,null, {
       params: {
         inDate,
         outDate,
