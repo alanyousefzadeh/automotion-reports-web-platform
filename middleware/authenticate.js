@@ -4,7 +4,7 @@ const authenticate = (req, res, next) => {
     // If there is no auth header provided
     console.log("line5",req.headers.authorization)
     console.log("line6", req.body)
-    cpnsole.log("req", req)
+    console.log("req", req)
     if (req.headers.authorization === undefined) {
         console.log("login")
         return res.status(401).send("login credentials required");
