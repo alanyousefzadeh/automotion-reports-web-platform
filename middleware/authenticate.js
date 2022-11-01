@@ -5,7 +5,7 @@ const authenticate = (req, res, next) => {
     console.log(req.headers.authorization)
     if (req.headers.authorization === undefined) {
         console.log("login")
-        return res.status(401).send("Please login");
+        return res.status(401).send("login credentials required");
     }
 
     // Parse the Bearer token
