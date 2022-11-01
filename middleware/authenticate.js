@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const authenticate = (req, res, next) => {
     // If there is no auth header provided
     console.log(req.headers.authorization)
-    if (req.headers.authorization === 'Bearer null') {
+    if (req.headers.authorization === 'Bearer undefined') {
         return res.status(401).send("Please login");
     }
 
