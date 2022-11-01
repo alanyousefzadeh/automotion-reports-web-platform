@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const authenticate = (req, res, next) => {
     // If there is no auth header provided
-    console.log(req.headers.authorization)
+    console.log("line5",req.headers.authorization)
     if (req.headers.authorization === undefined) {
         console.log("login")
         return res.status(401).send("login credentials required");
