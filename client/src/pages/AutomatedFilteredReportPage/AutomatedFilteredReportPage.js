@@ -49,7 +49,7 @@ function AutomatedFilteredReportPage() {
             },
             headers: {
               authorization: "Bearer " + token,
-            },
+            }
           }
         );
         data = promise.data;

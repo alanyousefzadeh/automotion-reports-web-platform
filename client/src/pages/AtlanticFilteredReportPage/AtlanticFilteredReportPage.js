@@ -158,6 +158,7 @@ function FilteredReportPage() {
 
   const generateReport = () => {
     if (inDate === null || outDate === null) {
+      const token = sessionStorage.getItem('token');
       //default report (partial report)
       axios
         .get(
@@ -166,6 +167,9 @@ function FilteredReportPage() {
             params: {
               inDate: new Date().setHours(3, 0, 0, 0),
               outDate: new Date().getTime(),
+            },
+            headers: {
+              authorization: 'Bearer ' + token
             }
           }
         )
@@ -180,6 +184,7 @@ function FilteredReportPage() {
     } else {
       //filtered report
       setIsLoading(true);
+      const token = sessionStorage.getItem('token');
       axios
         .get(
           process.env.REACT_APP_ATLANTIC_CLOSED_URL,
@@ -187,6 +192,9 @@ function FilteredReportPage() {
             params: {
               inDate: new Date(`${inDate}T03:00:00`).getTime(),
               outDate: new Date(`${outDate}T03:00:00`).getTime(),
+            },
+            headers: {
+              authorization: 'Bearer ' + token
             }
           }
         )

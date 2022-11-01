@@ -168,6 +168,7 @@ const AtlanticDailyReportPage = () => {
 
   async function fetchAtlanticData() {
     setIsLoading(true);
+    const token = sessionStorage.getItem('token');
     try {
       const res = await axios.get(
         process.env.REACT_APP_ATLANTIC_CLOSED_URL,
@@ -176,6 +177,10 @@ const AtlanticDailyReportPage = () => {
             inDate: inDate,
             outDate: outDate,
           },
+          headers: {
+            authorization: 'Bearer ' + token
+          }
+        
         }
       );
       setatlanticAllData(res.data);

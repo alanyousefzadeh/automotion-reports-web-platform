@@ -41,7 +41,7 @@ function AutomatedDailyReportPage() {
     );
   }, []);
 
-  if (!!failedToLoad) {
+  if (failedToLoad) {
     return (
       <p>
         {err} <Link to="/login">login</Link>

@@ -16,6 +16,7 @@ export default function Monthlies() {
 
   const { garageName } = useParams()
   async function fetchMonthliesData() {
+    const token = sessionStorage.getItem('token');
     setIsLoading(true);
     try {
       const res = await axios.get(
@@ -23,6 +24,9 @@ export default function Monthlies() {
         {
           params: {
             garageName
+          },
+          headers: {
+            authorization: 'Bearer ' + token
           }
         });
       setMonthliesData(res.data);

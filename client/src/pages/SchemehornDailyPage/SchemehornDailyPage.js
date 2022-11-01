@@ -9,7 +9,7 @@ import SchemehornPaymentTypeComponent from "../../components/SchemehornPaymentTy
 import { formatDate } from "../AutomatedDailyReportPage/AutomatedDailyReportHelpers";
 
 function SchemehornDailyPage() {
-  
+
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
   const formattedDate = formatDate(yesterday);
@@ -23,53 +23,70 @@ function SchemehornDailyPage() {
   const [loading, setLoading] = useState(true);
 
   const getSchemehornData = async () => {
-    
+    const token = sessionStorage.getItem('token');
     //revenue summary API call
     let response = await axios.post(
-      process.env.REACT_APP_SCHEMEHORN_URL,
-      {
+      process.env.REACT_APP_SCHEMEHORN_URL, {
+      params: {
         inDate,
         outDate,
         inTime: "12:00 AM",
         outTime: "11:59:59 PM",
+      },
+      headers: {
+        authorization: 'Bearer ' + token
       }
-    );
+
+    });
     setData(response.data);
+
 
     //discount table API call
     let discountResponse = await axios.post(
-      process.env.REACT_APP_SCHEMEHORN_DISCOUNTS_URL,
-      {
+      process.env.REACT_APP_SCHEMEHORN_DISCOUNTS_URL, {
+      params: {
         inDate,
         outDate,
         inTime: "12:00 AM",
         outTime: "11:59:59 PM",
+      },
+      headers: {
+        authorization: 'Bearer ' + token
       }
-    );
+
+    });
     setDiscounts(discountResponse.data);
 
     //ticket ranges API call
     let ticketRangesResponse = await axios.post(
-      process.env.REACT_APP_SCHEMEHORN_TICKETS_URL,
-      {
+      process.env.REACT_APP_SCHEMEHORN_TICKETS_URL, {
+      params: {
         inDate,
         outDate,
         inTime: "12:00 AM",
         outTime: "11:59:59 PM",
+      },
+      headers: {
+        authorization: 'Bearer ' + token
       }
-    );
+    });
     setTicketRanges(ticketRangesResponse.data);
 
     //payment type API call
     let paymentTypesResponse = await axios.post(
-      process.env.REACT_APP_SCHEMEHORN_PAYMENTS_URL,
-      {
+      process.env.REACT_APP_SCHEMEHORN_PAYMENTS_URL, {
+      params: {
         inDate,
         outDate,
         inTime: "12:00 AM",
         outTime: "11:59:59 PM",
+      },
+
+      headers: {
+        authorization: 'Bearer ' + token
       }
-    );
+
+    });
     setPaymentTypes(paymentTypesResponse.data);
     setLoading(false);
   };

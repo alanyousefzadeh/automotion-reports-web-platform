@@ -1,8 +1,9 @@
 import axios from 'axios';
-const getData = async (garageName, automatedSetFailedtoLoad, automatedSetErr, setResponse, setTotal, formattedDate, setIsLoading) => {
+const getData = async (garageName, automatedSetFailedtoLoad, setErr, setResponse, setTotal, formattedDate, setIsLoading) => {
     console.log(formattedDate);
 
   let data = null;
+  const token = sessionStorage.getItem('token');
 
   try {
     const promise = await axios.get(
@@ -12,7 +13,11 @@ const getData = async (garageName, automatedSetFailedtoLoad, automatedSetErr, se
           inDate: formattedDate,
           outDate: formattedDate,
           garage: garageName,
+        },
+        headers: {
+          authorization: 'Bearer ' + token
         }
+
       }
     );
     data = promise.data;
@@ -24,7 +29,7 @@ const getData = async (garageName, automatedSetFailedtoLoad, automatedSetErr, se
     }
   } catch (err) {
     automatedSetFailedtoLoad(true);
-    automatedSetErr(err.response.data);
+    setErr(err.response.data);
   }
 };
 

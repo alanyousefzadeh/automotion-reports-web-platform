@@ -43,7 +43,7 @@ function Login() {
             const auth = getAuth();
             try {
                 await signIn(form.email,form.password)
-                await axios.post("http://localhost:8080/login",{
+                await axios.post("https://automotion-heroku-server.herokuapp.com/login",{
                     email: form.email
                 })
                 .then((response) => {
