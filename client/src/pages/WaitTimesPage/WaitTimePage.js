@@ -25,7 +25,7 @@ function WaitTimePage() {
     let response = [];
     if (inDate !== null && outDate !== null) {
       const token = sessionStorage.getItem('token');
-      if (token) {
+     
         setIsLoading(true);
         response = await axios.get(process.env.REACT_APP_RETRIEVAL_TIME_URL,
           {
@@ -41,7 +41,7 @@ function WaitTimePage() {
               authorization: 'Bearer ' + token
             }
           });
-      }
+      
       setIsLoading(false);
       setWaitTimeData(response.data);
     }
