@@ -26,13 +26,14 @@ function SchemehornDailyPage() {
     const token = sessionStorage.getItem('token');
     //revenue summary API call
     let response = await axios.post(
-      process.env.REACT_APP_SCHEMEHORN_URL, {
-      params: {
+      process.env.REACT_APP_SCHEMEHORN_URL, 
+      {
         inDate,
         outDate,
         inTime: "12:00 AM",
         outTime: "11:59:59 PM",
       },
+      {
       headers: {
         authorization: 'Bearer ' + token
       }
@@ -42,13 +43,14 @@ function SchemehornDailyPage() {
 
     //discount table API call
     let discountResponse = await axios.post(
-      process.env.REACT_APP_SCHEMEHORN_DISCOUNTS_URL, {
-      params: {
+      process.env.REACT_APP_SCHEMEHORN_DISCOUNTS_URL, 
+      {
         inDate,
         outDate,
         inTime: "12:00 AM",
         outTime: "11:59:59 PM",
       },
+      {
       headers: {
         authorization: 'Bearer ' + token
       }
@@ -59,12 +61,13 @@ function SchemehornDailyPage() {
     //ticket ranges API call
     let ticketRangesResponse = await axios.post(
       process.env.REACT_APP_SCHEMEHORN_TICKETS_URL, {
-      params: {
+      
         inDate,
         outDate,
         inTime: "12:00 AM",
         outTime: "11:59:59 PM",
       },
+      {
       headers: {
         authorization: 'Bearer ' + token
       }
@@ -73,18 +76,18 @@ function SchemehornDailyPage() {
 
     //payment type API call
     let paymentTypesResponse = await axios.post(
-      process.env.REACT_APP_SCHEMEHORN_PAYMENTS_URL, {
-      params: {
+      process.env.REACT_APP_SCHEMEHORN_PAYMENTS_URL, 
+      {
         inDate,
         outDate,
         inTime: "12:00 AM",
         outTime: "11:59:59 PM",
       },
 
-      headers: {
+      {
+        headers: {
         authorization: 'Bearer ' + token
       }
-
     });
     setPaymentTypes(paymentTypesResponse.data);
     setLoading(false);
