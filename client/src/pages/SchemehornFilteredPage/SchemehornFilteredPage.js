@@ -24,64 +24,66 @@ function SchemehornFilteredPage() {
     const token = sessionStorage.getItem('token');
     //revenue summary API call
     let response = await axios.post(
-      process.env.REACT_APP_SCHEMEHORN_URL, null, {
-      params: {
+      process.env.REACT_APP_SCHEMEHORN_URL,
+      {
         inDate,
         outDate,
         inTime: "12:00 AM",
         outTime: "11:59:59 PM",
       },
-      headers: {
-        authorization: 'Bearer ' + token
-      }
-    });
+      {
+        headers: {
+          'authorization': 'Bearer ' + token
+        }
+      });
     setData(response.data);
 
     //discount table API call
     let discountResponse = await axios.post(
-      process.env.REACT_APP_SCHEMEHORN_DISCOUNTS_URL, null, {
-      params: {
+      process.env.REACT_APP_SCHEMEHORN_DISCOUNTS_URL,
+      {
         inDate,
         outDate,
         inTime: "12:00 AM",
         outTime: "11:59:59 PM",
       },
-      headers: {
-        authorization: 'Bearer ' + token
-      }
-    });
+      {
+        headers: {
+          'authorization': 'Bearer ' + token
+        }
+      });
     setDiscounts(discountResponse.data);
 
     //ticket ranges API call
     let ticketRangesResponse = await axios.post(
-      process.env.REACT_APP_SCHEMEHORN_TICKETS_URL, null, {
-      params: {
+      process.env.REACT_APP_SCHEMEHORN_TICKETS_URL,
+      {
         inDate,
         outDate,
         inTime: "12:00 AM",
         outTime: "11:59:59 PM",
       },
-
-      headers: {
-        authorization: 'Bearer ' + token
-      }
-    });
+      {
+        headers: {
+          'authorization': 'Bearer ' + token
+        }
+      });
     setTicketRanges(ticketRangesResponse.data);
 
     //payment type API call
     let paymentTypesResponse = await axios.post(
-      process.env.REACT_APP_SCHEMEHORN_PAYMENTS_URL, null, {
-      params: {
-        inDate,
-        outDate,
-        inTime: "12:00 AM",
-        outTime: "11:59:59 PM",
-      },
+      process.env.REACT_APP_SCHEMEHORN_PAYMENTS_URL, {
 
-      headers: {
-        authorization: 'Bearer ' + token
-      }
-    });
+      inDate,
+      outDate,
+      inTime: "12:00 AM",
+      outTime: "11:59:59 PM",
+    },
+      {
+        headers: {
+          'authorization': 'Bearer ' + token
+        }
+      });
     setPaymentTypes(paymentTypesResponse.data);
     setLoading(false);
   };
