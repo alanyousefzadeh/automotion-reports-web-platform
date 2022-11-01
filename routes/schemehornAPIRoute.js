@@ -4,18 +4,18 @@ const authenticate = require('../middleware/authenticate');
 
 router
     .route('/')
-        .post(authenticate, schemehornController.data);
-    
-router    
+    .post(authenticate, schemehornController.data);
+
+router
     .route('/discounts')
-        .post(authenticate, schemehornController.discountData)
+    .post(authenticate, schemehornController.discountData)
 
 router
     .route('/tickets')
-        .post(authenticate, schemehornController.tickets)
+    .post(authenticate, schemehornController.tickets)
 
-        router
-        .route('/payments')
-            .post(authenticate, schemehornController.payments)
+router
+    .route('/payments')
+    .post(authenticate, schemehornController.payments)
 
 module.exports = router;
