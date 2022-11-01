@@ -40,7 +40,6 @@ function SchemehornDailyPage() {
     });
     setData(response.data);
 
-
     //discount table API call
     let discountResponse = await axios.post(
       process.env.REACT_APP_SCHEMEHORN_DISCOUNTS_URL, {
