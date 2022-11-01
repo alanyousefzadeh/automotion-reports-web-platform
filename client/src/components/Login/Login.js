@@ -2,7 +2,7 @@ import React, {useState, useCallback} from "react";
 import { useNavigate } from "react-router-dom";
 import Form from 'react-bootstrap/Form';
 import Button from "react-bootstrap/esm/Button";
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import { getAuth } from 'firebase/auth'
 import {UserAuth} from "../Context/AuthContext";
 import loginLogo from '../../assets/loginLogo.png'
 import './Login.scss'
@@ -43,9 +43,16 @@ function Login() {
             const auth = getAuth();
             try {
                 await signIn(form.email,form.password)
-                nav('/welcome')
+                await axios.post("http://localhost:8080/login",{
+                    email: form.email
+                })
+                .then((response) => {
+                    sessionStorage.setItem("token", response.data.token);
+                    e.target.reset();
+                    nav('/welcome')
+                })
             } catch (e) {
-                setErrors(e.message)
+                setServerSideErr(e.message)
                 console.log(e.message)
                 alert(e.message);
             }

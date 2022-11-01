@@ -24,22 +24,24 @@ function WaitTimePage() {
   async function fetchData() {
     let response = [];
     if (inDate !== null && outDate !== null) {
-      setIsLoading(true);
-      response = await axios.get("https://automotion-heroku-server.herokuapp.com/retrievalTime", 
-        {
-        params: {
-          garage: garageName,
-          inDate,
-          outDate,
-          type,
-          num,
-        }
-      });
+      const token = sessionStorage.getItem('token');
+      if (token) {
+        setIsLoading(true);
+        response = await axios.get(process.env.REACT_APP_RETRIEVAL_TIME_URL,
+          {
+            params: {
+              garage: garageName,
+              inDate,
+              outDate,
+              type,
+              num,
+            }
+          });
+      }
+      setIsLoading(false);
+      setWaitTimeData(response.data);
     }
-    setIsLoading(false);
-    setWaitTimeData(response.data);
   }
-
   function style(wait) {
     let style = "";
     if (wait < 6) {
@@ -69,58 +71,58 @@ function WaitTimePage() {
               <TypePicker label={"Type"} type={type} setType={setType} />
               <TicketSelect label={"Ticket Number"} num={num} setNum={setNum} />
             </div>
-            <Button className ='report-button'onClick={fetchData}>Generate Table</Button>
-            <EmailFormDisplayToggler/>
+            <Button className='report-button' onClick={fetchData}>Generate Table</Button>
+            <EmailFormDisplayToggler />
           </div>
           {isLoading ? (
             <LoadingSpinner />
           ) : (
             <div className="wait-table">
-            <Table striped bordered className="table-sm table-font">
-              <thead>
-                <tr className="table-warning">
-                  <th>Num</th>
-                  <th>In</th>
-                  <th>Out</th>
-                  <th>Retrieval</th>
-                  <th>Wait time</th>
-                  <th>Sz</th>
-                </tr>
-              </thead>
+              <Table striped bordered className="table-sm table-font">
+                <thead>
+                  <tr className="table-warning">
+                    <th>Num</th>
+                    <th>In</th>
+                    <th>Out</th>
+                    <th>Retrieval</th>
+                    <th>Wait time</th>
+                    <th>Sz</th>
+                  </tr>
+                </thead>
 
-              <tbody>
-                {waitTimeData &&
-                  waitTimeData.map((data, index) => {
-                    const wait = data.waitTime;
-                    let color = style(wait);
+                <tbody>
+                  {waitTimeData &&
+                    waitTimeData.map((data, index) => {
+                      const wait = data.waitTime;
+                      let color = style(wait);
 
-                    return (
-                      <tr key={index}>
-                        <td>
-                          {data.STOPAKey2}
-                        </td>
-                        <td>
-                          {new Date(
-                            data.InDateTime.slice(0, -1)
-                          ).toLocaleString()}
-                        </td>
-                        <td>
-                          {data.OutDateTime ? new Date(
-                            data.OutDateTime.slice(0, -1)
-                          ).toLocaleString(): ""}
-                        </td>
-                        <td>
-                          {data.LastRetrievalDateTime ? new Date(
-                            data.LastRetrievalDateTime.slice(0, -1)
-                          ).toLocaleString(): ""}
-                        </td>
-                        <td className={color}>{wait}</td>
-                        <td>{data.Oversize}</td>
-                      </tr>
-                    );
-                  })}
-              </tbody>
-            </Table>
+                      return (
+                        <tr key={index}>
+                          <td>
+                            {data.STOPAKey2}
+                          </td>
+                          <td>
+                            {new Date(
+                              data.InDateTime.slice(0, -1)
+                            ).toLocaleString()}
+                          </td>
+                          <td>
+                            {data.OutDateTime ? new Date(
+                              data.OutDateTime.slice(0, -1)
+                            ).toLocaleString() : ""}
+                          </td>
+                          <td>
+                            {data.LastRetrievalDateTime ? new Date(
+                              data.LastRetrievalDateTime.slice(0, -1)
+                            ).toLocaleString() : ""}
+                          </td>
+                          <td className={color}>{wait}</td>
+                          <td>{data.Oversize}</td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </Table>
             </div>
           )}
         </div>
