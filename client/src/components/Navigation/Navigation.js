@@ -11,9 +11,8 @@ export default function Navigation() {
   const nav = useNavigate();
  
   const handleLogout = async () => {
+    sessionStorage.removeItem("token");
     try {
-      console.log(user, 'still logged in ')
-      sessionStorage.removeItem("token");
       await logout();
       nav('/login');
       console.log('You are logged out')
