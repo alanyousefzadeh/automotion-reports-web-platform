@@ -6,7 +6,8 @@ exports.data = (req, res) => {
   let inTime = req.body.inTime;
   let outTime = req.body.outTime;
 
-  console.log(req.body);
+  console.log("body9", req.body);
+  console.log("headers10", req.headers)
   console.log("from", from);
   console.log("to", to);
 
