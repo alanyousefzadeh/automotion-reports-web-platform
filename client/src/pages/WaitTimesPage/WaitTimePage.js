@@ -35,6 +35,10 @@ function WaitTimePage() {
               outDate,
               type,
               num,
+            },
+
+            headers: {
+              authorization: 'Bearer ' + token
             }
           });
       }
