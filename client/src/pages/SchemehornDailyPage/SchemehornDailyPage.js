@@ -26,7 +26,7 @@ function SchemehornDailyPage() {
     const token = sessionStorage.getItem('token');
     //revenue summary API call
     let response = await axios.post(
-      process.env.REACT_APP_SCHEMEHORN_URL, {
+      process.env.REACT_APP_SCHEMEHORN_URL, null, {
       params: {
         inDate,
         outDate,
@@ -42,7 +42,7 @@ function SchemehornDailyPage() {
 
     //discount table API call
     let discountResponse = await axios.post(
-      process.env.REACT_APP_SCHEMEHORN_DISCOUNTS_URL, {
+      process.env.REACT_APP_SCHEMEHORN_DISCOUNTS_URL, null, {
       params: {
         inDate,
         outDate,
@@ -58,7 +58,7 @@ function SchemehornDailyPage() {
 
     //ticket ranges API call
     let ticketRangesResponse = await axios.post(
-      process.env.REACT_APP_SCHEMEHORN_TICKETS_URL, {
+      process.env.REACT_APP_SCHEMEHORN_TICKETS_URL, null, {
       params: {
         inDate,
         outDate,
@@ -73,7 +73,7 @@ function SchemehornDailyPage() {
 
     //payment type API call
     let paymentTypesResponse = await axios.post(
-      process.env.REACT_APP_SCHEMEHORN_PAYMENTS_URL, {
+      process.env.REACT_APP_SCHEMEHORN_PAYMENTS_URL, null, {
       params: {
         inDate,
         outDate,
