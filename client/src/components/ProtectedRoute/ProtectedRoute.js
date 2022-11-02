@@ -10,7 +10,9 @@ const ProtectedRoute = ({children})=> {
     if(!user){
         return <Navigate to='/' />;
     }
+    //checks if current users email is in the array of authorized user emails
     else if(emails.indexOf(user.email) > -1) {
+        //children is the component
         return children
     }
     else{

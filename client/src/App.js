@@ -142,7 +142,7 @@ function App() {
               element={
                 <ProtectedRoute>
                   <AtlanticOpenPage
-                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  email={['alany@adgorg.com']}
                   />
                 </ProtectedRoute>
               }
