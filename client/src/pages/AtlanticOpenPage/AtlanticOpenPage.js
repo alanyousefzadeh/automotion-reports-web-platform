@@ -16,6 +16,10 @@ export default function AtlanticOpenPage() {
           inDate: new Date().setHours(3, 0, 0, 0),
           outDate: Math.floor(Date.now() / 1000),
         },
+
+        headers: {
+          authorization: 'Bearer ' + token
+        }
       });
       setAtlanticOpenData(res.data);
       setIsLoading(false);
