@@ -31,7 +31,8 @@ function App() {
               path="/welcome"
               element={
                 <ProtectedRoute>
-                  <WelcomePage />
+                  <WelcomePage 
+                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}/>
                 </ProtectedRoute>
               }
             />
@@ -41,7 +42,8 @@ function App() {
               path="/reportSelect/:garageName"
               element={
                 <ProtectedRoute>
-                  <ReportSelectPage />
+                  <ReportSelectPage 
+                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}/>
                 </ProtectedRoute>
               }
             />
@@ -52,7 +54,9 @@ function App() {
               path="/reportSelect/schemehorn/filtered"
               element={
                 <ProtectedRoute>
-                  <SchemehornFilteredPage />
+                  <SchemehornFilteredPage 
+                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  />
                 </ProtectedRoute>
               }
             />
@@ -63,7 +67,9 @@ function App() {
               path="/reportSelect/schemehorn/daily"
               element={
                 <ProtectedRoute>
-                  <SchemehornDailyPage />
+                  <SchemehornDailyPage
+                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  />
                 </ProtectedRoute>
               }
             />
@@ -74,7 +80,9 @@ function App() {
               path="/reportSelect/Atlantic%20Terrace/filtered"
               element={
                 <ProtectedRoute>
-                  <AtlanticFilteredReportPage />
+                  <AtlanticFilteredReportPage
+                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  />
                 </ProtectedRoute>
               }
             />
@@ -84,7 +92,9 @@ function App() {
               path="/reportSelect/:garageName/filtered"
               element={
                 <ProtectedRoute>
-                  <AutomatedFilteredReportPage />
+                  <AutomatedFilteredReportPage
+                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  />
                 </ProtectedRoute>
               }
             />
@@ -95,7 +105,9 @@ function App() {
               path="/reportSelect/Atlantic%20Terrace/daily"
               element={
                 <ProtectedRoute>
-                  <AtlanticDailyReportPage />
+                  <AtlanticDailyReportPage
+                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  />
                 </ProtectedRoute>
               }
             />
@@ -105,7 +117,9 @@ function App() {
               path="/reportSelect/:garageName/daily"
               element={
                 <ProtectedRoute>
-                  <AutomatedDailyReportPage />
+                  <AutomatedDailyReportPage 
+                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  />
                 </ProtectedRoute>
               }
             />
@@ -115,7 +129,9 @@ function App() {
               path="/reportSelect/:garageName/wait"
               element={
                 <ProtectedRoute>
-                  <WaitTimePage />
+                  <WaitTimePage
+                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  />
                 </ProtectedRoute>
               }
             />
@@ -125,7 +141,9 @@ function App() {
               path="/reportSelect/:garageName/open"
               element={
                 <ProtectedRoute>
-                  <AtlanticOpenPage />
+                  <AtlanticOpenPage
+                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  />
                 </ProtectedRoute>
               }
             />
@@ -135,7 +153,9 @@ function App() {
               path="/reportSelect/:garageName/filter"
               element={
                 <ProtectedRoute>
-                  <AutomatedFilteredByRate />
+                  <AutomatedFilteredByRate
+                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  />
                 </ProtectedRoute>
               }
             />
@@ -143,7 +163,9 @@ function App() {
               path="/reportSelect/:garageName/monthlies"
               element={
                 <ProtectedRoute>
-                  <MonthliesPage />
+                  <MonthliesPage
+                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  />
                 </ProtectedRoute>
               }
             />
