@@ -1,7 +1,7 @@
 import React from "react";
 import "./Navigation.scss";
 import {useState} from 'react'
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { UserAuth } from '../Context/AuthContext';
 import {AuthContextProvider} from '../Context/AuthContext'
 
@@ -22,11 +22,14 @@ export default function Navigation() {
       console.log(e.message);
     }
   };
+  const redirect = () => {
+    nav('/welcome')
+  }
   return (
     <nav>
       <ul>
         <li>
-          <a href="/welcome">Home</a>
+          <button className="nav__button" onClick={redirect}>Home</button>
         </li>
         <li>
           <button className="nav__button" onClick={handleLogout}>Logout</button>

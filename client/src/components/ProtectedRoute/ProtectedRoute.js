@@ -1,10 +1,14 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import {UserAuth} from "../Context/AuthContext";
 
 
 const ProtectedRoute = ({children})=> {
     let emails = (children.props.email)
+    let location = useLocation()
+    let path = location.pathname
+    console.log(path.substring(0,path.lastIndexOf('/') ))
+    let newpath = path.substring(0,path.lastIndexOf('/') )
     const {user} = UserAuth();
     console.log("logged in user email: ", user.email)
     if(!user){
@@ -14,10 +18,11 @@ const ProtectedRoute = ({children})=> {
     else if(emails.indexOf(user.email) > -1) {
         //children is the component
         return children
+        
     }
     else{
         alert("unauthorized")
-        return <Navigate to='/welcome' />;
+        return <Navigate to={newpath}/>
     }
 }
 
