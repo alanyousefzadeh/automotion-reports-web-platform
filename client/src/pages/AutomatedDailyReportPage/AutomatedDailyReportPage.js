@@ -74,12 +74,12 @@ function AutomatedDailyReportPage() {
   return (
     isLoading ? <LoadingSpinner/> :
     <div className="report">
-    <AutomatedDailyReportPdf formattedDate={formattedDate} garageName = {garageName} response = {response}/>
       <Navigation />
       <p className="daily-report__header">
         {garageName} Daily Report for: Yesterday {formattedDate}, 12:00AM -
         11:59PM
       </p>
+    <AutomatedDailyReportPdf formattedDate={formattedDate} garageName = {garageName} response = {response}/>
       <EmailFormDisplayToggler />
       <AutomatedDailyHeader
         ticketStart={
