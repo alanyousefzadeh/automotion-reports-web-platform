@@ -9,6 +9,9 @@ import AutomatedDailyHeader from "../../components/AutomatedDailyHeader/Automate
 import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
 import { automatedGarageAPI, formatDate } from "./AutomatedDailyReportHelpers";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
+import AutomatedDailyReportPdf from "./AutomatedDailyReportPDF";
+
+
 
 function AutomatedDailyReportPage() {
   const [response, setResponse] = useState(null);
@@ -50,7 +53,7 @@ function AutomatedDailyReportPage() {
   }
 
   if (response != null) {
-    //console.log(response)
+    console.log('response: ', response)
     response.tInDateTimes.forEach((hour) => {
       transientInTable[hour.hourofday] = hour.countperhour;
     });
@@ -67,10 +70,11 @@ function AutomatedDailyReportPage() {
       monthlyOutTable[hour.hourofday] = hour.countperhour;
     });
   }
-
+  
   return (
     isLoading ? <LoadingSpinner/> :
     <div className="report">
+    <AutomatedDailyReportPdf formattedDate={formattedDate} garageName = {garageName} response = {response}/>
       <Navigation />
       <p className="daily-report__header">
         {garageName} Daily Report for: Yesterday {formattedDate}, 12:00AM -
