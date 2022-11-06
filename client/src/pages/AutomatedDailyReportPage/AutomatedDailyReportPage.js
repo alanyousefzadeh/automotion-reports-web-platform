@@ -9,7 +9,7 @@ import AutomatedDailyHeader from "../../components/AutomatedDailyHeader/Automate
 import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
 import { automatedGarageAPI, formatDate } from "./AutomatedDailyReportHelpers";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
-import AutomatedDailyReportPdf from "./AutomatedDailyReportPDF";
+import AutomatedDailyReportPdf from "./pdf/AutomatedDailyReportPDF";
 
 
 

@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
+import {
+    makeBaxterRateTable,
+    makeWaverlyRateTable,
+    makeVanVorstRateTable,
+  } from "../../../components/RateTable/helpers";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 
 const AutomatedDailyReportPdf = (props) => {
     const {
@@ -15,6 +21,7 @@ const AutomatedDailyReportPdf = (props) => {
         transientOutTable,
         total
     } = props;
+    
     const [url, setUrl] = useState(null);
 
     useEffect(() => {
@@ -84,6 +91,101 @@ const AutomatedDailyReportPdf = (props) => {
     const FREE_SPACES = spaces - (openTicketsToday + openPrior + currentMonthliesIn);
     const RESERVED_FOR_MONTHLIES = 0;
 
+    //rateTable data
+    const BaxterBuckets = [
+        "Early Bird",
+        "Up to 1/2 hour",
+        "Up to 1 hour",
+        "Up to 2 hours",
+        "Up to 3 hours",
+        "Up to 12 hours",
+        "Up to 24 hours",
+        "Other",
+      ];
+      const baxterPrices = [25, 15, 25, 32, 42, 46, 55, 'N/A'];
+    
+      const WaverlyBuckets = [
+        "Early Bird",
+        "Up to 1/2 hour",
+        "Up to 2 hours",
+        "Up to 3 hours",
+        "Up to 8 hours",
+        "Up to 24 hours",
+        "Other",
+      ];
+      const waverlyPrices = [15, 5, 15, 20, 25, 35, 'N/A'];
+    
+      const VanVorstBuckets = [
+        "Up to 1/2 hour",
+        "Up to 1 hour",
+        "Up to 2 hours",
+        "Up to 3 hours",
+        "Up to 12 hours",
+        "Up to 24 hours",
+        "Other",
+      ];
+      const vanvorstPrices = [3.56, 10.67, 13.04, 17.78, 20.15, 28.44, 'N/A'];
+    
+      console.log(garageName);
+    
+      const ratesTable = {};
+    
+      //function to initialize all buckets to zero
+      const makeBuckets = (array) => {
+        array.forEach((bucket) => {
+          ratesTable[bucket] = {
+            count: 0,
+            revenue: 0,
+          };
+        });
+      };
+    
+      let buckets = null;
+      let prices = null;
+    
+      switch (garageName) {
+        case "Baxter":
+          console.log("Baxter");
+          makeBuckets(BaxterBuckets);
+          makeBaxterRateTable(response.rateTable, ratesTable);
+          buckets = BaxterBuckets;
+          prices = baxterPrices;
+          break;
+        case "Waverly":
+          console.log("Waverly");
+          makeBuckets(WaverlyBuckets);
+          makeWaverlyRateTable(response.rateTable, ratesTable);
+          buckets = WaverlyBuckets;
+          prices = waverlyPrices;
+          break;
+        case "VanVorst":
+          console.log("Vanvorst");
+          makeBuckets(VanVorstBuckets);
+          makeVanVorstRateTable(response.rateTable, ratesTable);
+          buckets = VanVorstBuckets;
+          prices = vanvorstPrices;
+          break;
+        default:
+          console.log("provide a garage name");
+      }
+    
+      let rateArray = [['Type of Rate','Number of Cars','Rate Price','Revenue']];
+      console.log("ratesTable: ", ratesTable);
+        for(let i = 0; i< buckets.length; i++){
+            rateArray.push([buckets[i],ratesTable[buckets[i]].count, '$' + prices[i],'$' + ratesTable[buckets[i]].revenue.toLocaleString(undefined, {minimumFractionDigits: 2})]);
+        }    
+        console.log("rateArray: ", rateArray);
+        console.log("prices: ", prices);
+
+        let overParkedArray = [['Type','Ticket Number','Parked In','Total Days In Garage']];
+        for(let i=0;i < response.overParked.length; i++){
+            overParkedArray.push([response.overParked[i].type, response.overParked[i].STOPAKey2,new Date((response.overParked[i].InDateTime).slice(0,-1)).toLocaleString(),response.overParked[i].TotalDays])
+        }
+
+        // <th>{data.type}</th>
+        // <td>{data.STOPAKey2}</td>
+        // <td>{new Date((data.InDateTime).slice(0,-1)).toLocaleString()}</td>
+        // <td>{data.TotalDays}</td>
     pdfMake.fonts = {
         NimbusSans: {
             normal: "NimbusSanL-Reg.otf",
@@ -122,6 +224,21 @@ const AutomatedDailyReportPdf = (props) => {
                     body: [...listElements,
                         [ 'Total',transientInTotal,transientOutTotal, monthlyInTotal, monthlyOutTotal, totalSum]
                     ]
+
+                }
+            },
+            { text: `Total: ${total.toLocaleString(undefined, {minimumFractionDigits: 2})}$`, style: 'subheader' },
+            {
+                style: 'tableExample',
+                table: {
+                    body: rateArray
+
+                }
+            },
+            {
+                style: 'tableExample',
+                table: {
+                    body: overParkedArray
 
                 }
             },
