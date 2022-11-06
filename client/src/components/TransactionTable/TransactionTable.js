@@ -10,8 +10,9 @@ function TransactionTable(props) {
         total
     } = props;
 
-    console.log(total)
-
+    console.log("total: ", total)
+    console.log("monthlyInTable:", monthlyInTable)
+    
     let listElements = []
 
     let times = ['12 AM', '1 AM', '2 AM', '3 AM', '4 AM', '5 AM', '6 AM', '7 AM', '8 AM', '9 AM','10 AM', '11 AM', '12 PM',
@@ -22,7 +23,7 @@ function TransactionTable(props) {
         listElements.push([transientInTable[i], transientOutTable[i], monthlyInTable[i], monthlyOutTable[i]])
     } 
 
-    console.log(listElements)
+    console.log("listElements: ", listElements)
 
     const monthlyInTotal = monthlyInTable.reduce((prevVal, currVal) => prevVal + currVal, 0)
     const monthlyOutTotal = monthlyOutTable.reduce((prevVal, currVal) => prevVal + currVal, 0)

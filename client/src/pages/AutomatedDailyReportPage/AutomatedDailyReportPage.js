@@ -70,47 +70,56 @@ function AutomatedDailyReportPage() {
       monthlyOutTable[hour.hourofday] = hour.countperhour;
     });
   }
-  
+
   return (
-    isLoading ? <LoadingSpinner/> :
-    <div className="report">
-      <Navigation />
-      <p className="daily-report__header">
-        {garageName} Daily Report for: Yesterday {formattedDate}, 12:00AM -
-        11:59PM
-      </p>
-    <AutomatedDailyReportPdf formattedDate={formattedDate} garageName = {garageName} response = {response}/>
-      <EmailFormDisplayToggler />
-      <AutomatedDailyHeader
-        ticketStart={
-          response.ticketStart.length > 0
-            ? response.ticketStart[0].TicketNum
-            : ""
-        }
-        ticketEnd={
-          response.ticketEnd.length > 0 ? response.ticketEnd[0].TicketNum : ""
-        }
-        currentMonthliesIn={response.currentMonthliesIn[0].monthliesIn}
-        openPrior={response.openPrior[0].openPrior}
-        openTicketsToday={response.openTicketsToday[0].openToday}
-        closedTickets={response.closedTickets[0].closedTickets}
-      />
-      <TransactionTable
-        monthlyInTable={monthlyInTable}
-        monthlyOutTable={monthlyOutTable}
-        transientInTable={transientInTable}
-        transientOutTable={transientOutTable}
-        total={total}
-      />
-      {response ? (
-        <>
-          <RateTable garageName={garageName} rateData={response.rateTable} />
-          <OverParkedTable overParkedData={response.overParked} />
-        </>
-      ) : (
-        ""
-      )}
-    </div>
+    isLoading ? <LoadingSpinner /> :
+      <div className="report">
+        <Navigation />
+        <p className="daily-report__header">
+          {garageName} Daily Report for: Yesterday {formattedDate}, 12:00AM -
+          11:59PM
+        </p>
+        <AutomatedDailyReportPdf
+          formattedDate={formattedDate}
+          garageName={garageName}
+          response={response}
+          monthlyInTable={monthlyInTable}
+          monthlyOutTable={monthlyOutTable}
+          transientInTable={transientInTable}
+          transientOutTable={transientOutTable}
+          total={total}
+        />
+        <EmailFormDisplayToggler />
+        <AutomatedDailyHeader
+          ticketStart={
+            response.ticketStart.length > 0
+              ? response.ticketStart[0].TicketNum
+              : ""
+          }
+          ticketEnd={
+            response.ticketEnd.length > 0 ? response.ticketEnd[0].TicketNum : ""
+          }
+          currentMonthliesIn={response.currentMonthliesIn[0].monthliesIn}
+          openPrior={response.openPrior[0].openPrior}
+          openTicketsToday={response.openTicketsToday[0].openToday}
+          closedTickets={response.closedTickets[0].closedTickets}
+        />
+        <TransactionTable
+          monthlyInTable={monthlyInTable}
+          monthlyOutTable={monthlyOutTable}
+          transientInTable={transientInTable}
+          transientOutTable={transientOutTable}
+          total={total}
+        />
+        {response ? (
+          <>
+            <RateTable garageName={garageName} rateData={response.rateTable} />
+            <OverParkedTable overParkedData={response.overParked} />
+          </>
+        ) : (
+          ""
+        )}
+      </div>
   );
 }
 
