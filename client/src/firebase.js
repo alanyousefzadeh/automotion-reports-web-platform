@@ -1,5 +1,6 @@
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import { initializeApp } from "firebase/app";
+import { getDatabase, ref, set } from "firebase/database";
 import { useState, useEffect, useContext, createContext } from "react";
 
 const firebaseConfig = {
@@ -15,7 +16,17 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-//export const AuthContext = createContext();
+function writeUserData(userId, name, email, type) {
+  const db = getDatabase();
+  const reference = ref(db, 'users/' + userId)
 
+  set(reference, {
+    username: name,
+    email: email, 
+    type: type
+  })
+}
+
+export {writeUserData}
 export const auth = getAuth(app)
 export default app

@@ -25,6 +25,10 @@ export default function Navigation() {
   const redirect = () => {
     nav('/welcome')
   }
+
+  const adminRoute = () => {
+    nav('/admin')
+  }
   return (
     <nav>
       <ul>
@@ -33,6 +37,9 @@ export default function Navigation() {
         </li>
         <li>
           <button className="nav__button" onClick={handleLogout}>Logout</button>
+        </li>
+        <li>
+          <button className="nav__button" onClick={adminRoute}>Admin</button>
         </li>
       </ul>
     </nav>

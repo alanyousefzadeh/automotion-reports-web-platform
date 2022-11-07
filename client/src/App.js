@@ -14,6 +14,8 @@ import AutomatedFilteredReportPage from "./pages/AutomatedFilteredReportPage/Aut
 import AutomatedDailyReportPage from "./pages/AutomatedDailyReportPage/AutomatedDailyReportPage";
 import AutomatedFilteredByRate from "./pages/AutomatedFilteredByRate/AutomatedFilteredByRate";
 import MonthliesPage from "./pages/MonthliesPage/MonthliesPage";
+import AdminProtectedRoute from "./components/AdminProtectedRoute/AdminProtectedRoute";
+import AdminPage from "./pages/AdminPage/AdminPage";
 
 function App() {
   return (
@@ -32,8 +34,21 @@ function App() {
               element={
                 <ProtectedRoute>
                   <WelcomePage 
-                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}/>
+                  //email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  />
                 </ProtectedRoute>
+              }
+            />
+          
+            {/* admin portal*/}
+            <Route
+              path="/admin"
+              element={
+                <AdminProtectedRoute>
+                  <AdminPage 
+                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  />
+                </AdminProtectedRoute>
               }
             />
             
@@ -43,7 +58,8 @@ function App() {
               element={
                 <ProtectedRoute>
                   <ReportSelectPage 
-                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}/>
+                  //email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  />
                 </ProtectedRoute>
               }
             />
@@ -55,7 +71,7 @@ function App() {
               element={
                 <ProtectedRoute>
                   <SchemehornFilteredPage 
-                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  //email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
                   />
                 </ProtectedRoute>
               }
@@ -68,7 +84,7 @@ function App() {
               element={
                 <ProtectedRoute>
                   <SchemehornDailyPage
-                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  //email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
                   />
                 </ProtectedRoute>
               }
@@ -81,7 +97,7 @@ function App() {
               element={
                 <ProtectedRoute>
                   <AtlanticFilteredReportPage
-                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  //email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
                   />
                 </ProtectedRoute>
               }
@@ -93,7 +109,7 @@ function App() {
               element={
                 <ProtectedRoute>
                   <AutomatedFilteredReportPage
-                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  //email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
                   />
                 </ProtectedRoute>
               }
@@ -106,7 +122,7 @@ function App() {
               element={
                 <ProtectedRoute>
                   <AtlanticDailyReportPage
-                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  //email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
                   />
                 </ProtectedRoute>
               }
@@ -118,7 +134,7 @@ function App() {
               element={
                 <ProtectedRoute>
                   <AutomatedDailyReportPage 
-                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  //email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
                   />
                 </ProtectedRoute>
               }
@@ -130,7 +146,7 @@ function App() {
               element={
                 <ProtectedRoute>
                   <WaitTimePage
-                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  //email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
                   />
                 </ProtectedRoute>
               }
@@ -142,7 +158,7 @@ function App() {
               element={
                 <ProtectedRoute>
                   <AtlanticOpenPage
-                  email={['alany@adgorg.com']}
+                  //email={['alany@adgorg.com']}
                   />
                 </ProtectedRoute>
               }
@@ -154,7 +170,7 @@ function App() {
               element={
                 <ProtectedRoute>
                   <AutomatedFilteredByRate
-                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  //email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
                   />
                 </ProtectedRoute>
               }
@@ -164,7 +180,7 @@ function App() {
               element={
                 <ProtectedRoute>
                   <MonthliesPage
-                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  //email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
                   />
                 </ProtectedRoute>
               }
