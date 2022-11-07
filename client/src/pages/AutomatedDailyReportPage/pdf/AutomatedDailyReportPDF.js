@@ -32,7 +32,7 @@ const AutomatedDailyReportPdf = (props) => {
         };
     }, [url]);
 
-    let listElements = [['Hour','T. In', 'T. Out', 'M. In', 'M. Out', 'Tot.']] // for the hours table
+    let listElements = [] // for the hours table
 
     let times = ['12 AM', '1 AM', '2 AM', '3 AM', '4 AM', '5 AM', '6 AM', '7 AM', '8 AM', '9 AM', '10 AM', '11 AM', '12 PM',
         '1 PM', '2 PM', '3 PM', '4 PM', '5 PM', '6 PM', '7 PM', '8 PM', '9 PM', '10 PM', '11 PM'
@@ -197,9 +197,12 @@ const AutomatedDailyReportPdf = (props) => {
 
     const docDefinition = {
         content: [
-            `${garageName} Daily Report for: Yesterday ${formattedDate}, 12:00AM - 11:59PM`,
+            { text: `${garageName} Daily Report for: Yesterday ${formattedDate}, 12:00AM - 11:59PM`,
+             style: 'subheader',fontSize: 15,bold: true, alignment: 'center' },
             {
+                margin: 10,
                 style: 'tableExample',
+                layout: 'lightHorizontalLines',
                 table: {
                     body: [
                         ['Ticket Start Num', 'Ticket End Num', 'Tickets Issued', 'Open Tickets Today', 'Open Prior', 'Closed Tickets'],
@@ -207,9 +210,10 @@ const AutomatedDailyReportPdf = (props) => {
                     ]
                 },
             },
-            { text: 'A simple table with nested elements', style: 'subheader' },
             {
+                margin: 10,
                 style: 'tableExample',
+                layout: 'lightHorizontalLines',
                 table: {
                     body: [
                         ['Total Spaces', 'Current T In', 'Current M In', 'Total Parked', 'Free Spaces', 'Reserved for Monthlies'],
@@ -219,9 +223,15 @@ const AutomatedDailyReportPdf = (props) => {
                 }
             },
             {
-                style: 'tableExample',
+                // style: 'tableExample',
+                margin: [ 10, 10, 10, 5 ],  
+                layout: {
+                    fillColor: function (rowIndex, node, columnIndex) {
+                        return (rowIndex % 2 === 0) ? '#CCCCCC' : null;
+                    }
+                },            
                 table: {
-                    body: [...listElements,
+                    body: [['Hour','T. In', 'T. Out', 'M. In', 'M. Out', 'Tot.'],...listElements,
                         [ 'Total',transientInTotal,transientOutTotal, monthlyInTotal, monthlyOutTotal, totalSum]
                     ]
 
@@ -230,6 +240,7 @@ const AutomatedDailyReportPdf = (props) => {
             { text: `Total: ${total.toLocaleString(undefined, {minimumFractionDigits: 2})}$`, style: 'subheader' },
             {
                 style: 'tableExample',
+                margin: 10,
                 table: {
                     body: rateArray
 
@@ -237,6 +248,7 @@ const AutomatedDailyReportPdf = (props) => {
             },
             {
                 style: 'tableExample',
+                margin: 10,
                 table: {
                     body: overParkedArray
 
@@ -245,8 +257,9 @@ const AutomatedDailyReportPdf = (props) => {
 
         ],
         defaultStyle: {
-            font: "NimbusSans"
-        }
+            font: "NimbusSans",
+            
+        },
     };
 
     const create = () => {
