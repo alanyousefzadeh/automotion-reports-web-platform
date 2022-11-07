@@ -182,10 +182,6 @@ const AutomatedDailyReportPdf = (props) => {
             overParkedArray.push([response.overParked[i].type, response.overParked[i].STOPAKey2,new Date((response.overParked[i].InDateTime).slice(0,-1)).toLocaleString(),response.overParked[i].TotalDays])
         }
 
-        // <th>{data.type}</th>
-        // <td>{data.STOPAKey2}</td>
-        // <td>{new Date((data.InDateTime).slice(0,-1)).toLocaleString()}</td>
-        // <td>{data.TotalDays}</td>
     pdfMake.fonts = {
         NimbusSans: {
             normal: "NimbusSanL-Reg.otf",
@@ -204,6 +200,7 @@ const AutomatedDailyReportPdf = (props) => {
                 style: 'tableExample',
                 layout: 'lightHorizontalLines',
                 table: {
+                    widths:  ['*', '*', '*', '*', '*', 'auto'],
                     body: [
                         ['Ticket Start Num', 'Ticket End Num', 'Tickets Issued', 'Open Tickets Today', 'Open Prior', 'Closed Tickets'],
                         [TICKET_START_NUM, TICKET_END_NUM, TICKETS_ISSUED, OPEN_TICKETS_TODAY, OPEN_PRIOR, CLOSED_TICKETS]
@@ -215,6 +212,7 @@ const AutomatedDailyReportPdf = (props) => {
                 style: 'tableExample',
                 layout: 'lightHorizontalLines',
                 table: {
+                    widths:  ['*', '*', '*', '*', '*', 'auto'],
                     body: [
                         ['Total Spaces', 'Current T In', 'Current M In', 'Total Parked', 'Free Spaces', 'Reserved for Monthlies'],
                         [TOTAL_SPACES, CURRENT_T_IN, CURRENT_M_IN, TOTAL_PARKED, FREE_SPACES, RESERVED_FOR_MONTHLIES],
@@ -223,7 +221,7 @@ const AutomatedDailyReportPdf = (props) => {
                 }
             },
             {
-                // style: 'tableExample',
+                style: 'tableExample',
                 margin: [ 10, 10, 10, 5 ],  
                 layout: {
                     fillColor: function (rowIndex, node, columnIndex) {
@@ -231,17 +229,21 @@ const AutomatedDailyReportPdf = (props) => {
                     }
                 },            
                 table: {
+                    widths:  ['*', '*', '*', '*', '*', 'auto'],
                     body: [['Hour','T. In', 'T. Out', 'M. In', 'M. Out', 'Tot.'],...listElements,
                         [ 'Total',transientInTotal,transientOutTotal, monthlyInTotal, monthlyOutTotal, totalSum]
                     ]
 
                 }
             },
-            { text: `Total: ${total.toLocaleString(undefined, {minimumFractionDigits: 2})}$`, style: 'subheader' },
+            { text: `Total: ${total.toLocaleString(undefined, {minimumFractionDigits: 2})}$`,pageBreak: 'after', style: 'subheader' },
             {
                 style: 'tableExample',
                 margin: 10,
                 table: {
+                // dontBreakRows: true,
+				// keepWithHeaderRows: 1,
+                    widths:  ['*', '*', '*', 'auto'],
                     body: rateArray
 
                 }
@@ -250,6 +252,7 @@ const AutomatedDailyReportPdf = (props) => {
                 style: 'tableExample',
                 margin: 10,
                 table: {
+                    widths:  ['*', '*', 'auto', '*'],
                     body: overParkedArray
 
                 }
