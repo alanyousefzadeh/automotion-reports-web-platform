@@ -16,6 +16,7 @@ import AutomatedFilteredByRate from "./pages/AutomatedFilteredByRate/AutomatedFi
 import MonthliesPage from "./pages/MonthliesPage/MonthliesPage";
 import AdminProtectedRoute from "./components/AdminProtectedRoute/AdminProtectedRoute";
 import AdminPage from "./pages/AdminPage/AdminPage";
+import AdminSelectPage from "./pages/AdminSelectPage/AdminSelectPage";
 
 function App() {
   return (
@@ -39,16 +40,27 @@ function App() {
                 </ProtectedRoute>
               }
             />
+
+            {/* list of admin tasks to select*/}
+            <Route
+              path="/admin/Create"
+              element={
+                <ProtectedRoute>
+                  <AdminPage 
+                  />
+                </ProtectedRoute>
+              }
+            />
           
             {/* admin portal*/}
             <Route
               path="/admin"
               element={
-                <AdminProtectedRoute>
-                  <AdminPage 
-                  email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                <ProtectedRoute>
+                  <AdminSelectPage 
+                  //email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
                   />
-                </AdminProtectedRoute>
+                </ProtectedRoute>
               }
             />
             
