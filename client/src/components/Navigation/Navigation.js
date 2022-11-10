@@ -31,7 +31,7 @@ export default function Navigation() {
   }
   return (
     <nav>
-      <ul>
+      <ul className="navigation">
         <li>
           <button className="nav__button" onClick={redirect}>Home</button>
         </li>

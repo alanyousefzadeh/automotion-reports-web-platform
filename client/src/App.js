@@ -17,6 +17,7 @@ import MonthliesPage from "./pages/MonthliesPage/MonthliesPage";
 import AdminProtectedRoute from "./components/AdminProtectedRoute/AdminProtectedRoute";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import AdminSelectPage from "./pages/AdminSelectPage/AdminSelectPage";
+import AdminDeletePage from "./pages/AdminDeletePage/AdminDeletePage";
 
 function App() {
   return (
@@ -41,7 +42,7 @@ function App() {
               }
             />
 
-            {/* list of admin tasks to select*/}
+            {/* create new admin */}
             <Route
               path="/admin/Create"
               element={
@@ -51,7 +52,18 @@ function App() {
                 </ProtectedRoute>
               }
             />
-          
+
+            {/* delete admin */}
+            <Route
+              path="/admin/delete"
+              element={
+                <ProtectedRoute>
+                  <AdminDeletePage 
+                  />
+                </ProtectedRoute>
+              }
+            />
+
             {/* admin portal*/}
             <Route
               path="/admin"
