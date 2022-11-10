@@ -7,7 +7,7 @@ export default function AdminDeletePage() {
     const [res, setRes] = useState(null)
     useEffect(() => {
         axios.
-            get("http://localhost:8080/admindelete")
+            get("http://localhost:8080/admin/list")
             .then(response => {
                 console.log(response.data)
                 setRes(response.data)
@@ -31,22 +31,29 @@ export default function AdminDeletePage() {
         console.log(checkedEmails)
     }
 
+    const applyHandler = () => {
+        axios
+            .post("http://localhost:8080/admin/delete", {
+                checkedEmails
+            })
+
+    }
     let emailArray = []
     return (
         res ?
             <div>
                 <ul>
                     {
-                        res.map((email, i) => {
+                        res.map((user, i) => {
                             return (
                                 <div>
-                                    <input onChange={checkHandler} type="checkbox" id="email" name="email" value={`${email}`} />
-                                    <label htmlFor="email">{email}</label>
+                                    <input onChange={checkHandler} type="checkbox" id="email" name="email" value={`${user[0]}`} />
+                                    <label htmlFor="email">{user[1]}</label>
                                 </div>
                             )
                         })}
                 </ul>
-                <button>Apply</button>
+                <button onClick={applyHandler}>Apply</button>
             </div>
             : ""
     )
