@@ -1,5 +1,5 @@
-const data = require('./fetchData');
-const pdfHelpers = require('./pdfHelpers');
+const data = require('../fetchData');
+const pdfHelpers = require('../pdfHelpers');
 
 
 const yesterday = new Date();

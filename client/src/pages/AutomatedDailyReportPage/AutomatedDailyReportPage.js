@@ -10,6 +10,10 @@ import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
 import { automatedGarageAPI, formatDate } from "./AutomatedDailyReportHelpers";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
 import AutomatedDailyReportPdf from "./pdf/AutomatedDailyReportPDF";
+import axios from 'axios';
+import Button from "react-bootstrap/Button";
+
+
 
 
 
@@ -71,6 +75,23 @@ function AutomatedDailyReportPage() {
     });
   }
 
+  const fetchPdf = async ()=>{
+
+  axios({
+    url: 'http://localhost:8080/garagedata/transactions-pdf', 
+    method: 'GET',
+    responseType: 'blob',
+}).then((response) => {
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'file.pdf');
+    document.body.appendChild(link);
+    link.click();
+});
+};
+  
+
   return (
     isLoading ? <LoadingSpinner /> :
       <div className="report">
@@ -79,6 +100,7 @@ function AutomatedDailyReportPage() {
           {garageName} Daily Report for: Yesterday {formattedDate}, 12:00AM -
           11:59PM
         </p>
+        <Button onClick={fetchPdf}>Download PDF(from server)</Button>
         <AutomatedDailyReportPdf
           formattedDate={formattedDate}
           garageName={garageName}
