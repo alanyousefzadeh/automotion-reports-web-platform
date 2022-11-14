@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { getAuth } from 'firebase/auth'
 import axios from 'axios'
 import './AdminDeletePage.scss'
-
+import { removeUserData } from '../../firebase'
 export default function AdminDeletePage() {
     const [res, setRes] = useState(null)
     useEffect(() => {
@@ -31,12 +31,12 @@ export default function AdminDeletePage() {
         console.log(checkedEmails)
     }
 
-    const applyHandler = () => {
-        axios
-            .post("http://localhost:8080/admin/delete", {
+    const applyHandler = async () => {
+        await axios
+            .post("http://localhost:8080/admindelete", {
                 checkedEmails
-            })
-
+            }).
+            removeUserData()
     }
     let emailArray = []
     return (

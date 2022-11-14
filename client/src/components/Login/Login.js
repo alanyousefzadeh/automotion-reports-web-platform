@@ -7,7 +7,7 @@ import {UserAuth} from "../Context/AuthContext";
 import loginLogo from '../../assets/loginLogo.png'
 import './Login.scss'
 import axios from 'axios';
-
+import LoadingSpinner from "../LoadingWheel/LoadingWheel";
 
 function Login() {
    
@@ -15,6 +15,7 @@ function Login() {
     const [ errors, setErrors ] = useState({})
     const [serverSideErr, setServerSideErr] = useState(null)
     const {signIn} = UserAuth();
+    const [waitingForToken, setWaitingForToken] = useState(false)
     //function to update the state of the form
     const setField = (field, value) => {
         //This will update our state to keep all the current form values, then add the newest form value to the correct key location
@@ -43,11 +44,13 @@ function Login() {
             const auth = getAuth();
             try {
                 await signIn(form.email,form.password)
+                setWaitingForToken(true)
                 await axios.post("https://automotion-heroku-server.herokuapp.com/login",{
                     email: form.email
                 })
                 .then((response) => {
                     sessionStorage.setItem("token", response.data.token);
+                    setWaitingForToken(false)
                     e.target.reset();
                     nav('/welcome')
                 })
@@ -73,6 +76,8 @@ function Login() {
     }
     return (
         
+        waitingForToken === true ? <LoadingSpinner/> 
+        : 
         <div className="login">
         <img className="logo" src={loginLogo}/>
         <Form className='my-5 mx-auto' style={{width: 300}}  noValidate onSubmit={handleSubmit}>

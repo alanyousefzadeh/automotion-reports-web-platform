@@ -27,6 +27,15 @@ function writeUserData(userId, name, email, type) {
   })
 }
 
-export {writeUserData}
+function removeUserData(userId, name, email, type) {
+  const db = getDatabase();
+  const reference = ref(db, 'users/' + userId)
+
+ // remove(reference)
+  
+}
+
+
+export {writeUserData, removeUserData}
 export const auth = getAuth(app)
 export default app
