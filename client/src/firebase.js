@@ -1,6 +1,6 @@
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set, get, child, remove } from "firebase/database";
 import { useState, useEffect, useContext, createContext } from "react";
 
 const firebaseConfig = {
@@ -22,20 +22,30 @@ function writeUserData(userId, name, email, type) {
 
   set(reference, {
     username: name,
-    email: email, 
+    email: email,
     type: type
   })
 }
 
-function removeUserData(userId, name, email, type) {
-  const db = getDatabase();
-  const reference = ref(db, 'users/' + userId)
-
- // remove(reference)
+function removeUserData(emailList) {
+  console.log("test")
+  const dbRef = ref(getDatabase());
+  
+  get(child(dbRef, `users/`  )).then((snapshot) => {
+    snapshot.forEach((child) => {
+      console.log(child.val().email)
+      if(emailList.includes(child.val().email)){
+        console.log("users/"+ child.ref._path.pieces_[1])
+        //let path = "users/"+ child.ref._path.pieces_[1]
+        const db = getDatabase();
+        const reference = ref(db, 'users/' + child.ref._path.pieces_[1])
+        remove(reference)
+      }
+    })
+  });
   
 }
 
-
-export {writeUserData, removeUserData}
+export { writeUserData, removeUserData }
 export const auth = getAuth(app)
 export default app
