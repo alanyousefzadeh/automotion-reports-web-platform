@@ -1,7 +1,6 @@
-import { getAuth, onAuthStateChanged } from "@firebase/auth";
+import { getAuth } from "@firebase/auth";
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, set, get, child, remove } from "firebase/database";
-import { useState, useEffect, useContext, createContext } from "react";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
