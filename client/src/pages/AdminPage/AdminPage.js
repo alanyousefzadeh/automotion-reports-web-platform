@@ -41,8 +41,13 @@ export default function AdminPage() {
     //Create User with Email and Password
     const handleSubmit = async e => {
         e.preventDefault();
+
+        //function to add user to authenticated user database
         await createUserWithEmailAndPassword(detachedAuth, form.email, form.password)
+        
+        //function to add user to real-time database
         writeUserData(form.userID, form.name, form.email, form.type)
+
         setForm({
            userID: '',
            name: '',

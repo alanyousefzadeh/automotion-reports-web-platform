@@ -45,10 +45,10 @@ export default function AdminDeletePage() {
     }
 
     const applyHandler = async () => {
-        // await axios
-        //     .post("http://localhost:8080/admin/delete", {
-        //         IdsOfCheckedEmails
-        //     })
+        await axios
+            .post("http://localhost:8080/admin/delete", {
+                IdsOfCheckedEmails
+            })
 
             console.log("test3")
             removeUserData(checkedEmails)

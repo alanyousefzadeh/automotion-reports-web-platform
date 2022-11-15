@@ -15,10 +15,10 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
+//function to add user to the real-time database
 function writeUserData(userId, name, email, type) {
   const db = getDatabase();
   const reference = ref(db, 'users/' + userId)
-
   set(reference, {
     username: name,
     email: email,
@@ -26,6 +26,7 @@ function writeUserData(userId, name, email, type) {
   })
 }
 
+//function to remove user from real-time database
 function removeUserData(emailList) {
   const dbRef = ref(getDatabase());
   get(child(dbRef, `users/`)).then((snapshot) => {
@@ -37,8 +38,10 @@ function removeUserData(emailList) {
       }
     })
   });
-
 }
+
+//function to modify user in the real-time database
+
 
 export { writeUserData, removeUserData }
 export const auth = getAuth(app)
