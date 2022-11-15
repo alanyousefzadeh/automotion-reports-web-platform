@@ -4,13 +4,9 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import AdminModal from '../../components/AdminModal/AdminModal'
 import { writeUserData } from '../../firebase';
-// import { writeUserData } from '../../firebase'
+
 export default function AdminPage() {
-    // const [name, setName] = useState('')
-    // const [email, setEmail] = useState('')
-    // const [userID, setUserID] = useState('')
-    // const [type, setType] = useState('')
-    // const [password, setPassword] = useState('')
+    
     const [form, setForm] = useState({
         name:'',
         email: '',
