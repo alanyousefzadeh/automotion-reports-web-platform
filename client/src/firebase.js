@@ -28,22 +28,17 @@ function writeUserData(userId, name, email, type) {
 }
 
 function removeUserData(emailList) {
-  console.log("test")
   const dbRef = ref(getDatabase());
-  
-  get(child(dbRef, `users/`  )).then((snapshot) => {
+  get(child(dbRef, `users/`)).then((snapshot) => {
     snapshot.forEach((child) => {
-      console.log(child.val().email)
-      if(emailList.includes(child.val().email)){
-        console.log("users/"+ child.ref._path.pieces_[1])
-        //let path = "users/"+ child.ref._path.pieces_[1]
+      if (emailList.includes(child.val().email)) {
         const db = getDatabase();
         const reference = ref(db, 'users/' + child.ref._path.pieces_[1])
         remove(reference)
       }
     })
   });
-  
+
 }
 
 export { writeUserData, removeUserData }
