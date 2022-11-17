@@ -18,6 +18,8 @@ import AdminProtectedRoute from "./components/AdminProtectedRoute/AdminProtected
 import AdminPage from "./pages/AdminPage/AdminPage";
 import AdminSelectPage from "./pages/AdminSelectPage/AdminSelectPage";
 import AdminDeletePage from "./pages/AdminDeletePage/AdminDeletePage";
+import AdminUpdatePage from "./pages/AdminUpdatePage/AdminUpdatePage";
+import AdminUpdateDetailsPage from "./pages/AdminUpdateDetailsPage/AdminUpdateDetailsPage";
 
 function App() {
   return (
@@ -59,6 +61,28 @@ function App() {
               element={
                 <ProtectedRoute>
                   <AdminDeletePage 
+                  />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* update admin */}
+            <Route
+              path="/admin/update"
+              element={
+                <ProtectedRoute>
+                  <AdminUpdatePage 
+                  />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* update admin */}
+            <Route
+              path="/admin/update/:userId"
+              element={
+                <ProtectedRoute>
+                  <AdminUpdateDetailsPage 
                   />
                 </ProtectedRoute>
               }

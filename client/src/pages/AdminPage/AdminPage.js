@@ -20,7 +20,6 @@ export default function AdminPage() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    ///////
     var authApp = initializeApp({
         apiKey: process.env.REACT_APP_API_KEY,
         authDomain: process.env.REACT_APP_AUTH_DOMAIN,

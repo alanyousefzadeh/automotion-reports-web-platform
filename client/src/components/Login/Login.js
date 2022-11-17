@@ -40,10 +40,8 @@ function Login() {
             // We got errors!
             setErrors(newErrors)
         } else {
-            // No errors!
-            const auth = getAuth();
             try {
-                await signIn(form.email,form.password)
+                signIn(form.email,form.password)
                 setWaitingForToken(true)
                 await axios.post("https://automotion-heroku-server.herokuapp.com/login",{
                     email: form.email
