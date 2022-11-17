@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import WelcomePage from "./pages/WelcomePage/WelcomePage";
 import ReportSelectPage from "./pages/ReportSelectPage/ReportSelectPage";
@@ -14,6 +14,7 @@ import AutomatedFilteredReportPage from "./pages/AutomatedFilteredReportPage/Aut
 import AutomatedDailyReportPage from "./pages/AutomatedDailyReportPage/AutomatedDailyReportPage";
 import AutomatedFilteredByRate from "./pages/AutomatedFilteredByRate/AutomatedFilteredByRate";
 import MonthliesPage from "./pages/MonthliesPage/MonthliesPage";
+import AutomatedFilteredSelectPage from "./pages/AutomatedFilteredSelectPage/AutomatedFiltetedSelectPage";
 
 function App() {
   return (
@@ -92,9 +93,23 @@ function App() {
               path="/reportSelect/:garageName/filtered"
               element={
                 <ProtectedRoute>
-                  <AutomatedFilteredReportPage
+                  {/* <AutomatedFilteredReportPage
                   email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
-                  />
+                  /> */}
+                  <AutomatedFilteredSelectPage/>
+                </ProtectedRoute>
+              }
+            />
+
+            {/* all automated garages (baxter, vanvorst, waverly) filtered reports */}
+            <Route
+              path={`/reportSelect/:garageName/filtered/dates`}
+              element={
+                <ProtectedRoute>
+                  <AutomatedFilteredReportPage
+                  // email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  /> 
+                  {/* <AutomatedFilteredSelectPage/> */}
                 </ProtectedRoute>
               }
             />
@@ -102,7 +117,7 @@ function App() {
             {/* atlantic terrace daily report (24 hour report) */}
             <Route
               exact
-              path="/reportSelect/Atlantic%20Terrace/daily"
+              path='/reportSelect/Atlantic%20Terrace/daily'
               element={
                 <ProtectedRoute>
                   <AtlanticDailyReportPage

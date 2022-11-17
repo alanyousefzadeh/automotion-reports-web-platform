@@ -12,6 +12,7 @@ import EmailComponent from "../../components/EmailComponent/EmailComponent";
 import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
 
 const AtlanticDailyReportPage = () => {
+  
   const sortObjectByKeys = (o) => {
     return Object.keys(o)
       .sort()
@@ -233,7 +234,5 @@ const AtlanticDailyReportPage = () => {
     </div>
   );
 };
-// let html = ReactDOMServer.renderToStaticMarkup(<AtlanticDailyReportPage/>);
-// console.log(html.toString());
 
 export default AtlanticDailyReportPage;
