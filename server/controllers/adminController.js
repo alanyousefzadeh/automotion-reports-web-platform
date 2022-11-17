@@ -51,3 +51,36 @@ exports.adminDelete = async (req, res) => {
       console.log('Error deleting users:', error);
     });
 }
+
+exports.adminUpdate = async (req, res) => {
+  let userToUpdate = req.body.Id
+  console.log(userToUpdate)
+  console.log(req.body.Id)
+  admin.auth()
+  .updateUser(uid, {
+    email: 'modifiedUser@example.com',
+    
+  })
+  .then((userRecord) => {
+    // See the UserRecord reference doc for the contents of userRecord.
+    console.log('Successfully updated user', userRecord.toJSON());
+  })
+  .catch((error) => {
+    console.log('Error updating user:', error);
+  });
+}
+
+exports.userDetails = async (req, res) => {
+  let userId = req.body.userId
+  console.log(userId)
+  admin.auth()
+  .getUser(userId)
+  .then((userRecord) => {
+    // See the UserRecord reference doc for the contents of userRecord.
+    console.log(`Successfully fetched user data: ${userRecord.toJSON()}`);
+    res.send(userRecord.toJSON())
+  })
+  .catch((error) => {
+    console.log('Error fetching user data:', error);
+  });
+}
