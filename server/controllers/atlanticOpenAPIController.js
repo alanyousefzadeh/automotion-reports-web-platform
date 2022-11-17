@@ -1,4 +1,5 @@
 const axios = require('axios')
+
 exports.atlanticOpenAPI = (req, res) => {
     let from = req.query.inDate;
     let to = req.query.outDate;
