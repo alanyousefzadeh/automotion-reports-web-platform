@@ -10,3 +10,15 @@
         margin-bottom: 0.5rem;
     }
 }
+
+.type-radio{
+    display: flex;
+    &_text{
+        margin: 0;
+    }
+}
+
+.radio-buttons{
+    margin-bottom: 0.5rem;
+}
+

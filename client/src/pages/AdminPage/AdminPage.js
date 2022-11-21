@@ -17,7 +17,10 @@ export default function AdminPage() {
     })
     const [show, setShow] = useState(false)
 
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        //setShow(false)
+        //window.location.reload()
+    }
     const handleShow = () => setShow(true);
 
     var authApp = initializeApp({
@@ -51,7 +54,7 @@ export default function AdminPage() {
            password: '', 
            confirm: ''
         })
-       handleShow(true)
+       handleShow()
    }
 
    const setField = (field, value) => {
@@ -92,6 +95,7 @@ export default function AdminPage() {
                 : <AdminModal
                     show={show}
                     handleClose={handleClose}
+                    body={"New User Created"}
                 />}
         </div>
     )

@@ -1,6 +1,6 @@
 import { getAuth } from "@firebase/auth";
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set, get, child, remove } from "firebase/database";
+import { getDatabase, ref, set, get, update, child, remove } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -41,8 +41,26 @@ function removeUserData(emailList) {
 }
 
 //function to modify user in the real-time database
+function UpdateUserData(updatedUser) {
+  console.log(updatedUser)
+  const dbRef = ref(getDatabase());
+  get(child(dbRef, `users/`)).then((snapshot) => {
+    snapshot.forEach((child) => {
+      console.log(child)
+      if ((child.val().email) === updatedUser.oldEmail) {
+        const db = getDatabase();
+        let type = updatedUser.type
+        const reference = ref(db, 'users/' + child.ref._path.pieces_[1])
+        update(reference, {
+          email: updatedUser.updatedEmail,
+          type: type
+        })
+      }
+    })
+  });
+}
 
 
-export { writeUserData, removeUserData }
+export { writeUserData, removeUserData, UpdateUserData }
 export const auth = getAuth(app)
 export default app
