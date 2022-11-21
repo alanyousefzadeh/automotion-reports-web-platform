@@ -53,17 +53,20 @@ exports.adminDelete = async (req, res) => {
 }
 
 exports.adminUpdate = async (req, res) => {
-  let userToUpdate = req.body.Id
-  console.log(userToUpdate)
-  console.log(req.body.Id)
+  let userToUpdate = req.body.userId
+  console.log("user",userToUpdate)
+  console.log("id",req.body.userId)
+  //console.log("newPw", req.body.password)
+  console.log("newEmail", req.body.email)
   admin.auth()
-  .updateUser(uid, {
-    email: 'modifiedUser@example.com',
-    
+  .updateUser(userToUpdate, {
+    email: req.body.email,
+    //password: req.body.password  
   })
   .then((userRecord) => {
     // See the UserRecord reference doc for the contents of userRecord.
     console.log('Successfully updated user', userRecord.toJSON());
+    res.sendStatus(200)
   })
   .catch((error) => {
     console.log('Error updating user:', error);
