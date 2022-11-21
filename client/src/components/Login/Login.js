@@ -41,7 +41,7 @@ function Login() {
             setErrors(newErrors)
         } else {
             try {
-                signIn(form.email,form.password)
+                await signIn(form.email,form.password)
                 setWaitingForToken(true)
                 await axios.post("https://automotion-heroku-server.herokuapp.com/login",{
                     email: form.email
@@ -52,6 +52,7 @@ function Login() {
                     e.target.reset();
                     nav('/welcome')
                 })
+
             } catch (e) {
                 setServerSideErr(e.message)
                 console.log(e.message)

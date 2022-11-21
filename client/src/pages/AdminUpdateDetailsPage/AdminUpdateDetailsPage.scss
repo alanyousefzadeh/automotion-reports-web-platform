@@ -1,0 +1,12 @@
+.edit-user-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &_email{
+       margin: 0; 
+    }
+    &_input{
+        margin-bottom: 0.5rem;
+    }
+}

@@ -1,0 +1,16 @@
+.edit-user{
+    display: flex;
+    margin-bottom: 4px;
+
+    &_button{
+        border: 1px solid black !important;
+        border-radius: 4px !important;
+        margin-right: 4px !important;
+        padding: 0 4px 0 4px !important;
+        font-size: small !important;
+
+    }
+    &_email{
+        margin: 0;
+    }
+}
