@@ -61,7 +61,7 @@ exports.adminUpdate = async (req, res) => {
   admin.auth()
   .updateUser(userToUpdate, {
     email: req.body.email,
-    //password: req.body.password  
+    password: req.body.newPassword  
   })
   .then((userRecord) => {
     // See the UserRecord reference doc for the contents of userRecord.
