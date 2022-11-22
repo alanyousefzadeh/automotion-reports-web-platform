@@ -8,10 +8,6 @@ function Example(props) {
     const {show, handleClose, body } = props
   return (
     <>
-      {/* <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button> */}
-
       <Modal className="special_modal" show={show} onHide={handleClose}>
         <Modal.Body>{body}</Modal.Body>
         <Modal.Footer>

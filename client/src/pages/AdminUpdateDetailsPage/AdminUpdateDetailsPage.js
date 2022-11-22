@@ -4,7 +4,6 @@ import axios from 'axios'
 import './AdminUpdateDetailsPage.scss'
 import { UpdateUserData } from '../../firebase'
 import AdminModal from '../../components/AdminModal/AdminModal'
-import { getAuth, updatePassword } from "firebase/auth";
 
 export default function AdminUpdateDetailsPage() {
     const [res, setRes] = useState(null)
@@ -20,12 +19,6 @@ export default function AdminUpdateDetailsPage() {
     const handleShow = () => setShow(true);
 
     const { userId } = useParams()
-    console.log(userId)
-    const auth = getAuth();
-
-    const user = auth.currentUser;
-    console.log(auth.currentUser)
-    //const newPassword = password;
 
     useEffect(() => {
         axios.
@@ -33,9 +26,8 @@ export default function AdminUpdateDetailsPage() {
                 userId
             })
             .then(response => {
-                console.log("line15res", response.data)
                 setRes(response.data)
-                setEmail(response.email)
+                setEmail(response.data.email)
             })
     }, [])
 
@@ -50,7 +42,6 @@ export default function AdminUpdateDetailsPage() {
                 .post("http://localhost:8080/admin/update", {
                     userId,
                     email,
-                    type,
                     newPassword
                 })
             let updatedUser = {
@@ -79,7 +70,7 @@ export default function AdminUpdateDetailsPage() {
                     <p>{res.email}</p>
                     <form onSubmit={applyHandler} className='edit-user-form'>
                         <p className='edit-user-form_email'>Email:</p>
-                        <input className='edit-user-form_input' placeholder={res.email} value={email != '' ? email : ''} onChange={(e) => { setEmail(e.target.value) }}></input>
+                        <input className='edit-user-form_input' value={email} onChange={(e) => { setEmail(e.target.value) }}></input>
                         <p className='edit-user-form_email'>Password:</p>
                         <input className='edit-user-form_input' type='password' value={newPassword} onChange={(e) => { setNewPassword(e.target.value) }} placeholder='Edit Password'></input>
                         <div className='radio-buttons' onChange={onChangeValue}>

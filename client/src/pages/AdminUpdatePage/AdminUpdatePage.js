@@ -3,6 +3,7 @@ import {Link, useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import './AdminUpdate.scss'
 import Button from "react-bootstrap/Button";
+import Navigation from '../../components/Navigation/Navigation';
 
 export default function AdminUpdatePage() {
     const [res, setRes] = useState(null)
@@ -23,19 +24,19 @@ export default function AdminUpdatePage() {
     return (
         res ?
             <div>
+                <Navigation/>
                 <ul>
                     {
                         res.map((user, i) => {
                             return (
                                 <div className='edit-user' key={i}>
-                                    {/* <input onChange={checkHandler} type="checkbox" id="email" name="email" value={user} /> */}
                                     <Button className="edit-user_button" onClick={()=>clickHandler(user)}>Edit</Button>
                                     <p className='edit-user_email'>{user[1]}</p>  
                                 </div>
                             )
                         })}
                 </ul>
-                {/* <button onClick={applyHandler}>Apply</button> */}
+                
             </div>
             : ""
     )

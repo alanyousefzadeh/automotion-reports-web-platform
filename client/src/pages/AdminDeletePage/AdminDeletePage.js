@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { getAuth } from 'firebase/auth'
 import axios from 'axios'
 import './AdminDeletePage.scss'
 import { removeUserData } from '../../firebase'
+import Navigation from '../../components/Navigation/Navigation'
 
 export default function AdminDeletePage() {
     const [res, setRes] = useState(null)
@@ -54,10 +54,11 @@ export default function AdminDeletePage() {
             removeUserData(checkedEmails)
             console.log("test4")
     }
-    let emailArray = []
+
     return (
         res ?
             <div>
+                <Navigation/>
                 <ul>
                     {
                         res.map((user, i) => {

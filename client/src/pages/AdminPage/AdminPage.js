@@ -4,6 +4,7 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import AdminModal from '../../components/AdminModal/AdminModal'
 import { writeUserData } from '../../firebase';
+import Navigation from '../../components/Navigation/Navigation';
 
 export default function AdminPage() {
     
@@ -69,6 +70,7 @@ export default function AdminPage() {
         <div>
             {!show ?
                 <>
+                    <Navigation/>
                     <h6>AdminPage</h6>
                     <form className='new-user-form' onSubmit={handleSubmit}>
                         <label htmlFor="UserID">UserID:</label>
