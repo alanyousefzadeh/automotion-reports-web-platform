@@ -41,8 +41,11 @@ function Login() {
             setErrors(newErrors)
         } else {
             try {
+                //firebase login
                 await signIn(form.email,form.password)
                 setWaitingForToken(true)
+                
+                //server side login/JWT
                 await axios.post("https://automotion-heroku-server.herokuapp.com/login",{
                     email: form.email
                 })

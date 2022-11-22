@@ -18,8 +18,8 @@ export default function AdminPage() {
     const [show, setShow] = useState(false)
 
     const handleClose = () => {
-        //setShow(false)
-        //window.location.reload()
+        setShow(false)
+        window.location.reload()
     }
     const handleShow = () => setShow(true);
 

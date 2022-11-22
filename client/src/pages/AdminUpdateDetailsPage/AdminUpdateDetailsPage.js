@@ -4,12 +4,13 @@ import axios from 'axios'
 import './AdminUpdateDetailsPage.scss'
 import { UpdateUserData } from '../../firebase'
 import AdminModal from '../../components/AdminModal/AdminModal'
+import { getAuth, updatePassword } from "firebase/auth";
 
 export default function AdminUpdateDetailsPage() {
     const [res, setRes] = useState(null)
     const [type, setType] = useState(null)
     const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [newPassword, setNewPassword] = useState('')
     const [show, setShow] = useState(false)
 
     const handleClose = () => {
@@ -19,6 +20,12 @@ export default function AdminUpdateDetailsPage() {
     const handleShow = () => setShow(true);
 
     const { userId } = useParams()
+    console.log(userId)
+    const auth = getAuth();
+
+    const user = auth.currentUser;
+    console.log(auth.currentUser)
+    //const newPassword = password;
 
     useEffect(() => {
         axios.
@@ -37,13 +44,14 @@ export default function AdminUpdateDetailsPage() {
     }
     const applyHandler = async (e) => {
         e.preventDefault()
-        if (type !== null && email !== null) {
+        if (type !== null && email !== '') {
+            //update email and type in firebase real-time DB
             await axios
                 .post("http://localhost:8080/admin/update", {
                     userId,
                     email,
-                    type
-                    //password
+                    type,
+                    newPassword
                 })
             let updatedUser = {
                 oldEmail: res.email,
@@ -51,6 +59,7 @@ export default function AdminUpdateDetailsPage() {
                 type: type
             }
             console.log(updatedUser)
+            //update user in authenticated users list on firebase
             UpdateUserData(updatedUser)
             handleShow()
         }
@@ -58,36 +67,36 @@ export default function AdminUpdateDetailsPage() {
 
 
     return (
-        show ? 
-        <AdminModal
-            show={show}
-            handleClose={handleClose}
-            body={"User Updated"}
-        /> :
-        res ?
-            <div>
-                <h5>Update User Details Page For:</h5>
-                <p>{res.email}</p>
-                <form onSubmit={applyHandler} className='edit-user-form'>
-                    <p className='edit-user-form_email'>Email:</p>
-                    <input className='edit-user-form_input' placeholder={res.email} value={email != '' ? email : ''} onChange={(e) => { setEmail(e.target.value) }}></input>
-                    <p className='edit-user-form_email'>Password:</p>
-                    <input className='edit-user-form_input' value={password} onChange={(e) => { setPassword(e.target.value) }} placeholder='Edit Password'></input>
-                    <div className='radio-buttons' onChange={onChangeValue}>
-                        <p>User Type:</p>
-                        <div className='type-radio'>
-                            <input className='type-input' type="radio" value="Admin" name="type" />
-                            <p className='type-radio_text'>Admin</p>
+        show ?
+            <AdminModal
+                show={show}
+                handleClose={handleClose}
+                body={"User Updated"}
+            /> :
+            res ?
+                <div>
+                    <h5>Update User Details Page For:</h5>
+                    <p>{res.email}</p>
+                    <form onSubmit={applyHandler} className='edit-user-form'>
+                        <p className='edit-user-form_email'>Email:</p>
+                        <input className='edit-user-form_input' placeholder={res.email} value={email != '' ? email : ''} onChange={(e) => { setEmail(e.target.value) }}></input>
+                        <p className='edit-user-form_email'>Password:</p>
+                        <input className='edit-user-form_input' type='password' value={newPassword} onChange={(e) => { setNewPassword(e.target.value) }} placeholder='Edit Password'></input>
+                        <div className='radio-buttons' onChange={onChangeValue}>
+                            <p>User Type:</p>
+                            <div className='type-radio'>
+                                <input className='type-input' type="radio" value="Admin" name="type" />
+                                <p className='type-radio_text'>Admin</p>
+                            </div>
+                            <div className='type-radio'>
+                                <input className='type-input' type="radio" value="Tech" name="type" />
+                                <p className='type-radio_text'>Tech</p>
+                            </div>
                         </div>
-                        <div className='type-radio'>
-                            <input className='type-input' type="radio" value="Tech" name="type" />
-                            <p className='type-radio_text'>Tech</p>
-                        </div>
-                    </div>
-                    <button>Apply Changes</button>
-                </form>
-            </div>
-            : ""
+                        <button>Apply Changes</button>
+                    </form>
+                </div>
+                : ""
 
     )
 }
