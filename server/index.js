@@ -15,6 +15,7 @@ const schemehornAPIRoute = require('./routes/schemehornAPIRoute')
 const filterByRateRoute = require('./routes/filterByRateRoute')
 const monthliesRoute = require('./routes/monthliesRoute')
 const adminRoute = require('./routes/adminRoute')
+const wakeUpRoute = require('./routes/wakeUpRoute')
 
 const port = process.env.PORT || 8080;
 
@@ -23,6 +24,7 @@ app.use(cors());
 app.use(express.json());
 
 //Routes
+app.use('/wake-up', wakeUpRoute);
 app.use('/login', loginRoute);
 app.use('/garagedata', garageRoute);
 app.use('/emailGenerator', emailRoute);
