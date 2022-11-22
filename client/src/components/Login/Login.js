@@ -1,8 +1,7 @@
-import React, {useState, useCallback} from "react";
+import React, {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import Form from 'react-bootstrap/Form';
 import Button from "react-bootstrap/esm/Button";
-import { getAuth } from 'firebase/auth'
 import {UserAuth} from "../Context/AuthContext";
 import loginLogo from '../../assets/loginLogo.png'
 import './Login.scss'
@@ -16,6 +15,16 @@ function Login() {
     const [serverSideErr, setServerSideErr] = useState(null)
     const {signIn} = UserAuth();
     const [waitingForToken, setWaitingForToken] = useState(false)
+
+    //wake-up Heroku "cold server" and minimize login wait times
+    useEffect(() => {
+        axios
+            .get(process.env.REACT_APP_WAKE_UP_URL)
+            .then((res)=>{
+                console.log(res)
+            })
+    }, [])
+
     //function to update the state of the form
     const setField = (field, value) => {
         //This will update our state to keep all the current form values, then add the newest form value to the correct key location
