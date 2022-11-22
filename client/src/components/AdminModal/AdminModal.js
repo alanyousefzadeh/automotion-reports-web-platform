@@ -9,7 +9,12 @@ function Example(props) {
   return (
     <>
       <Modal className="special_modal" show={show} onHide={handleClose}>
-        <Modal.Body>{body}</Modal.Body>
+        <Modal.Header closeButton>
+          <Modal.Title>{body}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {body === 'User Updated' ? <p>Note: If you changed your personal credentials, you will be required to login again using your new credentials</p>:""}
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={handleClose}>
             Close

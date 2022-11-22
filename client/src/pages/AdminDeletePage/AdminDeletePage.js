@@ -3,9 +3,18 @@ import axios from 'axios'
 import './AdminDeletePage.scss'
 import { removeUserData } from '../../firebase'
 import Navigation from '../../components/Navigation/Navigation'
+import AdminModal from '../../components/AdminModal/AdminModal'
 
 export default function AdminDeletePage() {
     const [res, setRes] = useState(null)
+    const [show, setShow] = useState(false)
+
+    const handleClose = () => {
+        setShow(false)
+        window.location.reload()
+    }
+    const handleShow = () => setShow(true);
+
     useEffect(() => {
         axios.
             get("http://localhost:8080/admin/list")
@@ -33,11 +42,11 @@ export default function AdminDeletePage() {
 
         else if (!checked) {
             checkedEmails = checkedEmails.filter(function (email) {
-                return email !== checkedValue.split(",")[1] ;
-            });      
-            
+                return email !== checkedValue.split(",")[1];
+            });
+
             IdsOfCheckedEmails = IdsOfCheckedEmails.filter(function (email) {
-                return email !== checkedValue.split(",")[0] ;
+                return email !== checkedValue.split(",")[0];
             });
         }
         console.log(checkedEmails)
@@ -50,28 +59,35 @@ export default function AdminDeletePage() {
                 IdsOfCheckedEmails
             })
 
-            console.log("test3")
-            removeUserData(checkedEmails)
-            console.log("test4")
+        console.log("test3")
+        removeUserData(checkedEmails)
+        handleShow()
     }
 
     return (
-        res ?
-            <div>
-                <Navigation/>
-                <ul>
-                    {
-                        res.map((user, i) => {
-                            return (
-                                <div key={i}>
-                                    <input onChange={checkHandler} type="checkbox" id="email" name="email" value={user} />
-                                    <label htmlFor="email">{user[1]}</label>
-                                </div>
-                            )
-                        })}
-                </ul>
-                <button onClick={applyHandler}>Apply</button>
-            </div>
-            : ""
+        show ?
+            <AdminModal
+                show={show}
+                handleClose={handleClose}
+                body={"User Deleted"}
+            /> :
+            res ?
+                <div>
+                    <Navigation />
+                    <ul>
+                        {
+                            res.map((user, i) => {
+                                return (
+                                    <div key={i}>
+                                        <input onChange={checkHandler} type="checkbox" id="email" name="email" value={user} />
+                                        <label htmlFor="email">{user[1]}</label>
+                                    </div>
+                                )
+                            })}
+                    </ul>
+                    <button onClick={applyHandler}>Delete</button>
+                </div>
+                : ""
+
     )
 }
