@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
 import './AdminPage.scss'
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, FacebookAuthProvider } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import AdminModal from '../../components/AdminModal/AdminModal'
 import { writeUserData } from '../../firebase';
 import Navigation from '../../components/Navigation/Navigation';
+import Button from "react-bootstrap/Button";
 
 export default function AdminPage() {
-    
+
     const [form, setForm] = useState({
-        name:'',
+        name: '',
         email: '',
         userID: '',
         type: '',
@@ -39,27 +40,35 @@ export default function AdminPage() {
 
     //Create User with Email and Password
     const handleSubmit = async e => {
+        if(form.userID === '' || form.name === '' || form.email === '' || form.password === '' || form.type === '' || form.confirm === ''){
+            alert("all fields must be filled")
+            window.location.reload()
+
+        }else if(form.password !== form.confirm) {
+            alert("passwords must match")
+            window.location.reload()
+        }
         e.preventDefault();
 
         //function to add user to authenticated user database
         await createUserWithEmailAndPassword(detachedAuth, form.email, form.password)
-        
+
         //function to add user to real-time database
         writeUserData(form.userID, form.name, form.email, form.type)
 
         setForm({
-           userID: '',
-           name: '',
-           email: '',
-           type: '', 
-           password: '', 
-           confirm: ''
+            userID: '',
+            name: '',
+            email: '',
+            type: '',
+            password: '',
+            confirm: ''
         })
-       handleShow()
-   }
+        handleShow()
+    }
 
-   const setField = (field, value) => {
-    //This will update our state to keep all the current form values, then add the newest form value to the correct key location
+    const setField = (field, value) => {
+        //This will update our state to keep all the current form values, then add the newest form value to the correct key location
         setForm({
             ...form,
             [field]: value
@@ -69,31 +78,50 @@ export default function AdminPage() {
     return (
         <div>
             {!show ?
-                <>
-                    <Navigation/>
-                    <h6>AdminPage</h6>
+                <div className='new-user-page'>
+                    <Navigation />
                     <form className='new-user-form' onSubmit={handleSubmit}>
-                        <label htmlFor="UserID">UserID:</label>
-                        <input type="text" value={form.userID} onChange={ e => setField('userID', e.target.value) } name="userID" />
-
-                        <label htmlFor="fname">Name:</label>
-                        <input type="text" value={form.name} onChange={ e => setField('name', e.target.value) } name="fname" />
-
-                        <label htmlFor="email" >Email:</label>
-                        <input type="text" value={form.email} onChange={ e => setField('email', e.target.value) } name="email" />
-
-                        <label htmlFor="type">Type: Admin or Tech</label>
-                        <input type="text" value={form.type} onChange={ e => setField('type', e.target.value) } name="type" />
-
-                        <label htmlFor="password">Password:</label>
-                        <input type="password" value={form.password} onChange={ e => setField('password', e.target.value) } name="password" />
-
-                        <label htmlFor="confirmPassword">Confirm Password:</label>
-                        <input type="password" value={form.confirm} onChange={ e => setField('confirm', e.target.value) }name="confirmPassword" />
-
-                        <button type="submit">Apply</button>
+                        <h6>AdminPage</h6>
+                        <div className='user-input'>
+                            <label htmlFor="UserID">UserID:</label>
+                            <input className='input' type="text" value={form.userID} onChange={e => setField('userID', e.target.value)} name="userID" />
+                        </div>
+                        <div className='user-input'>
+                            <label htmlFor="fname">Name:</label>
+                            <input className='input' type="text" placeholder='First Last' value={form.name} onChange={e => setField('name', e.target.value)} name="fname" />
+                        </div>
+                        <div className='user-input'>
+                            <label htmlFor="email" >Email:</label>
+                            <input className='input' type="email" value={form.email} onChange={e => setField('email', e.target.value)} name="email" />
+                        </div>
+                        <div className='user-input'>
+                            <label htmlFor="password">Password:</label>
+                            <input className='input' type="password" value={form.password} onChange={e => setField('password', e.target.value)} name="password" />
+                        </div>
+                        <div className='user-input'>
+                            <label htmlFor="confirmPassword">Confirm Password:</label>
+                            <input className='input' type="password" value={form.confirm} onChange={e => setField('confirm', e.target.value)} name="confirmPassword" />
+                        </div>
+                        <p className='radio-buttons-title'>User Type:</p>
+                        <div className='radio-buttons' onChange={e => setField('type', e.target.value)}>
+                            
+                            <div className='radio-selectios'>
+                                <div className='type-radio'>
+                                    <input className='type-input' type="radio" value="Admin" name="type" />
+                                    <p className='type-radio_text'>Admin</p>
+                                </div>
+                                <div className='type-radio'>
+                                    <input className='type-input' type="radio" value="Tech" name="type" />
+                                    <p className='type-radio_text'>Tech</p>
+                                </div>
+                            </div>
+                        </div>
+                        {/* <button className='create-user-button' type="submit">Create User</button> */}
+                        <Button type='submit' className="button">
+                            Create User
+                        </Button>
                     </form>
-                </>
+                </div>
                 : <AdminModal
                     show={show}
                     handleClose={handleClose}

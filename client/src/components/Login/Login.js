@@ -21,7 +21,7 @@ function Login() {
         axios
             .get(process.env.REACT_APP_WAKE_UP_URL)
             .then((res)=>{
-                console.log(res)
+                console.log(res.status)
             })
     }, [])
 

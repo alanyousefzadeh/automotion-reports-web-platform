@@ -23,9 +23,9 @@ export default function AdminUpdatePage() {
 
     return (
         res ?
-            <div>
+            <div className='admin-update-page'>
                 <Navigation/>
-                <ul>
+                <ul className='admin-update-list'>
                     {
                         res.map((user, i) => {
                             return (

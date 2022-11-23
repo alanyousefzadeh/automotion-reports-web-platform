@@ -4,6 +4,7 @@ import './AdminDeletePage.scss'
 import { removeUserData } from '../../firebase'
 import Navigation from '../../components/Navigation/Navigation'
 import AdminModal from '../../components/AdminModal/AdminModal'
+import { Button } from 'react-bootstrap'
 
 export default function AdminDeletePage() {
     const [res, setRes] = useState(null)
@@ -85,7 +86,7 @@ export default function AdminDeletePage() {
                                 )
                             })}
                     </ul>
-                    <button onClick={applyHandler}>Delete</button>
+                    <Button className='delete-button' onClick={applyHandler}>Delete</Button>
                 </div>
                 : ""
 

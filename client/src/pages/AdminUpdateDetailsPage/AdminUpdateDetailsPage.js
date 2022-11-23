@@ -4,7 +4,8 @@ import axios from 'axios'
 import './AdminUpdateDetailsPage.scss'
 import { UpdateUserData } from '../../firebase'
 import AdminModal from '../../components/AdminModal/AdminModal'
-
+import Button from "react-bootstrap/Button";
+import Navigation from '../../components/Navigation/Navigation';
 export default function AdminUpdateDetailsPage() {
     const [res, setRes] = useState(null)
     const [type, setType] = useState(null)
@@ -65,7 +66,9 @@ export default function AdminUpdateDetailsPage() {
                 body={"User Updated"}
             /> :
             res ?
+
                 <div>
+                    <Navigation/>
                     <h5>Update User Details Page For:</h5>
                     <p>{res.email}</p>
                     <form onSubmit={applyHandler} className='edit-user-form'>
@@ -84,7 +87,7 @@ export default function AdminUpdateDetailsPage() {
                                 <p className='type-radio_text'>Tech</p>
                             </div>
                         </div>
-                        <button>Apply Changes</button>
+                        <Button>Apply Changes</Button>
                     </form>
                 </div>
                 : ""

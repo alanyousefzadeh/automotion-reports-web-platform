@@ -1,6 +1,7 @@
 .edit-user{
     display: flex;
     margin-bottom: 4px;
+    padding: 0;
 
     &_button{
         border: 1px solid black !important;
@@ -13,4 +14,18 @@
     &_email{
         margin: 0;
     }
+}
+
+.admin-update-page{
+    margin: auto;
+    max-width: 768px;
+}
+
+.admin-update-list{
+    padding: 0;
+    margin-left: 0.5rem;
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }

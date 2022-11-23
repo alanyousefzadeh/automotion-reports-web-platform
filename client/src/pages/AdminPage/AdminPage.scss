@@ -1,5 +1,41 @@
+.new-user-page{
+   margin: auto;
+   max-width: 768px;
+}
+
+.input{
+    border: 2px solid gainsboro;
+    border-radius: 8px;
+}
+
+.user-input{
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    
+}
+
 .new-user-form{
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.type-radio{
+    margin: 0 1rem 0 1rem;
+}
+
+.radio-selectios{
+    display: flex;
+    //flex-direction: column;
+    //align-items: flex-start;
+}
+
+.radio-buttons-title{
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.create-user-button{
+    margin-top: 0.5rem;
 }
