@@ -7,6 +7,11 @@ import SchemehornDiscountComponent from "../../components/SchemehornDiscountComp
 import SchemehornTicketRangesComponent from "../../components/SchemehornTicketRangesComponent/SchemehornTicketRangesComponent";
 import SchemehornPaymentTypeComponent from "../../components/SchemehornPaymentTypeComponent/SchemehornPaymentTypeComponent";
 import { formatDate } from "../AutomatedDailyReportPage/AutomatedDailyReportHelpers";
+import {pdfExport} from "../../components/EmailSender/EmailPdf";
+import {PDFExport} from "@progress/kendo-react-pdf";
+import {Button} from "react-bootstrap";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
 
 function SchemehornDailyPage() {
 
@@ -21,7 +26,7 @@ function SchemehornDailyPage() {
   const [ticketRanges, setTicketRanges] = useState(null);
   const [paymentTypes, setPaymentTypes] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const container = React.useRef(null);
   const getSchemehornData = async () => {
     const token = sessionStorage.getItem('token');
     //revenue summary API call
@@ -107,10 +112,20 @@ function SchemehornDailyPage() {
 
   return (
     <div className="report">
+
       <Navigation />
+        <ButtonGroup aria-label="Basic example">
+            <Button onClick={() => pdfExport(container)}>PDF</Button>
+            <Button >Open</Button>
+            <Button >Print</Button>
+        </ButtonGroup>
+        <EmailFormDisplayToggler />
       {loading ? (
         <LoadingSpinner />
+
       ) : (
+          <div id="PDFExport">
+          <PDFExport  fileName={`Report for ${new Date().getFullYear()}`} forcePageBreak=".page-break" scale={0.68} paperSize="Letter" margin={{ top: 5, left: 5, right: 5, bottom: 5 }} ref={container}>
         <>
           <SchemehornRevenueSummaryComponent
             inDate={inDate}
@@ -122,9 +137,11 @@ function SchemehornDailyPage() {
           <SchemehornTicketRangesComponent ticketRanges={ticketRanges} />
           <SchemehornPaymentTypeComponent paymentTypes={paymentTypes} />
         </>
+          </PDFExport>
+       </div>
       )}
     </div>
-  );
+      );
 }
 
 export default SchemehornDailyPage;

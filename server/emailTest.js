@@ -2,7 +2,11 @@
 const nodemailer = require("nodemailer");
 
 // async..await is not allowed in global scope, must use a wrapper
-async function main(downloaded) {
+async function main(downloaded,from , to , text) {
+
+
+    const encode = downloaded.substring(downloaded.indexOf(',') + 1);
+    console.log(encode)
     // Generate test SMTP service account from ethereal.email
     // Only needed if you don't have a real mail account for testing
     let testAccount = await nodemailer.createTestAccount();
@@ -24,16 +28,18 @@ async function main(downloaded) {
     // send mail with defined transport object
     let info = await transporter.sendMail({
         from: '"Email Test" <cmsreports@outlook.com>', // sender address
-        to: "alanyou73@gmail.com", // list of receivers
-        subject: "Hello ✔", // Subject line
-        text: "I'm Your Father!", // plain text body
-        html: "<b>I'm Your Father!</b>", // html body
+        to: to, // list of receivers
+        subject: "Report sent by : " + from, // Subject line
+        text: "Shalom!", // plain text body
+        html: "<b>"+text+"</b>", // html body
         attachments:[
             {
-                // filename: 'license.pdf',
-                filename: JSON.stringify(downloaded),
+                 filename: 'report.pdf',
+                 content: encode,
+                 encoding:"base64"
+               // filename: JSON.stringify(downloaded),
                 // path: 'https://raw.github.com/nodemailer/nodemailer/master/LICENSE'
-                path: `C:/Users/shmue/Downloads/${downloaded}`
+                //path: `C:/Users/shmue/Downloads/${downloaded}`
             }
         ]
     });

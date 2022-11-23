@@ -9,6 +9,14 @@ import AutomatedDailyHeader from "../../components/AutomatedDailyHeader/Automate
 import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
 import { automatedGarageAPI, formatDate } from "./AutomatedDailyReportHelpers";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
+import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
+import {base64Email,pdfExport} from "../../components/EmailSender/EmailPdf"
+import {drawDOM, exportPDF} from "@progress/kendo-drawing";
+import axios from "axios";
+import { Viewer } from '@react-pdf-viewer/core';
+import {saveAs} from "@progress/kendo-drawing/pdf";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import {Button} from "react-bootstrap";
 
 function AutomatedDailyReportPage() {
   const [response, setResponse] = useState(null);
@@ -28,6 +36,24 @@ function AutomatedDailyReportPage() {
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
   const formattedDate = formatDate(yesterday);
+
+  const container = React.useRef(null);
+
+    // const base64toBlob = (data: string) => {
+    //     // Cut the prefix `data:application/pdf;base64` from the raw base 64
+    //     const base64WithoutPrefix = data.substr(`data:${pdfContentType};base64,`.length);
+    //
+    //     const bytes = atob(base64WithoutPrefix);
+    //     let length = bytes.length;
+    //     let out = new Uint8Array(length);
+    //
+    //     while (length--) {
+    //         out[length] = bytes.charCodeAt(length);
+    //     }
+    //
+    //     return new Blob([out], { type: pdfContentType });
+    // };
+
 
   useEffect(() => {
     automatedGarageAPI(
@@ -68,15 +94,23 @@ function AutomatedDailyReportPage() {
     });
   }
 
+
   return (
     isLoading ? <LoadingSpinner/> :
     <div className="report">
       <Navigation />
-      <p className="daily-report__header">
-        {garageName} Daily Report for: Yesterday {formattedDate}, 12:00AM -
-        11:59PM
-      </p>
+        <ButtonGroup aria-label="Basic example">
+            <Button onClick={() => pdfExport(container)}>PDF</Button>
+            <Button >Open</Button>
+            <Button >Print</Button>
+        </ButtonGroup>
       <EmailFormDisplayToggler />
+      <div id="PDFExport">
+      <PDFExport  fileName={`Report for ${new Date().getFullYear()}`} forcePageBreak=".page-break" scale={0.68} paperSize="Letter" margin={{ top: 5, left: 5, right: 5, bottom: 5 }} ref={container} autoPrint={true}>
+      <p className="daily-report__header">
+          {garageName} Daily Report for:  {formattedDate}, 12:00AM -
+          11:59PM
+      </p>
       <AutomatedDailyHeader
         ticketStart={
           response.ticketStart.length > 0
@@ -98,6 +132,7 @@ function AutomatedDailyReportPage() {
         transientOutTable={transientOutTable}
         total={total}
       />
+        <p className="page-break" style={{textAlign : 'center'}}>Rates and Overnights</p>
       {response ? (
         <>
           <RateTable garageName={garageName} rateData={response.rateTable} />
@@ -106,6 +141,8 @@ function AutomatedDailyReportPage() {
       ) : (
         ""
       )}
+      </PDFExport>
+      </div>
     </div>
   );
 }

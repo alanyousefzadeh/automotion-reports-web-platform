@@ -10,6 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@progress/kendo-drawing": "^1.17.2",
+    "@progress/kendo-react-pdf": "^5.9.0",
+    "@react-pdf-viewer/core": "^3.8.0",
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",

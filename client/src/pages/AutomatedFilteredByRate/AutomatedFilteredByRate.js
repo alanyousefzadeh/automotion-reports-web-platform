@@ -9,7 +9,9 @@ import LoadingSpinner from '../../components/LoadingWheel/LoadingWheel';
 import Navigation from '../../components/Navigation/Navigation';
 import NonRegularChargeTable from '../../components/NonRegularChargeTable/NonRegularChargeTable';
 import RegularRateTable from '../../components/RegularRateTable/RegularRateTable';
-
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
+import {base64Email} from "../../components/EmailSender/EmailPdf"
 export default function AutomatedFilteredByRate() {
 
     const [startDate, setStartDate] = useState(null)

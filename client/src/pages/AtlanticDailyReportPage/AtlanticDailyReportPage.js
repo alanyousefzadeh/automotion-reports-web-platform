@@ -10,6 +10,10 @@ import "./AtlanticDailyReportPage.scss";
 import Navigation from "../../components/Navigation/Navigation";
 import EmailComponent from "../../components/EmailComponent/EmailComponent";
 import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
+import { PDFExport, savePDF } from "@progress/kendo-react-pdf";
+import {drawDOM, exportPDF} from "@progress/kendo-drawing";
+import {base64Email,pdfExport} from "../../components/EmailSender/EmailPdf"
+
 
 const AtlanticDailyReportPage = () => {
   
@@ -192,6 +196,27 @@ const AtlanticDailyReportPage = () => {
     }
   }
 
+  // const exportPDFWithMethod = () => {
+  //   if (container.current) {
+  //     container.current.save();
+  //   }
+  // };
+
+  // const base64Email = () => {
+  //   let gridElement = document.querySelector('#PDFExport');
+  //   drawDOM(gridElement, {
+  //     paperSize: "A4",
+  //   })
+  //       .then((group) => {
+  //         return exportPDF(group);
+  //       })
+  //       .then((dataUri) => {
+  //         axios.post('http://localhost:8080/emailGenerator',{dataUri})
+  //         console.log(dataUri.split(";base64,")[1]);
+  //       });
+  // };
+  const container = React.useRef(null);
+
   useEffect(() => {
     fetchAtlanticData();
   }, []);
@@ -210,6 +235,10 @@ const AtlanticDailyReportPage = () => {
           ) : (
             <>
               <Navigation />
+              <button onClick={base64Email}>Email</button>
+              <EmailFormDisplayToggler />
+              <div id="PDFExport">
+              <PDFExport id="" paperSize="A4" margin="1cm" ref={container}>
               <p className="daily__report">Atlantic Terrace Daily Report Page</p>
               <ReportHeader
                 start={start}
@@ -221,12 +250,13 @@ const AtlanticDailyReportPage = () => {
                   timeZone: "America/New_York",
                 })}
               />
-              <EmailFormDisplayToggler />
               <AtlanticTable
                 atlanticTable={atlanticTable}
                 atlanticDiscountTable={sortObjectByKeys(atlanticDiscountTable)}
                 atlanticMiscTable={atlanticMiscTable}
               />
+              </PDFExport>
+              </div>
             </>
           )}
         </div>
