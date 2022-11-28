@@ -11,13 +11,14 @@ export default function RatePicker(props) {
             {garage === "Baxter" ?
                 <select onChange={(e) => setVals(e)}>
                     <option value="">--</option>
-                    <option value="25">Early Bird - $25</option>
+                    <option value="All">All Tickets</option>
+                    <option value="Early">Early Bird - $25</option>
                     <option value="15">Up to 1/2 Hr - $15</option>
                     <option value="25">Up to 1 Hr - $25</option>
-                    <option value="32">Up to 2 Hr- $32</option>
-                    <option value="42">Up to 3 Hr- $42</option>
+                    <option value="32">Up to 2 Hr - $32</option>
+                    <option value="42">Up to 3 Hr - $42</option>
                     <option value="46">Up to 12 Hr - $46</option>
-                    <option value="45">Up to 24 Hr- $55</option>
+                    <option value="45">Up to 24 Hr - $55</option>
                     <option value="Other">Other</option>
                     <option value="NC/0">NC/0</option>
                 </select> :
@@ -35,7 +36,7 @@ export default function RatePicker(props) {
                     </select> :
                     <select onChange={(e) => setVals(e)}>
                         <option value="">--</option>
-                        <option value="15">Early Bird - $15</option>
+                        <option value="Early">Early Bird - $15</option>
                         <option value="5">Up to 1/2 Hr - $5</option>
                         <option value="15">Up to 2 Hr - $15</option>
                         <option value="20">Up to 3 Hr - $20</option>

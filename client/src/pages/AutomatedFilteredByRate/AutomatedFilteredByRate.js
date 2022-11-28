@@ -39,7 +39,14 @@ export default function AutomatedFilteredByRate() {
                         authorization: 'Bearer ' + token
                       }
                 })
-            setCurrRate(rate)
+            if(garageName === "Baxter" && rate === "Early"){
+                setCurrRate(25)
+            }else if(garageName === "Waverly" && rate === "Early"){
+                setCurrRate(15)
+            }else{
+                setCurrRate(rate)
+            }
+            
             setData(promise.data)
             setLoading(false)
         } else {
