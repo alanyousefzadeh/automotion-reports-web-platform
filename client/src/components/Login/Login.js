@@ -23,6 +23,9 @@ function Login() {
             .then((res)=>{
                 console.log(res.status)
             })
+            .catch((e)=>{
+                console.log("WakeUpErr", e)
+            })
     }, [])
 
     //function to update the state of the form

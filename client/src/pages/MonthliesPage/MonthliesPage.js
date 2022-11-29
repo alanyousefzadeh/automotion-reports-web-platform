@@ -6,6 +6,7 @@ import InActiveMonthlies from '../../components/InActiveMonthlies/InActiveMonthl
 import RepoMonthlies from '../../components/RepoMonthlies/RepoMonthlies'
 import LoadingSpinner from '../../components/LoadingWheel/LoadingWheel';
 import InUseMonthlies from '../../components/InUseMonthlies/InUseMonthlies';
+import Navigation from '../../components/Navigation/Navigation';
 import './MonthliesPage.scss'
 
 export default function Monthlies() {
@@ -45,6 +46,7 @@ export default function Monthlies() {
   return (
 
     <div className='monthliesSelect'>
+      <Navigation/>
       {
         isLoading ? <LoadingSpinner /> :
           <div className='report'>
