@@ -44,10 +44,20 @@ exports.filterByRate = async (req, res) => {
     //check for all rates in one 
     if (rate === 'All') {
         filterByRateData = await knex.raw(
-            `SELECT count(total) as count, sum(total) as total, CAST(outdatetime AS DATE) as date
-        FROM Transactions
-        where OutDateTime between '${startDate}T00:00:00' and '${endDate}T23:59:59' and type = 'T' 
-        GROUP BY CAST(outdatetime AS DATE)`
+            `DECLARE @inCars AS TABLE
+            (
+                carsIn int,
+                outDate Date
+            );
+            insert into @inCars SELECT count(indatetime) as inCars ,  CAST(indatetime AS DATE) as indate
+                    FROM [Transactions]
+                    where inDateTime between '${startDate}T00:00:00' and '${endDate}T23:59:59' and type = 'T'
+                    GROUP BY CAST(indatetime AS DATE)
+            SELECT count(OutDateTime) as outCars , t2.carsIn ,  CAST(OutDateTime AS DATE) as outdate , sum(t1.total) as total
+                    FROM [Transactions] as t1 full outer join @inCars as t2 on CAST(OutDateTime AS DATE) = t2.outDate
+                    where OutDateTime between '${startDate}T00:00:00' and '${endDate}T23:59:59' and type = 'T'
+                    GROUP BY CAST(OutDateTime AS DATE),t2.carsIn
+                    order by CAST(OutDateTime AS DATE)`
         )
 
     }
