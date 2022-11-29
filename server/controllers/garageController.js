@@ -1,6 +1,5 @@
 const axios = require("axios");
 const helpers = require("../helpers");
-
 require("dotenv").config();
 
 let db = {
@@ -18,22 +17,18 @@ let db = {
 };
 
 exports.transactions = async (req, res) => {
+  
   const currentGarage = req.query.garage;
-  switch (currentGarage) {
-    case "Baxter":
-      db.connection.options.database = "BaxterSync";
-      break;
-    case "Waverly":
-      db.connection.options.database = "502WaverlySync";
-      break;
-    case "VanVorst":
-      db.connection.options.database = "207VanvorstSync";
-      break;
-    default:
-      console.log("please provide a db name");
-  }
+  
+  //set the correct db in the db object
+  helpers.dbConnector(currentGarage, db)
+  
+  //console log to confirm coorect db connection made
   console.log(db.connection.options.database)
+  
+  //connect to the db with knex
   const knex = await require("knex")(db);
+  
   let inDate = req.query.inDate;
   let outDate = req.query.outDate;
 
@@ -53,6 +48,7 @@ exports.transactions = async (req, res) => {
     currentMonthliesIn:[],
     closedTickets: []
   };
+  
   //query for InDateTime type = M
   let query1 = await knex.raw(
     helpers.hourOfDayQuery("InDateTime", inDate, outDate, "M")
@@ -94,7 +90,6 @@ exports.transactions = async (req, res) => {
   //query for starting ticket num
    data.ticketStart = await knex.raw(helpers.ticketStartNum(inDate, outDate))
   
-
   //query for end ticket num
   data.ticketEnd = await knex.raw(helpers.ticketEndNum(inDate, outDate))
 

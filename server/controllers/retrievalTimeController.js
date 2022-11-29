@@ -1,4 +1,6 @@
 require("dotenv").config();
+const {dbConnector} = require('../helpers')
+
 let db = {
   client: "mssql",
   connection: {
@@ -14,22 +16,16 @@ let db = {
 };
 
 exports.time = async (req, res) => {
-  console.log("test");
   const currentGarage = await req.query.garage;
-  switch (currentGarage) {
-    case "Baxter":
-      db.connection.options.database = "BaxterSync";
-      break;
-    case "Waverly":
-      db.connection.options.database = "502WaverlySync";
-      break;
-    case "VanVorst":
-      db.connection.options.database = "207VanvorstSync";
-      break;
-    default:
-      console.log("please provide a db name");
-  }
+ 
+  //set the correct db in the db object
+  dbConnector(currentGarage, db)
+  
+  //console log to confirm coorect db connection made
+  console.log(db.connection.options.database)
+ 
   const knex = await require("knex")(db);
+ 
   const inDate = req.query.inDate;
   const outDate = req.query.outDate;
   const type = req.query.type;

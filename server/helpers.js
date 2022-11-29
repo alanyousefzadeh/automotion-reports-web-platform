@@ -1,19 +1,19 @@
 function hourOfDayQuery(timeCol, inDate, outDate, type) {
   return `Select datepart(hour, ${timeCol}) as hourofday, count (*) as countperhour
-        From [dbo].[Transactions]
+        From [Transactions]
         where (${timeCol} between '${inDate} 00:00:00' and '${outDate} 23:59:59') and Type='${type}' 
         Group by datepart(hour, ${timeCol})`;
 }
 
 function totalQuery(inDate, outDate) {
   return `SELECT sum(total) as total
-        FROM [dbo].[Transactions]
+        FROM [Transactions]
         where OutDateTime between '${inDate} 00:00:00' and '${outDate} 23:59:59' and [Type]='T'`;
 }
 
 function rateTableQuery(inDate, outDate) {
   return `SELECT InDateTime, OutDateTime, total
-        FROM [dbo].[Transactions]
+        FROM [Transactions]
         WHERE OutDateTime between '${inDate} 00:00:00' and '${outDate} 23:59:59' and [Type] = 'T'`;
 }
 
@@ -34,7 +34,7 @@ function ticketEndNum(inDate, outDate) {
   return `SELECT 
   Top 1
   [TicketNum]
-  FROM [dbo].[Transactions]
+  FROM [Transactions]
   where indatetime between '${inDate} 00:00:00' and '${outDate} 23:59:59' 
   and type = 'T' order by TicketNum desc`;
 }
@@ -42,7 +42,7 @@ function ticketEndNum(inDate, outDate) {
 function openTicketsToday(inDate, outDate) {
   return `SELECT 
   count([TicketNum]) as openToday
-  FROM [dbo].[Transactions]
+  FROM [Transactions]
   where indatetime between '${inDate} 00:00:00' and '${outDate} 23:59:59'
   and outdatetime  is null
   and type = 'T'`;
@@ -51,7 +51,7 @@ function openTicketsToday(inDate, outDate) {
 function openPrior(inDate) {
   return `SELECT 
   count([TicketNum]) as openPrior
-  FROM [dbo].[Transactions]
+  FROM [Transactions]
   where indatetime <'${inDate} 00:00:00' 
   and outdatetime  is null
   and type = 'T'`;
@@ -60,7 +60,7 @@ function openPrior(inDate) {
 function currentMonthliesIn(inDate) {
   return `SELECT 
   count(STOPAKey2) as monthliesIn
-  FROM [dbo].[Transactions]
+  FROM [Transactions]
   where indatetime <'${inDate} 23:59:59'
   and outdatetime  is null
   and type = 'M'`;
@@ -69,11 +69,30 @@ function currentMonthliesIn(inDate) {
 function closedTickets(inDate, outDate) {
   return `SELECT 
   count([TicketNum]) as closedTickets
-  FROM [dbo].[Transactions]
+  FROM [Transactions]
   where outdatetime between '${inDate} 00:00:00' and '${outDate} 23:59:59'
   and type = 'T'`;
 }
 
+function dbConnector(garageName, db){
+  
+  switch (garageName) {
+    case "Baxter":
+      db.connection.options.database = "BaxterSync";
+      break;
+    case "Waverly":
+      db.connection.options.database = "502WaverlySync";
+      break;
+    case "VanVorst":
+      db.connection.options.database = "207VanvorstSync";
+      break;
+    case "24th Street":
+        db.connection.options.database = "24thSync";
+        break;
+    default:
+      console.log("please provide a db name");
+  }
+}
 module.exports = {
   hourOfDayQuery,
   totalQuery,
@@ -85,4 +104,5 @@ module.exports = {
   openPrior,
   currentMonthliesIn,
   closedTickets,
+  dbConnector
 };

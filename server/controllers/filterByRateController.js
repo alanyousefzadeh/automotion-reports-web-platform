@@ -1,4 +1,5 @@
 require("dotenv").config();
+const {dbConnector} = require('../helpers')
 
 let db = {
     client: "mssql",
@@ -16,23 +17,15 @@ let db = {
 
 exports.filterByRate = async (req, res) => {
     const currentGarage = req.query.garageName;
-    console.log(currentGarage)
-    //set the database garage
-    switch (currentGarage) {
-        case "Baxter":
-            db.connection.options.database = "BaxterSync";
-            break;
-        case "Waverly":
-            db.connection.options.database = "502WaverlySync";
-            break;
-        case "VanVorst":
-            db.connection.options.database = "207VanvorstSync";
-            break;
-        default:
-            console.log("please provide a db name");
-    }
-    console.log(db.connection.options.database)
+  
+    //set the correct db in the db object
+    dbConnector(currentGarage, db)
+    
+    //console log to confirm coorect db connection made
+    console.log("25",db.connection.options.database)
+   
     const knex = await require("knex")(db);
+    
     let startDate = req.query.startDate;
     let endDate = req.query.endDate;
     let rate = req.query.rate
@@ -111,6 +104,13 @@ exports.filterByRate = async (req, res) => {
                 FROM Transactions
                 where outDateTime between '${startDate}' and '${endDate}' and Total NOT IN (0, 5, 15, 20, 25, 35)`)
                 break;
+            case ("24th Street"):
+                filterByRateData = await knex.raw(
+                    `SELECT Total, TicketNum, InDateTime, OutDateTime
+                FROM Transactions
+                where outDateTime between '${startDate}' and '${endDate}' and Total NOT IN (8, 25, 33, 39, 46)`)
+                break;
+
 
         }
         //all other non-early bird charges
