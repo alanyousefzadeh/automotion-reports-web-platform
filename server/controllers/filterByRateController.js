@@ -44,7 +44,7 @@ exports.filterByRate = async (req, res) => {
     //check for all rates in one 
     if (rate === 'All') {
         filterByRateData = await knex.raw(
-            `SELECT count(total) as count, CAST(outdatetime AS DATE) as date
+            `SELECT count(total) as count, sum(total) as total, CAST(outdatetime AS DATE) as date
         FROM Transactions
         where OutDateTime between '${startDate}T00:00:00' and '${endDate}T23:59:59' and type = 'T' 
         GROUP BY CAST(outdatetime AS DATE)`
@@ -54,7 +54,7 @@ exports.filterByRate = async (req, res) => {
     //check if the 25 charge in Baxter is an early bird rate
     else if (rate === "Early" && currentGarage === "Baxter") {
         filterByRateData = await knex.raw(
-            `SELECT count(total) as count, CAST(outdatetime AS DATE) as date
+            `SELECT count(total) as count, sum(total) as total, CAST(outdatetime AS DATE) as date
     FROM Transactions
     where OutDateTime between '${startDate}T00:00:00' and '${endDate}T23:59:59' and type = 'T' and total = '25'
     and DATEDIFF(mi, InDateTime, outDateTime) > '60'
@@ -65,7 +65,7 @@ exports.filterByRate = async (req, res) => {
     //check if the 15 charge in Waverly is an early bird rate
     else if (rate === "Early" && currentGarage === "Waverly") {
         filterByRateData = await knex.raw(
-            `SELECT count(total) as count, CAST(outdatetime AS DATE) as date
+            `SELECT count(total) as count, sum(total) as total, CAST(outdatetime AS DATE) as date
         FROM Transactions
         where OutDateTime between '${startDate}T00:00:00' and '${endDate}T23:59:59' and type = 'T' and total = '15'
         and DATEDIFF(mi, InDateTime, outDateTime) > 120
@@ -105,7 +105,7 @@ exports.filterByRate = async (req, res) => {
     } else {
         if ((currentGarage === "Baxter") && (rate === "25")) {
             filterByRateData = await knex.raw(
-                `SELECT count(total) as count, CAST(outdatetime AS DATE) as date 
+                `SELECT count(total) as count, sum(total) as total, CAST(outdatetime AS DATE) as date 
         FROM Transactions
         where OutDateTime between '${startDate}T00:00:00' and '${endDate}T23:59:59' and type = 'T' and total = ${rate}
         and DATEDIFF(mi, InDateTime, outDateTime) < '60'
@@ -113,7 +113,7 @@ exports.filterByRate = async (req, res) => {
             );
         } else if (currentGarage === "Waverly" && rate === "15") {
             filterByRateData = await knex.raw(
-                `SELECT count(total) as count, CAST(outdatetime AS DATE) as date 
+                `SELECT count(total) as count, sum(total) as total, CAST(outdatetime AS DATE) as date 
         FROM Transactions
         where OutDateTime between '${startDate}T00:00:00' and '${endDate}T23:59:59' and type = 'T' and total = ${rate}
         and DATEDIFF(mi, InDateTime, outDateTime) < 120
@@ -122,7 +122,7 @@ exports.filterByRate = async (req, res) => {
 
         } else {
             filterByRateData = await knex.raw(
-                `SELECT count(total) as count, CAST(outdatetime AS DATE) as date 
+                `SELECT count(total) as count, sum(total) as total, CAST(outdatetime AS DATE) as date 
         FROM Transactions
         where OutDateTime between '${startDate}T00:00:00' and '${endDate}T23:59:59' and type = 'T' and total = ${rate}
         GROUP BY CAST(outdatetime AS DATE)`
