@@ -20,6 +20,10 @@ const reports = [
   },
 ];
 
+const schemehornReports = ["Daily report", "Filtered Report"]
+const automatedGarageReports = ["Daily Report", "Filtered Report", "Filter By Rate", "Monthlies", "Wait Times Report"]
+const atlanticReports = ["Daily report", "Filtered Report", "Open Tickets Report"]
+
 function ReportSelectPage() {
   let { garageName } = useParams();
 
@@ -28,42 +32,48 @@ function ReportSelectPage() {
       <Navigation />
       <h4 className="garage__title">{garageName} Garage Reports</h4>
       <div className="cards d-flex justify-content-center">
-     
-        {garageName === "Schemehorn" ? (
+        {garageName === "Schemehorn" ? 
           <>
-          <ReportCard
-            key={1}
-            name={garageName}
-            title={"Daily Report"}
-          />
-          <ReportCard
-            key={3}
-            name={garageName}
-            title={"Filtered Report"}
-          /></>
-        ) : (
-          reports.map((report) => (
-            <ReportCard
-              key={report.id}
-              name={garageName}
-              title={report.title}
-            />
-          ))
-        )}
-        {garageName === "Atlantic Terrace" ? (
-          <ReportCard title="Open Tickets Report" />
-        ) : (
-          ""
-        )}
-        {
-          garageName !== "Atlantic Terrace" && garageName !== "Schemehorn" ?
+            {schemehornReports.map((report, index) => {
+              return (
+                <div key={index}>
+                  <ReportCard
+                    name={garageName}
+                    title={report}
+                  />
+                </div>)
+            })}
+          </>
+        : 
+        garageName === "Atlantic Terrace" ? 
           <>
-          <ReportCard title="Filter By Rate" />
-          <ReportCard title="Monthlies"/>
-          </>: ""
+            {atlanticReports.map((report, index)=>{
+              return (
+                <div key={index}>
+                  <ReportCard
+                    name={garageName}
+                    title={report}
+                  />
+                </div>)
+            })}
+          </>
+        :
+          <>
+          {
+            automatedGarageReports.map((report, index)=>{
+              return (
+                <div key={index}>
+                  <ReportCard
+                    name={garageName}
+                    title={report}
+                  />
+                </div>)
+            })
+          }
+          </>
         }
       </div>
-    </>
+    </>    
   );
 }
 

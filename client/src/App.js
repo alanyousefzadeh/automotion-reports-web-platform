@@ -151,7 +151,7 @@ function App() {
               }
             />
             
-            {/* all automated garages (baxter, vanvorst, waverly) filtered reports */}
+            {/* all automated garages (baxter, vanvorst, waverly, 24th Street) filtered reports */}
             <Route
               path="/reportSelect/:garageName/filtered"
               element={
@@ -176,7 +176,7 @@ function App() {
               }
             />
             
-            {/* daily report (24 hours) */}
+            {/* All automated Garages Daily report (24 hours) */}
             <Route
               path="/reportSelect/:garageName/daily"
               element={
@@ -188,7 +188,7 @@ function App() {
               }
             />
             
-            {/* wait times report */}
+            {/* All automated Garages wait-times report */}
             <Route
               path="/reportSelect/:garageName/wait"
               element={
@@ -200,7 +200,7 @@ function App() {
               }
             />
             
-            {/* open tickets report */}
+            {/* All automated Garages open-tickets report */}
             <Route
               path="/reportSelect/:garageName/open"
               element={
@@ -212,7 +212,7 @@ function App() {
               }
             />
             
-            {/* filter by rate report */}
+            {/* All automated Garages filter-by-rate report */}
             <Route
               path="/reportSelect/:garageName/filter"
               element={

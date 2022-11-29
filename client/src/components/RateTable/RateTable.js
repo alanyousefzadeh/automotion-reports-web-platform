@@ -5,6 +5,7 @@ import {
   makeBaxterRateTable,
   makeWaverlyRateTable,
   makeVanVorstRateTable,
+  make24thStreetRateTable
 } from "./helpers";
 import Table from "react-bootstrap/Table";
 
@@ -45,6 +46,17 @@ function RateTable(props) {
   ];
   const vanvorstPrices = [3.56, 10.67, 13.04, 17.78, 20.15, 28.44, 'N/A'];
 
+  const street24thBuckets = [
+    "Early Bird",
+    "Up to 1/2 hour",
+    "Up to 2 hours",
+    "Up to 3 hours",
+    "Up to 24 hours",
+    "Other"
+  ];
+
+  const street24Prices = [25, 8, 33, 39, 46, 'N/A'];
+
   console.log(garageName);
 
   const ratesTable = {};
@@ -83,6 +95,13 @@ function RateTable(props) {
       makeVanVorstRateTable(rateData, ratesTable);
       buckets = VanVorstBuckets;
       prices = vanvorstPrices;
+      break;
+    case "24th Street":
+      console.log("24th");
+      makeBuckets(street24thBuckets);
+      make24thStreetRateTable(rateData, ratesTable);
+      buckets = street24thBuckets;
+      prices = street24Prices;
       break;
     default:
       console.log("provide a garage name");

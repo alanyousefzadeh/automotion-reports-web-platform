@@ -1,5 +1,5 @@
 import axios from 'axios';
-const getData = async (garageName, automatedSetFailedtoLoad, setErr, setResponse, setTotal, formattedDate, setIsLoading) => {
+const automatedGarageAPI = async (garageName, automatedSetFailedtoLoad, setErr, setResponse, setTotal, formattedDate, setIsLoading) => {
     console.log(formattedDate);
 
   let data = null;
@@ -7,7 +7,8 @@ const getData = async (garageName, automatedSetFailedtoLoad, setErr, setResponse
 
   try {
     const promise = await axios.get(
-      process.env.REACT_APP_TRANSACTIONS_URL,
+      // process.env.REACT_APP_TRANSACTIONS_URL,
+      "http://localhost:8080/garagedata/transactions",
       {
         params: {
           inDate: formattedDate,
@@ -45,4 +46,4 @@ function formatDate(date) {
   ].join('-');
 }
 
-export {padTo2Digits, formatDate, getData as automatedGarageAPI};
+export {padTo2Digits, formatDate, automatedGarageAPI};

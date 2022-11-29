@@ -5,6 +5,7 @@ import baxter from "../../assets/baxter.png";
 import vanvorst from "../../assets/vanvorst.png";
 import waverly from "../../assets/waverly.png";
 import atlanticTerrace from "../../assets/atlanticTerrace.png";
+import street24 from '../../assets/street24.png';
 import schemehorn from "../../assets/schemehorn.png"
 import Navigation from '../../components/Navigation/Navigation'
 
@@ -34,6 +35,11 @@ const data = [
     id: 3,
     title: "Waverly",
     image: waverly,
+  },
+  {
+    id: 6,
+    title: "24th Street",
+    image: street24
   },
 ];
 

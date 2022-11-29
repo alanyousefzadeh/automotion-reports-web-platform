@@ -27,7 +27,9 @@ function WaitTimePage() {
       const token = sessionStorage.getItem('token');
      
         setIsLoading(true);
-        response = await axios.get(process.env.REACT_APP_RETRIEVAL_TIME_URL,
+        response = await axios.get(
+          //process.env.REACT_APP_RETRIEVAL_TIME_URL,
+          "http://localhost:8080/retrievaltime",
           {
             params: {
               garage: garageName,
