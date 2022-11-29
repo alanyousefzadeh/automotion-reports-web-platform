@@ -8,8 +8,9 @@ export default function AllRateTable(props) {
     <Table striped bordered className="report table-sm">
         <thead>
             <tr className="table-warning">
-                <th>Cars In</th>
-                <th>Cars Out</th>
+                <th>In</th>
+                <th>Out</th>
+                <th>Day</th>
                 <th>Date</th>
                 <th>Total</th>
             </tr>
@@ -20,6 +21,7 @@ export default function AllRateTable(props) {
                     <tr key={index} >
                         <td>{record.carsIn}</td>
                         <td>{record.outCars}</td>
+                        <td>{record.dayofweek}</td>
                         <td>{record.outdate.split('T')[0]}</td>
                         <td>${record.total.toLocaleString()}</td>
                     </tr>
