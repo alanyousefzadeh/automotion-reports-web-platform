@@ -2,4 +2,3 @@ node_modules/*
 
 .env
 
-service_key.json
