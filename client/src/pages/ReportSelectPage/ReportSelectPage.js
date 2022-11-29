@@ -36,12 +36,12 @@ function ReportSelectPage() {
           <>
             {schemehornReports.map((report, index) => {
               return (
-                <div key={index}>
                   <ReportCard
+                    key={index}
                     name={garageName}
                     title={report}
                   />
-                </div>)
+                )
             })}
           </>
         : 
@@ -49,12 +49,12 @@ function ReportSelectPage() {
           <>
             {atlanticReports.map((report, index)=>{
               return (
-                <div key={index}>
                   <ReportCard
+                    key={index}
                     name={garageName}
                     title={report}
                   />
-                </div>)
+                )
             })}
           </>
         :
@@ -62,14 +62,13 @@ function ReportSelectPage() {
           {
             automatedGarageReports.map((report, index)=>{
               return (
-                <div key={index}>
                   <ReportCard
+                    key={index}
                     name={garageName}
                     title={report}
                   />
-                </div>)
-            })
-          }
+                )
+          })}
           </>
         }
       </div>
