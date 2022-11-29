@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { useParams } from "react-router-dom";
 import DatePicker from '../../components/DatePicker/DatePicker'
 import Button from "react-bootstrap/Button";
-import Table from "react-bootstrap/Table";
 import axios from 'axios'
 import RatePicker from '../../components/RatePicker/RatePicker';
 import LoadingSpinner from '../../components/LoadingWheel/LoadingWheel';
 import Navigation from '../../components/Navigation/Navigation';
 import NonRegularChargeTable from '../../components/NonRegularChargeTable/NonRegularChargeTable';
+import AllRateTable from '../../components/AllRateTable/AllRateTable';
 import RegularRateTable from '../../components/RegularRateTable/RegularRateTable';
 
 export default function AutomatedFilteredByRate() {
@@ -71,10 +71,15 @@ export default function AutomatedFilteredByRate() {
                 {rate === "NC/0" || rate === "Other" ?
                     <NonRegularChargeTable
                     data={data}/> :
-                    
+                    rate === "All" ?
+                    <AllRateTable
+                    data={data}
+                    />
+                    :
                     <RegularRateTable
                     data={data}
-                    currRate={currRate}/>
+                    />
+
                 }
                 </>
             }

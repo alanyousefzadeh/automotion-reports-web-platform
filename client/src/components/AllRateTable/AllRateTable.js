@@ -1,15 +1,15 @@
 import React from 'react'
 import Table from "react-bootstrap/Table";
 
-export default function RegularRateTable(props) {
+export default function AllRateTable(props) {
 
   const {data} = props  
   return (
     <Table striped bordered className="report table-sm">
         <thead>
             <tr className="table-warning">
-                
-                <th>out Cars</th>
+                <th>Cars In</th>
+                <th>Cars Out</th>
                 <th>Date</th>
                 <th>Total</th>
             </tr>
@@ -18,10 +18,10 @@ export default function RegularRateTable(props) {
             {data && (data).map((record, index) => {
                 return (
                     <tr key={index} >
-                    
-                        <td>{record.count}</td>
-                        <td>{record.date.split('T')[0]}</td>
-                        <td>${record.total}</td>
+                        <td>{record.carsIn}</td>
+                        <td>{record.outCars}</td>
+                        <td>{record.outdate.split('T')[0]}</td>
+                        <td>${record.total.toLocaleString()}</td>
                     </tr>
                 );
             })}
