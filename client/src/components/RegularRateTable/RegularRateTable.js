@@ -21,7 +21,7 @@ export default function RegularRateTable(props) {
                     
                         <td>{record.count}</td>
                         <td>{record.date.split('T')[0]}</td>
-                        <td>${record.total}</td>
+                        <td>${record.total.toLocaleString()}</td>
                     </tr>
                 );
             })}
