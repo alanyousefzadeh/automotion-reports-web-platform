@@ -40,31 +40,34 @@ export default function AdminPage() {
 
     //Create User with Email and Password
     const handleSubmit = async e => {
-        if(form.userID === '' || form.name === '' || form.email === '' || form.password === '' || form.type === '' || form.confirm === ''){
-            alert("all fields must be filled")
-            window.location.reload()
-
-        }else if(form.password !== form.confirm) {
-            alert("passwords must match")
-            window.location.reload()
-        }
         e.preventDefault();
 
-        //function to add user to authenticated user database
-        await createUserWithEmailAndPassword(detachedAuth, form.email, form.password)
+        //if all fields are filled, create the user
+        if (form.userID !== '' && form.name !== '' && form.email !== '' && form.password !== '' && form.type !== '' && form.confirm !== '') {
+            
+            //function to add user to authenticated Firebase DB
+            await createUserWithEmailAndPassword(detachedAuth, form.email, form.password)
 
-        //function to add user to real-time database
-        writeUserData(form.userID, form.name, form.email, form.type)
+            //function to add user to Firebase real-time database
+            writeUserData(form.userID, form.name, form.email, form.type)
 
-        setForm({
-            userID: '',
-            name: '',
-            email: '',
-            type: '',
-            password: '',
-            confirm: ''
-        })
-        handleShow()
+            setForm({
+                userID: '',
+                name: '',
+                email: '',
+                type: '',
+                password: '',
+                confirm: ''
+            })
+            handleShow()
+        
+        //handle passwords dont match
+        } else if (form.password !== form.confirm) {
+            alert("passwords must match")
+            //window.location.reload()
+        }
+
+
     }
 
     const setField = (field, value) => {
@@ -104,7 +107,7 @@ export default function AdminPage() {
                         </div>
                         <p className='radio-buttons-title'>User Type:</p>
                         <div className='radio-buttons' onChange={e => setField('type', e.target.value)}>
-                            
+
                             <div className='radio-selectios'>
                                 <div className='type-radio'>
                                     <input className='type-input' type="radio" value="Admin" name="type" />

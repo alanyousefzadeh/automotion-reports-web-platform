@@ -31,7 +31,7 @@ export default function AutomatedFilteredByRate() {
             const token = sessionStorage.getItem('token');
             setLoading(true)
             const promise = await axios
-                .get("https://automotion-heroku-server.herokuapp.com/filterByRate", {
+                .get(process.env.REACT_APP_FILTER_BY_RATE_URL, {
                     params: {
                         rate, startDate, endDate, garageName
                     },
