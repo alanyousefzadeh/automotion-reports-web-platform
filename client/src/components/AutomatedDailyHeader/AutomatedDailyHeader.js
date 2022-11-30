@@ -14,6 +14,8 @@ export default function AutomatedDailyHeader(props) {
             break;
         case 'Waverly':
             spaces = 32
+        case '24th Street':
+            spaces = 61
     }
   const {
     currentMonthliesIn,

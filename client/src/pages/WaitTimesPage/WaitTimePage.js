@@ -28,8 +28,8 @@ function WaitTimePage() {
      
         setIsLoading(true);
         response = await axios.get(
-          //process.env.REACT_APP_RETRIEVAL_TIME_URL,
-          "http://localhost:8080/retrievaltime",
+          process.env.REACT_APP_RETRIEVAL_TIME_URL,
+          //"http://localhost:8080/retrievaltime",
           {
             params: {
               garage: garageName,

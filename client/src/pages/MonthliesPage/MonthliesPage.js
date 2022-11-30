@@ -21,9 +21,8 @@ export default function Monthlies() {
     setIsLoading(true);
     try {
       const res = await axios.get(
-        // process.env.REACT_APP_MONTHLIES,
-        "http://localhost:8080/monthlies",
-
+        process.env.REACT_APP_MONTHLIES,
+        // "http://localhost:8080/monthlies",
         {
           params: {
             garageName

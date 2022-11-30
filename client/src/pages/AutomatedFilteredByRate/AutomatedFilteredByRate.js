@@ -31,8 +31,8 @@ export default function AutomatedFilteredByRate() {
             const token = sessionStorage.getItem('token');
             setLoading(true)
             const promise = await axios
-                .get("http://localhost:8080/filterByRate",
-                    // process.env.REACT_APP_FILTER_BY_RATE_URL, 
+                .get(//"http://localhost:8080/filterByRate",
+                    process.env.REACT_APP_FILTER_BY_RATE_URL, 
                     {
                     params: {
                         rate, startDate, endDate, garageName
