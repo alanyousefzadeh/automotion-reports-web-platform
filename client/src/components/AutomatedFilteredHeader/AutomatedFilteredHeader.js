@@ -5,7 +5,7 @@ import Table from "react-bootstrap/Table";
 export default function (props) {
 
   const {avgTicketPrice, transientInTotal, monthlyInTotal, totalCarsParked, totalDays } = props
-  
+
   const {garageName} = useParams()
 
   let spaces;
@@ -42,7 +42,7 @@ export default function (props) {
           <td>{monthlyInTotal}</td>
           <td>{totalCarsParked}</td>
           <td>{((((transientInTotal + monthlyInTotal)/spaces)/totalDays)*100).toFixed(2)}%</td>
-          <td>{avgTicketPrice}</td>
+          <td>${avgTicketPrice}</td>
         </tr>
       </tbody>
     </Table>
