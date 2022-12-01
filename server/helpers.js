@@ -6,7 +6,7 @@ function hourOfDayQuery(timeCol, inDate, outDate, type) {
 }
 
 function totalQuery(inDate, outDate) {
-  return `SELECT sum(total) as total
+  return `SELECT sum(total) as total, DATEDIFF(day, '${inDate} 00:00:00', '${outDate} 23:59:59') AS date_difference
         FROM [Transactions]
         where OutDateTime between '${inDate} 00:00:00' and '${outDate} 23:59:59' and [Type]='T'`;
 }
