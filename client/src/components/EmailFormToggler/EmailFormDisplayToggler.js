@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import Button from "react-bootstrap/Button";
-import EmailComponent from "./EmailComponent/EmailComponent";
+import EmailComponent from "../EmailComponent/EmailComponent";
+import './EmailFormToggler.scss';
 
 export default function EmailFormDisplayToggler() {
   const [displayForm, setDisplayForm] = useState(false);
@@ -9,7 +10,7 @@ export default function EmailFormDisplayToggler() {
   }
   return (
     <>
-    <Button onClick={clickHandler} className="button">
+    <Button onClick={clickHandler} className="email-form-button">
       {displayForm ? "Hide Email Form" : "Open Email Form"}
     </Button>
     {displayForm ?

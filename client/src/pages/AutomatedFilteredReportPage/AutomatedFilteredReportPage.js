@@ -9,7 +9,7 @@ import OverParkedTable from "../../components/OverParked/OverParkedTable";
 import "./AutomatedFilteredReportPage.scss";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
 import ReactDOMServer from "react-dom/server";
-import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
+import EmailFormDisplayToggler from "../../components/EmailFormToggler/EmailFormDisplayToggler";
 import Navigation from "../../components/Navigation/Navigation";
 import AutomatedFilteredHeader from "../../components/AutomatedFilteredHeader/AutomatedFilteredHeader";
 
@@ -46,8 +46,8 @@ function AutomatedFilteredReportPage() {
       try {
         setIsLoading(true);
         const promise = await axios.get(
-          process.env.REACT_APP_TRANSACTIONS_URL,
-          //"http://localhost:8080/garagedata/transactions",
+          //process.env.REACT_APP_TRANSACTIONS_URL,
+          "http://localhost:8080/garagedata/transactions",
           {
             params: {
               inDate: inDate,
@@ -108,7 +108,7 @@ function AutomatedFilteredReportPage() {
     <div className="report">
       <Navigation />
       <p className="report_title">{garageName} Garage Filtered Report</p>
-      <div className="filtered-date-picker">
+      <div>
         <DatePicker label={"In-Date - 12:00AM"} setDate={setInDate} />
         <DatePicker label={"Out-Date - 11:59PM"} setDate={setOutDate} />
       </div>
@@ -128,7 +128,8 @@ function AutomatedFilteredReportPage() {
             transientInTotal={transientInTotal}
             monthlyInTotal={monthlyInTotal}
             totalCarsParked={transientInTotal + monthlyInTotal}
-            // avgTicketPrice={(total/ }
+            avgTicketPrice={(total/transientOutTotal).toFixed(2)}
+            totalDays={response.total[0].date_difference + 1}
           />
           <TransactionTable
             garageName={garageName}

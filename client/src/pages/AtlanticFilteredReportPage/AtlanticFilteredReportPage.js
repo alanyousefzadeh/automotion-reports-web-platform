@@ -7,7 +7,7 @@ import AtlanticTable from "../../components/AtlanticTable/AtlanticTable";
 import DatePicker from "../../components/DatePicker/DatePicker";
 import Navigation from "../../components/Navigation/Navigation";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
-import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
+import EmailFormDisplayToggler from "../../components/EmailFormToggler/EmailFormDisplayToggler";
 
 function FilteredReportPage() {
   const sortObjectByKeys = (o) => {

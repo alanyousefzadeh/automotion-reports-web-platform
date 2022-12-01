@@ -9,7 +9,7 @@ import TicketSelect from "../../components/TicketSelect/TicketSelect";
 import { Button } from "react-bootstrap";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
 import Navigation from "../../components/Navigation/Navigation";
-import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
+import EmailFormDisplayToggler from "../../components/EmailFormToggler/EmailFormDisplayToggler";
 
 function WaitTimePage() {
   const [waitTimeData, setWaitTimeData] = useState(null);
@@ -77,13 +77,19 @@ function WaitTimePage() {
               <TypePicker label={"Type"} type={type} setType={setType} />
               <TicketSelect label={"Ticket Number"} num={num} setNum={setNum} />
             </div>
-            <Button className='report-button' onClick={fetchData}>Generate Table</Button>
+            <Button className="filtered-button" onClick={fetchData}>
+              Generate Table
+            </Button>
             <EmailFormDisplayToggler />
           </div>
           {isLoading ? (
             <LoadingSpinner />
           ) : (
             <div className="wait-table">
+              <div className='rate-table-header'>
+                    <p className='rate-table-header__text'>{garageName} Wait Time Report</p>
+                    <p className='rate-table-header__text'><b>From: </b>{inDate} <b>To: </b>{outDate} </p>
+                </div>
               <Table striped bordered className="table-sm table-font">
                 <thead>
                   <tr className="table-warning">

@@ -74,6 +74,10 @@ export default function AutomatedFilteredByRate() {
             </Button>
             {loading ? <LoadingSpinner /> :
                 <>
+                <div className='rate-table-header'>
+                    <p className='rate-table-header__text'>{garageName} Filter by Rate Report</p>
+                    <p className='rate-table-header__text'><b>From: </b>{startDate} <b>To: </b>{endDate} </p>
+                </div>
                 {rate === "NC/0" || rate === "Other" ?
                     <NonRegularChargeTable
                     data={data}/> :

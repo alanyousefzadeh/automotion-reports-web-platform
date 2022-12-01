@@ -1,6 +1,6 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
-import EmailFormDisplayToggler from "../EmailFormDisplayToggler";
+import EmailFormDisplayToggler from "../EmailFormToggler/EmailFormDisplayToggler";
 import './AtlanticOpenTable.scss';
 
 export default function AtlanticOpenTable(props) {

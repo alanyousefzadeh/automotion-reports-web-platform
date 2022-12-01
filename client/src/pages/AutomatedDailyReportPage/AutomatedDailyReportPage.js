@@ -6,7 +6,7 @@ import OverParkedTable from "../../components/OverParked/OverParkedTable";
 import Navigation from "../../components/Navigation/Navigation";
 import "./AutomatedDailyReport.scss";
 import AutomatedDailyHeader from "../../components/AutomatedDailyHeader/AutomatedDailyHeader";
-import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
+import EmailFormDisplayToggler from "../../components/EmailFormToggler/EmailFormDisplayToggler";
 import { automatedGarageAPI, formatDate } from "./AutomatedDailyReportHelpers";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
 
@@ -82,10 +82,10 @@ function AutomatedDailyReportPage() {
     <div className="report">
       <Navigation />
       <EmailFormDisplayToggler />
-      <p className="daily-report__header">
-        {garageName} Garage Daily Report: Yesterday {formattedDate},<br/>
-        12:00AM - 11:59PM
-      </p>
+      <div className="daily-report__header">
+        <p className="daily-report__header__text">{garageName} Garage Daily Report</p>
+        <p className="daily-report__header__text">Yesterday {formattedDate}, 12AM - 11:59PM </p>
+      </div>
       <AutomatedDailyHeader
         ticketStart={
           response.ticketStart.length > 0

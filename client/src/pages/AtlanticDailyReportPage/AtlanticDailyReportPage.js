@@ -9,7 +9,7 @@ import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
 import "./AtlanticDailyReportPage.scss";
 import Navigation from "../../components/Navigation/Navigation";
 import EmailComponent from "../../components/EmailComponent/EmailComponent";
-import EmailFormDisplayToggler from "../../components/EmailFormDisplayToggler";
+import EmailFormDisplayToggler from "../../components/EmailFormToggler/EmailFormDisplayToggler";
 
 const AtlanticDailyReportPage = () => {
   const sortObjectByKeys = (o) => {
