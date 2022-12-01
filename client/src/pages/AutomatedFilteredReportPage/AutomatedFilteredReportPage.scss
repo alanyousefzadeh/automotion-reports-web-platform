@@ -8,5 +8,14 @@
 .report_title{
     display: flex;
     justify-content: center;
-    margin-bottom: 6px;
+    margin: 0.5rem 0 0.5rem 0;
+}
+
+.automated-filtered-header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__text{
+        margin: 0;
+    }
 }

@@ -22,6 +22,11 @@ function AutomatedDailyReportPage() {
   let monthlyInTable = new Array(24).fill(0);
   let monthlyOutTable = new Array(24).fill(0);
 
+  let monthlyInTotal = 0
+  let monthlyOutTotal = 0
+  let transientInTotal = 0
+  let transientOutTotal = 0
+
   const { garageName } = useParams();
   console.log("db", garageName);
 
@@ -66,17 +71,21 @@ function AutomatedDailyReportPage() {
     response.mOutDateTimes.forEach((hour) => {
       monthlyOutTable[hour.hourofday] = hour.countperhour;
     });
+    monthlyInTotal = monthlyInTable.reduce((prevVal, currVal) => prevVal + currVal, 0)
+    monthlyOutTotal = monthlyOutTable.reduce((prevVal, currVal) => prevVal + currVal, 0)
+    transientInTotal = transientInTable.reduce((prevVal, currVal) => prevVal + currVal, 0)
+    transientOutTotal = transientOutTable.reduce((prevVal, currVal) => prevVal + currVal, 0)
   }
 
   return (
     isLoading ? <LoadingSpinner/> :
     <div className="report">
       <Navigation />
-      <p className="daily-report__header">
-        {garageName} Daily Report for: Yesterday {formattedDate}, 12:00AM -
-        11:59PM
-      </p>
       <EmailFormDisplayToggler />
+      <p className="daily-report__header">
+        {garageName} Garage Daily Report: Yesterday {formattedDate},<br/>
+        12:00AM - 11:59PM
+      </p>
       <AutomatedDailyHeader
         ticketStart={
           response.ticketStart.length > 0
@@ -92,10 +101,15 @@ function AutomatedDailyReportPage() {
         closedTickets={response.closedTickets[0].closedTickets}
       />
       <TransactionTable
+
         monthlyInTable={monthlyInTable}
         monthlyOutTable={monthlyOutTable}
         transientInTable={transientInTable}
         transientOutTable={transientOutTable}
+        monthlyInTotal={monthlyInTotal}
+        monthlyOutTotal={monthlyOutTotal}
+        transientInTotal={transientInTotal}
+        transientOutTotal={transientOutTotal}
         total={total}
       />
       {response ? (

@@ -1,3 +1,4 @@
+import './AutomatedFilteredByRate.scss'
 import React, { useState } from 'react'
 import { useParams } from "react-router-dom";
 import DatePicker from '../../components/DatePicker/DatePicker'
@@ -58,6 +59,9 @@ export default function AutomatedFilteredByRate() {
     return (
         <div className='report'>
             <Navigation />
+            <div>
+                <p className='filter-by-rate__header'>{garageName} Filter By Rate Report</p>
+            </div>
             <DatePicker label={'Starting Date'} setDate={setStartDate} />
             <DatePicker label={'Ending Date'} setDate={setEndDate} />
             <RatePicker

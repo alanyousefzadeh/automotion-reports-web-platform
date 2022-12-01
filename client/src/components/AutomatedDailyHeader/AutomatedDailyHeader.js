@@ -2,6 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import './AutomatedDailyHeader.scss'
+
 export default function AutomatedDailyHeader(props) {
     const {garageName} = useParams()
     let spaces;

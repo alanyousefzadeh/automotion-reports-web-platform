@@ -3,10 +3,17 @@ import Table from 'react-bootstrap/Table';
 import './TransactionTable.scss'
 function TransactionTable(props) {
     const {
+        // garageName,
+        // inDate, 
+        // outDate,
         monthlyInTable,
         monthlyOutTable,
         transientInTable,
         transientOutTable, 
+        monthlyInTotal,
+        monthlyOutTotal,
+        transientInTotal,
+        transientOutTotal,
         total
     } = props;
 
@@ -24,14 +31,8 @@ function TransactionTable(props) {
 
     console.log(listElements)
 
-    const monthlyInTotal = monthlyInTable.reduce((prevVal, currVal) => prevVal + currVal, 0)
-    const monthlyOutTotal = monthlyOutTable.reduce((prevVal, currVal) => prevVal + currVal, 0)
-    const transientInTotal = transientInTable.reduce((prevVal, currVal) => prevVal + currVal, 0)
-    const transientOutTotal = transientOutTable.reduce((prevVal, currVal) => prevVal + currVal, 0)
-
     return(
             <>
-            <p>T = Transient, M = Monthly </p>
             <Table striped bordered className='table-sm'>
             <thead>
                 <tr className='table-warning'>
