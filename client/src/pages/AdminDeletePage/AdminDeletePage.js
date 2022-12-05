@@ -69,7 +69,7 @@ export default function AdminDeletePage() {
             <AdminModal
                 show={show}
                 handleClose={handleClose}
-                body={"User Deleted"}
+                body={"User(s) Deleted"}
             /> :
             res ?
                 <div>
