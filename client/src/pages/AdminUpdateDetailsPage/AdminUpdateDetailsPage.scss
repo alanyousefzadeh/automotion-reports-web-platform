@@ -1,3 +1,13 @@
+.update-user-header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+    &__text{
+        margin:0;
+    }
+}
+
 .edit-user-form{
     display: flex;
     flex-direction: column;

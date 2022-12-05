@@ -32,9 +32,6 @@ export default function AdminUpdateDetailsPage() {
             })
     }, [])
 
-    const onChangeValue = (e) => {
-        setType(e.target.value)
-    }
     const applyHandler = async (e) => {
         e.preventDefault()
         if (type !== null && email !== '') {
@@ -67,27 +64,40 @@ export default function AdminUpdateDetailsPage() {
             /> :
             res ?
 
-                <div>
+                <div className='report'>
                     <Navigation/>
-                    <h5>Update User Details Page For:</h5>
-                    <p>{res.email}</p>
+                    <div className='update-user-header'>
+                        <h5 className='update-user-header__text'>Update User Details For:</h5>
+                        <p className='update-user-header__text'>{res.email}</p>
+                    </div>
                     <form onSubmit={applyHandler} className='edit-user-form'>
-                        <p className='edit-user-form_email'>Email:</p>
+                        {/* <p className='edit-user-form_email'>Email:</p>
                         <input className='edit-user-form_input' value={email} onChange={(e) => { setEmail(e.target.value) }}></input>
                         <p className='edit-user-form_email'>Password:</p>
-                        <input className='edit-user-form_input' type='password' value={newPassword} onChange={(e) => { setNewPassword(e.target.value) }} placeholder='Edit Password'></input>
-                        <div className='radio-buttons' onChange={onChangeValue}>
-                            <p>User Type:</p>
-                            <div className='type-radio'>
-                                <input className='type-input' type="radio" value="Admin" name="type" />
-                                <p className='type-radio_text'>Admin</p>
-                            </div>
-                            <div className='type-radio'>
-                                <input className='type-input' type="radio" value="Tech" name="type" />
-                                <p className='type-radio_text'>Tech</p>
+                        <input className='edit-user-form_input' type='password' value={newPassword} onChange={(e) => { setNewPassword(e.target.value) }} placeholder='Edit Password'></input> */}
+                        <div className='user-input'>
+                            <label htmlFor="email" >Update Email:</label>
+                            <input className='input' type="email" value={email} onChange={e => setEmail(e.target.value)}/>
+                        </div>
+                        <div className='user-input'>
+                            <label htmlFor="password">Update Password:</label>
+                            <input className='input' type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)} placeholder="Edit Password" />
+                        </div>
+                        <p className='radio-buttons-title'>User Type:</p>
+                        <div className='radio-buttons' onChange={e => setType(e.target.value)}>
+
+                            <div className='radio-selectios'>
+                                <div className='type-radio'>
+                                    <input className='type-input' type="radio" value="Admin" name="type" />
+                                    <p className='type-radio_text'>Admin</p>
+                                </div>
+                                <div className='type-radio'>
+                                    <input className='type-input' type="radio" value="Tech" name="type" />
+                                    <p className='type-radio_text'>Tech</p>
+                                </div>
                             </div>
                         </div>
-                        <Button>Apply Changes</Button>
+                        <Button type="submit">Apply Changes</Button>
                     </form>
                 </div>
                 : ""

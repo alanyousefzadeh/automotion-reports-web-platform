@@ -72,7 +72,7 @@ export default function AdminDeletePage() {
                 body={"User(s) Deleted"}
             /> :
             res ?
-                <div>
+                <div className='report'>
                     <Navigation />
                     <ul>
                         {
