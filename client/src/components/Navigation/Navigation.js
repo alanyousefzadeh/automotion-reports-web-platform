@@ -38,9 +38,9 @@ export default function Navigation() {
         <li>
           <button className="nav__button" onClick={handleLogout}>Logout</button>
         </li>
-        {/* <li>
+        <li>
           <button className="nav__button" onClick={adminRoute}>Admin</button>
-        </li> */}
+        </li>
       </ul>
     </nav>
   );

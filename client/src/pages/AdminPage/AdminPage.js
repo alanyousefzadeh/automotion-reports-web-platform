@@ -84,7 +84,7 @@ export default function AdminPage() {
                 <div className='new-user-page'>
                     <Navigation />
                     <form className='new-user-form' onSubmit={handleSubmit}>
-                        <h6>AdminPage</h6>
+                        <h6 className='new-user-form__header'>Create New User</h6>
                         <div className='user-input'>
                             <label htmlFor="UserID">UserID:</label>
                             <input className='input' type="text" value={form.userID} onChange={e => setField('userID', e.target.value)} name="userID" />
