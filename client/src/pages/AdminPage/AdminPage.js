@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import './AdminPage.scss'
+import { v4 as uuid } from 'uuid';
 import { getAuth, createUserWithEmailAndPassword, FacebookAuthProvider } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import AdminModal from '../../components/AdminModal/AdminModal'
@@ -12,7 +13,6 @@ export default function AdminPage() {
     const [form, setForm] = useState({
         name: '',
         email: '',
-        userID: '',
         type: '',
         password: '',
         confirm: ''
@@ -42,17 +42,18 @@ export default function AdminPage() {
     const handleSubmit = async e => {
         e.preventDefault();
 
+        const unique_id = uuid();
+
         //if all fields are filled, create the user
-        if (form.userID !== '' && form.name !== '' && form.email !== '' && form.password !== '' && form.type !== '' && form.confirm !== '') {
+        if (form.name !== '' && form.email !== '' && form.password !== '' && form.type !== '' && form.confirm !== '') {
             
             //function to add user to authenticated Firebase DB
             await createUserWithEmailAndPassword(detachedAuth, form.email, form.password)
 
             //function to add user to Firebase real-time database
-            writeUserData(form.userID, form.name, form.email, form.type)
+            writeUserData(unique_id, form.name, form.email, form.type)
 
             setForm({
-                userID: '',
                 name: '',
                 email: '',
                 type: '',
@@ -85,10 +86,6 @@ export default function AdminPage() {
                     <Navigation />
                     <form className='new-user-form' onSubmit={handleSubmit}>
                         <h6 className='new-user-form__header'>Create New User</h6>
-                        <div className='user-input'>
-                            <label htmlFor="UserID">UserID:</label>
-                            <input className='input' type="text" value={form.userID} onChange={e => setField('userID', e.target.value)} name="userID" />
-                        </div>
                         <div className='user-input'>
                             <label htmlFor="fname">Name:</label>
                             <input className='input' type="text" placeholder='First Last' value={form.name} onChange={e => setField('name', e.target.value)} name="fname" />

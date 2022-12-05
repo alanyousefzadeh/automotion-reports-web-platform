@@ -59,8 +59,7 @@ function Login() {
                 
                 //server side login/JWT
                 await axios.post(
-                    //"https://automotion-heroku-server.herokuapp.com/login",
-                    "http://localhost:8080/login",
+                    "https://automotion-heroku-server.herokuapp.com/login",
                 {
                     email: form.email
                 })
