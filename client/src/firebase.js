@@ -24,6 +24,7 @@ function writeUserData(userId, name, email, type) {
     email: email,
     type: type
   })
+  console.log("user created")
 }
 
 //function to remove user from real-time database
@@ -31,6 +32,7 @@ function removeUserData(emailList) {
   const dbRef = ref(getDatabase());
   get(child(dbRef, `users/`)).then((snapshot) => {
     snapshot.forEach((child) => {
+      console.log("line 35", child)
       if (emailList.includes(child.val().email)) {
         const db = getDatabase();
         const reference = ref(db, 'users/' + child.ref._path.pieces_[1])

@@ -42,7 +42,7 @@ export default function AdminPage() {
     const handleSubmit = async e => {
         e.preventDefault();
 
-        const unique_id = uuid();
+        let unique_id; //uuid();
 
         //if all fields are filled, create the user
         if (form.name !== '' && form.email !== '' && form.password !== '' && form.type !== '' && form.confirm !== '') {
@@ -51,6 +51,7 @@ export default function AdminPage() {
             await createUserWithEmailAndPassword(detachedAuth, form.email, form.password)
 
             //function to add user to Firebase real-time database
+            unique_id = form.email.split('@')[0]
             writeUserData(unique_id, form.name, form.email, form.type)
 
             setForm({
