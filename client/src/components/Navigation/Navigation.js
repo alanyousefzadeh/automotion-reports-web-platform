@@ -32,15 +32,19 @@ export default function Navigation() {
   return (
     <nav>
       <ul className="navigation">
-        <li>
-          <button className="nav__button" onClick={redirect}>Home</button>
-        </li>
-        <li>
-          <button className="nav__button" onClick={handleLogout}>Logout</button>
-        </li>
-        <li>
-          <button className="nav__button" onClick={adminRoute}>Admin</button>
-        </li>
+        <div className="navigation__left">
+          <li>
+            <button className="nav__button" onClick={redirect}>Home</button>
+          </li>
+          <li>
+            <button className="nav__button" onClick={handleLogout}>Logout</button>
+          </li>
+        </div>
+        <div className="navigation__right">
+          <li>
+            <button className="nav__button" onClick={adminRoute}>Admin</button>
+          </li>
+        </div>
       </ul>
     </nav>
   );
