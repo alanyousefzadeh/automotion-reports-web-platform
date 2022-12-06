@@ -24,7 +24,7 @@ function AdminSelectPage() {
         <>
             <Navigation />
             <div className="cards d-flex justify-content-center">
-            <p>admin selections</p>
+            <p>Admin Selections</p>
                 {
                     tasks.map((task) => (
                         <AdminCard

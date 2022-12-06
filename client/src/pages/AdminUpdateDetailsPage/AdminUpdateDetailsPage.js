@@ -71,10 +71,7 @@ export default function AdminUpdateDetailsPage() {
                         <p className='update-user-header__text'>{res.email}</p>
                     </div>
                     <form onSubmit={applyHandler} className='edit-user-form'>
-                        {/* <p className='edit-user-form_email'>Email:</p>
-                        <input className='edit-user-form_input' value={email} onChange={(e) => { setEmail(e.target.value) }}></input>
-                        <p className='edit-user-form_email'>Password:</p>
-                        <input className='edit-user-form_input' type='password' value={newPassword} onChange={(e) => { setNewPassword(e.target.value) }} placeholder='Edit Password'></input> */}
+                       
                         <div className='user-input'>
                             <label htmlFor="email" >Update Email:</label>
                             <input className='input' type="email" value={email} onChange={e => setEmail(e.target.value)}/>
