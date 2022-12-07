@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import Form from 'react-bootstrap/Form';
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import Button from "react-bootstrap/esm/Button";
 import {UserAuth} from "../Context/AuthContext";
 import loginLogo from '../../assets/loginLogo.png'
@@ -78,7 +79,6 @@ function Login() {
         }
     }
 
-
     const findFormErrors = () => {
         const { email, password} = form
         const newErrors = {}
@@ -90,13 +90,44 @@ function Login() {
 
         return newErrors
     }
+
+    const findNoEmailProvidedError = () => {
+        const { email } = form
+        const newErrors = {}
+        // email errors: null, blank, or invalid email format
+        let emailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if ( !email || email === '' || !email.match(emailformat) ) newErrors.email = 'please provide a valid email address'
+
+        return newErrors
+    }
+
+    const sendPasswordReset = (e) => {
+        e.preventDefault()
+        // get our new errors
+        const newErrors = findNoEmailProvidedError()
+        // Conditional logic:
+        if (Object.keys(newErrors).length > 0) {
+            // We got errors!
+            setErrors(newErrors)
+        }else{
+        const auth = getAuth();
+        sendPasswordResetEmail(auth, form.email)
+          .then(() => {
+            alert("Reset Email Sent")
+          })
+          .catch((error) => {
+            alert(error.message)
+          });
+        }
+    }
+
     return (
         
         waitingForToken === true ? <LoadingSpinner/> 
         : 
         <div className="login">
         <img className="logo" src={loginLogo}/>
-        <Form className='my-5 mx-auto' style={{width: 300}}  noValidate onSubmit={handleSubmit}>
+        <Form className='my-2 mx-auto' style={{width: 300}}  noValidate onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email Address</Form.Label>
                 <Form.Control type="email" placeholder="Enter email" onChange={ e => setField('email', e.target.value) } isInvalid={ !!errors.email } />
@@ -116,6 +147,9 @@ function Login() {
                 Log In
             </Button>
       </Form>
+      <Button onClick={sendPasswordReset} style={{width:300}} variant="secondary" type="forgotPassword">
+                Forgot Password
+            </Button>
     </div>
     );
 }
