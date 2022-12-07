@@ -103,7 +103,7 @@ function App() {
               }
             />
             
-            {/* list of available reports for each garage */}
+            {/* list of available reports for each automated garage */}
             <Route
               path="/reportSelect/:garageName"
               element={

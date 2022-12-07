@@ -32,7 +32,6 @@ function removeUserData(emailList) {
   const dbRef = ref(getDatabase());
   get(child(dbRef, `users/`)).then((snapshot) => {
     snapshot.forEach((child) => {
-      console.log("line 35", child)
       if (emailList.includes(child.val().email)) {
         const db = getDatabase();
         const reference = ref(db, 'users/' + child.ref._path.pieces_[1])
@@ -44,7 +43,6 @@ function removeUserData(emailList) {
 
 //function to modify user in the real-time database
 function UpdateUserData(updatedUser) {
-  console.log(updatedUser)
   const dbRef = ref(getDatabase());
   get(child(dbRef, `users/`)).then((snapshot) => {
     snapshot.forEach((child) => {
@@ -67,12 +65,7 @@ async function isUserTech(currentAuthUserEmail, setIsTech){
   let isTech = null
   await get(child(dbRef, `users/`)).then((snapshot) => {
     snapshot.forEach((child) => {
-      console.log(child)  
-      console.log(child.val().email)
-      console.log(child.val().type)
-      console.log(currentAuthUserEmail)
       if ((child.val().email) === currentAuthUserEmail) {
-        console.log("matched")
         if(child.val().type === 'Tech'){
           setIsTech(true)
         }else{

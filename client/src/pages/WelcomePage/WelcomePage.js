@@ -48,12 +48,10 @@ function WelcomePage() {
   const [currUser, setCurrUser] = useState(null);
   const [failedAuth, setFailedAuth] = useState(false);
 
-
   return (
     <>
     <Navigation/>
     <div className="cards d-flex justify-content-center">
-      
       {data.map((garage) => (
         <GarageCard
           key={garage.id}

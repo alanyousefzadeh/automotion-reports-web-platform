@@ -45,7 +45,11 @@ export default function AdminPage() {
         let unique_id = uuid();
 
         //if all fields are filled, create the user
-        if (form.name !== '' && form.email !== '' && form.password !== '' && form.type !== '' && form.confirm !== '') {
+        if (form.name !== '' && form.email !== ''
+         && form.password !== '' 
+         && form.type !== '' 
+         && form.confirm !== ''
+         ) {
             
             //function to add user to authenticated Firebase DB
             await createUserWithEmailAndPassword(detachedAuth, form.email, form.password)
@@ -67,8 +71,6 @@ export default function AdminPage() {
             alert("passwords must match")
             //window.location.reload()
         }
-
-
     }
 
     const setField = (field, value) => {
