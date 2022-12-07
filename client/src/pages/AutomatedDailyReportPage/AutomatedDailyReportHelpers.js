@@ -8,7 +8,6 @@ const automatedGarageAPI = async (garageName, automatedSetFailedtoLoad, setErr, 
   try {
     const promise = await axios.get(
       process.env.REACT_APP_TRANSACTIONS_URL,
-      //"http://localhost:8080/garagedata/transactions",
       {
         params: {
           inDate: formattedDate,
