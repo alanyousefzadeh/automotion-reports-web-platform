@@ -6,6 +6,7 @@ import { UpdateUserData } from '../../firebase'
 import AdminModal from '../../components/AdminModal/AdminModal'
 import Button from "react-bootstrap/Button";
 import Navigation from '../../components/Navigation/Navigation';
+
 export default function AdminUpdateDetailsPage() {
     const [res, setRes] = useState(null)
     const [type, setType] = useState(null)
@@ -23,7 +24,7 @@ export default function AdminUpdateDetailsPage() {
 
     useEffect(() => {
         axios.
-            post("http://localhost:8080/admin/userDetails", {
+            post(process.env.REACT_APP_ADMIN_USER_DETAILS_URL, {
                 userId
             })
             .then(response => {
@@ -37,7 +38,7 @@ export default function AdminUpdateDetailsPage() {
         if (type !== null && email !== '') {
             //update email and type in firebase real-time DB
             await axios
-                .post("http://localhost:8080/admin/update", {
+                .post(process.env.REACT_APP_ADMIN_UPDATE_URL, {
                     userId,
                     email,
                     newPassword

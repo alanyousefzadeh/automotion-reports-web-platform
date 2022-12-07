@@ -18,7 +18,7 @@ export default function AdminDeletePage() {
 
     useEffect(() => {
         axios.
-            get("http://localhost:8080/admin/list")
+            get(process.env.REACT_APP_ADMIN_LIST_URL)
             .then(response => {
                 console.log(response.data)
                 setRes(response.data)
@@ -56,7 +56,7 @@ export default function AdminDeletePage() {
 
     const applyHandler = async () => {
         await axios
-        .post("http://localhost:8080/admin/delete", {
+        .post(process.env.REACT_APP_ADMIN_DELETE_URL, {
             IdsOfCheckedEmails
         })
         console.log("test3")

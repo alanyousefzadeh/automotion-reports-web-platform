@@ -9,7 +9,7 @@ export default function AdminUpdatePage() {
     const [res, setRes] = useState(null)
     useEffect(() => {
         axios.
-            get("http://localhost:8080/admin/list")
+            get(process.env.REACT_APP_ADMIN_LIST_URL)
             .then(response => {
                 console.log(response.data)
                 setRes(response.data)

@@ -86,7 +86,7 @@ function Login() {
         let emailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         if ( !email || email === '' || !email.match(emailformat) ) newErrors.email = 'please provide a valid email address'
         //password errors
-        if ( !password || password === '' ) newErrors.password = 'please provide a password'
+        if ( !password || password === '' ) newErrors.password = 'Please provide a password'
 
         return newErrors
     }
@@ -96,7 +96,7 @@ function Login() {
         const newErrors = {}
         // email errors: null, blank, or invalid email format
         let emailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        if ( !email || email === '' || !email.match(emailformat) ) newErrors.email = 'please provide a valid email address'
+        if ( !email || email === '' || !email.match(emailformat) ) newErrors.email = 'Please provide a valid user email address'
 
         return newErrors
     }
