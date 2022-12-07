@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import './AdminModal.scss'
 
-function Example(props) {
+function AdminModal(props) {
  
     const {show, handleClose, body } = props
   return (
@@ -25,4 +25,4 @@ function Example(props) {
   );
 }
 
-export default Example
+export default AdminModal;

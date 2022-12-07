@@ -20,8 +20,10 @@ import AdminSelectPage from "./pages/AdminSelectPage/AdminSelectPage";
 import AdminDeletePage from "./pages/AdminDeletePage/AdminDeletePage";
 import AdminUpdatePage from "./pages/AdminUpdatePage/AdminUpdatePage";
 import AdminUpdateDetailsPage from "./pages/AdminUpdateDetailsPage/AdminUpdateDetailsPage";
+import UnauthorizedPage from "./pages/UnauthorizedPage/UnauthorizedPage";
 
 function App() {
+
   return (
     <div className="App">
       <div className="App">
@@ -31,6 +33,7 @@ function App() {
 
             {/* login page */}
             <Route path="/login" element={<LoginPage />} />
+            <Route path='unauthorized' element={<UnauthorizedPage/>}/>
             
             {/* list of garages to select*/}
             <Route

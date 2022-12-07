@@ -62,7 +62,28 @@ function UpdateUserData(updatedUser) {
   });
 }
 
+async function isUserTech(currentAuthUserEmail, setIsTech){
+  const dbRef = ref(getDatabase());
+  let isTech = null
+  await get(child(dbRef, `users/`)).then((snapshot) => {
+    snapshot.forEach((child) => {
+      console.log(child)  
+      console.log(child.val().email)
+      console.log(child.val().type)
+      console.log(currentAuthUserEmail)
+      if ((child.val().email) === currentAuthUserEmail) {
+        console.log("matched")
+        if(child.val().type === 'Tech'){
+          setIsTech(true)
+        }else{
+          setIsTech(false)
+        }
+      }
+    })
+  });
+  return isTech
+}
 
-export { writeUserData, removeUserData, UpdateUserData }
+export { writeUserData, removeUserData, UpdateUserData, isUserTech}
 export const auth = getAuth(app)
 export default app
