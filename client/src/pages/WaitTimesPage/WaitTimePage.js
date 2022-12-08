@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./WaitTimePage.scss";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
 import DatePicker from "../../components/DatePicker/DatePicker";
@@ -110,7 +110,9 @@ function WaitTimePage() {
                       return (
                         <tr key={index}>
                           <td>
-                            {data.STOPAKey2}
+                            {/* //{data.STOPAKey2} */}
+                            <Link to={`/reportSelect/${garageName}/monthlies/carDetails/${data.STOPAKey2}`}>{data.STOPAKey2}</Link>
+
                           </td>
                           <td>
                             {new Date(

@@ -1,10 +1,17 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Table from "react-bootstrap/Table";
 import {Link} from 'react-router-dom'
 import './ActiveMonthlies.scss'
+
 export default function ActiveMonthlies(props) {
 
-  const {data, garage} = props  
+  const [showModal, setShowModal] = useState(false)
+  const {data, garage} = props 
+  
+  const modal = () => {
+    setShowModal(true)
+  }
+
   return (
     <div>
         <p>{garage} Active Monthlies: {data.length}</p>
