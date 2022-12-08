@@ -1,5 +1,6 @@
 import React from 'react'
 import Table from "react-bootstrap/Table";
+import {Link} from 'react-router-dom'
 import './ActiveMonthlies.scss'
 export default function ActiveMonthlies(props) {
 
@@ -25,7 +26,7 @@ export default function ActiveMonthlies(props) {
             return (
               <tr key={index} >
                 <td>{record.CustomerNumber}</td>
-                <td>{record.CustomerName}</td>
+                <td><Link to={`/reportSelect/${garage}/monthlies/carDetails/${record.CarBarCode}`}>{record.CustomerName}</Link></td>
                 <td>{record.CarBarCode}</td>
                 <td>{new Date(record.ContractStartDate).toLocaleString()}</td>
                 <td>{new Date(record.ContractEndDate).toLocaleString()}</td>

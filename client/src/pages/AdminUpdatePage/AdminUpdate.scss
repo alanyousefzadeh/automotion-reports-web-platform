@@ -1,16 +1,13 @@
 .edit-user{
     display: flex;
     margin-bottom: 4px;
-    padding: 0;
-
+    padding-bottom: 4px;
+    border-bottom: 2px solid lightgray;
+    align-items: center;
     &_button{
-        border: 1px solid black !important;
-        border-radius: 4px !important;
-        margin-right: 4px !important;
-        padding: 0 4px 0 4px !important;
-        font-size: small !important;
-
+        margin-right: 0.5rem;
     }
+
     &_email{
         margin: 0;
     }
@@ -24,6 +21,7 @@
 .admin-update-list{
     padding: 0;
     margin-left: 0.5rem;
+    margin-right: 0.5rem;
     margin-top: 1.5rem;
     display: flex;
     flex-direction: column;

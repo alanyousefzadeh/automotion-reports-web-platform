@@ -21,6 +21,7 @@ import AdminDeletePage from "./pages/AdminDeletePage/AdminDeletePage";
 import AdminUpdatePage from "./pages/AdminUpdatePage/AdminUpdatePage";
 import AdminUpdateDetailsPage from "./pages/AdminUpdateDetailsPage/AdminUpdateDetailsPage";
 import UnauthorizedPage from "./pages/UnauthorizedPage/UnauthorizedPage";
+import CarDetailsPage from "./pages/CarDetailsPage/CarDetailsPage";
 
 function App() {
 
@@ -232,6 +233,16 @@ function App() {
                 <ProtectedRoute>
                   <MonthliesPage
                   //email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/reportSelect/:garageName/monthlies/carDetails/:carId"
+              element={
+                <ProtectedRoute>
+                  <CarDetailsPage
                   />
                 </ProtectedRoute>
               }
