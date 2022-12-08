@@ -4,7 +4,6 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 
-
 const loginRoute = require('./routes/loginRoute');
 const garageRoute = require('./routes/garageRoute');
 const emailRoute = require('./routes/emailRoute');
@@ -16,6 +15,7 @@ const filterByRateRoute = require('./routes/filterByRateRoute')
 const monthliesRoute = require('./routes/monthliesRoute')
 const adminRoute = require('./routes/adminRoute')
 const wakeUpRoute = require('./routes/wakeUpRoute')
+const carDetailsRoute = require('./routes/carDetailsRoute')
 
 const port = process.env.PORT || 8080;
 
@@ -35,7 +35,8 @@ app.use('/schemehorn', schemehornAPIRoute)
 app.use('/filterByRate', filterByRateRoute)
 app.use('/monthlies', monthliesRoute)
 app.use('/admin', adminRoute)
-
+app.use('/carDetails', carDetailsRoute)
+          
 //port listener
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
