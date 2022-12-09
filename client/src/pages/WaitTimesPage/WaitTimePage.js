@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./WaitTimePage.scss";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useSearchParams  } from "react-router-dom";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
 import DatePicker from "../../components/DatePicker/DatePicker";
@@ -20,6 +20,11 @@ function WaitTimePage() {
   const [isLoading, setIsLoading] = useState(null);
 
   const { garageName } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const updateInDate = (inDate) => {
+    setSearchParams({ inDate })
+  }
    
   async function fetchData() {
     let response = [];
@@ -71,7 +76,7 @@ function WaitTimePage() {
           <Navigation />
           <p className="heading">{garageName} Garage Wait Times Report</p>
           <div className="wait-times-pickers">
-            <DatePicker label={"In-Date 12:00AM"} setDate={setIndate} />
+            <DatePicker label={"In-Date 12:00AM"} setDate={updateInDate} />
             <DatePicker label={"Out-Date 11:59PM"} setDate={setOutDate} />
             <div className="selectors">
               <TypePicker label={"Type"} type={type} setType={setType} />
