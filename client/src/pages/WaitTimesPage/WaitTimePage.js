@@ -15,6 +15,7 @@ function WaitTimePage() {
   const [waitTimeData, setWaitTimeData] = useState(null);
   const [inDate, setIndate] = useState(null);
   const [outDate, setOutDate] = useState(null);
+  const [form, setForm] = useState({})
   const [type, setType] = useState("M");
   const [num, setNum] = useState("");
   const [isLoading, setIsLoading] = useState(null);
@@ -23,9 +24,16 @@ function WaitTimePage() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const updateInDate = (inDate) => {
-    setSearchParams({ inDate })
+    setForm({...form, inDate})
+    setSearchParams({ ...form, inDate })
   }
-   
+
+  const updateOutDate = (outDate) => {
+    setForm({...form, outDate})
+    setSearchParams({ ...form, outDate })
+  }
+
+
   async function fetchData() {
     let response = [];
     if (inDate !== null && outDate !== null) {
@@ -76,7 +84,7 @@ function WaitTimePage() {
           <Navigation />
           <p className="heading">{garageName} Garage Wait Times Report</p>
           <div className="wait-times-pickers">
-            <DatePicker label={"In-Date 12:00AM"} setDate={updateInDate} />
+            <DatePicker label={"In-Date 12:00AM"} setDate={setIndate} />
             <DatePicker label={"Out-Date 11:59PM"} setDate={setOutDate} />
             <div className="selectors">
               <TypePicker label={"Type"} type={type} setType={setType} />
