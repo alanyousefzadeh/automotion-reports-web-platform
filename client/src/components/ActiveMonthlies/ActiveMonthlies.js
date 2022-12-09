@@ -7,10 +7,6 @@ export default function ActiveMonthlies(props) {
 
   const [showModal, setShowModal] = useState(false)
   const {data, garage} = props 
-  
-  const modal = () => {
-    setShowModal(true)
-  }
 
   return (
     <div>

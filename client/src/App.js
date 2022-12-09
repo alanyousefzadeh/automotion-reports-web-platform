@@ -194,7 +194,7 @@ function App() {
             
             {/* All automated Garages wait-times report */}
             <Route
-              path="/reportSelect/:garageName/wait"
+              path='/reportSelect/:garageName/wait'
               element={
                 <ProtectedRoute>
                   <WaitTimePage
@@ -203,6 +203,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
+
             
             {/* All automated Garages open-tickets report */}
             <Route

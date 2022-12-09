@@ -20,7 +20,7 @@ function WaitTimePage() {
   const [isLoading, setIsLoading] = useState(null);
 
   const { garageName } = useParams();
-
+   
   async function fetchData() {
     let response = [];
     if (inDate !== null && outDate !== null) {
@@ -47,6 +47,7 @@ function WaitTimePage() {
       setWaitTimeData(response.data);
     }
   }
+
   function style(wait) {
     let style = "";
     if (wait < 6) {
@@ -110,9 +111,7 @@ function WaitTimePage() {
                       return (
                         <tr key={index}>
                           <td>
-                            {/* //{data.STOPAKey2} */}
                             <Link to={`/reportSelect/${garageName}/monthlies/carDetails/${data.STOPAKey2}`}>{data.STOPAKey2}</Link>
-
                           </td>
                           <td>
                             {new Date(
