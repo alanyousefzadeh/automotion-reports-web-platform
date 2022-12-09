@@ -20,7 +20,10 @@ function Login() {
     //wake-up Heroku "cold server" and minimize login wait times
     useEffect(() => {
         axios
-            .get(process.env.REACT_APP_WAKE_UP_URL)
+            .get(
+                process.env.REACT_APP_WAKE_UP_URL
+                //"https://localhost:8080/wake-up"
+                )
             .then((res)=>{
                 console.log(res.status)
             })
@@ -61,6 +64,8 @@ function Login() {
                 //server side login/JWT
                 await axios.post(
                     "https://automotion-heroku-server.herokuapp.com/login",
+                    //"http://localhost:8080/login",
+
                 {
                     email: form.email
                 })
