@@ -12,7 +12,9 @@ export default function CarDetailsPage() {
 
     useEffect(() => {
         axios.
-            get('http://localhost:8080/carDetails',
+            get(
+                //'http://localhost:8080/carDetails',
+                'https://automotion-heroku-server/carDetails',
                 {
                     params: {
                         carId,

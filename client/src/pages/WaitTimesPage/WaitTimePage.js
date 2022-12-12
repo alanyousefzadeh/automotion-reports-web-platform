@@ -62,6 +62,11 @@ function WaitTimePage() {
     if(data){
 		  setWaitTimeData(data);
     }
+
+    else if(inDate){
+      fetchData()
+    }
+
   }, [])
 
   
