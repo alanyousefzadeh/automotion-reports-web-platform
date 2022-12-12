@@ -31,6 +31,7 @@ export default function Monthlies() {
           }
         });
       setMonthliesData(res.data);
+      localStorage.setItem('monthliesData', JSON.stringify(res.data))
       setIsLoading(false);
     } catch (err) {
       console.log(err)
@@ -38,7 +39,13 @@ export default function Monthlies() {
   }
 
   useEffect(() => {
-    fetchMonthliesData();
+    const data = JSON.parse(localStorage.getItem('monthliesData'))
+  
+    if(data){
+		  setMonthliesData(data);
+    }else{
+      fetchMonthliesData();
+    }
   }, []);
 
   return (

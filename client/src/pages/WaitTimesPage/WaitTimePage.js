@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./WaitTimePage.scss";
-import { Link, useParams, useSearchParams  } from "react-router-dom";
+import { Link, useParams, useSearchParams, useLocation } from "react-router-dom";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
 import DatePicker from "../../components/DatePicker/DatePicker";
@@ -15,7 +15,7 @@ function WaitTimePage() {
   const [waitTimeData, setWaitTimeData] = useState(null);
   const [inDate, setIndate] = useState(null);
   const [outDate, setOutDate] = useState(null);
-  const [form, setForm] = useState({})
+  // const [form, setForm] = useState({})
   const [type, setType] = useState("M");
   const [num, setNum] = useState("");
   const [isLoading, setIsLoading] = useState(null);
@@ -23,18 +23,10 @@ function WaitTimePage() {
   const { garageName } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const updateInDate = (inDate) => {
-    setForm({...form, inDate})
-    setSearchParams({ ...form, inDate })
-  }
-
-  const updateOutDate = (outDate) => {
-    setForm({...form, outDate})
-    setSearchParams({ ...form, outDate })
-  }
-
-
+  // const params = useSearchParams()
+  // console.log(params)
   async function fetchData() {
+    setSearchParams({inDate, outDate, type, num})
     let response = [];
     if (inDate !== null && outDate !== null) {
       const token = sessionStorage.getItem('token');
@@ -58,8 +50,21 @@ function WaitTimePage() {
       
       setIsLoading(false);
       setWaitTimeData(response.data);
+      localStorage.setItem('waitTimeData', JSON.stringify(response.data))
+      console.log("line 73")
     }
   }
+
+  useEffect(() => {
+    
+    const data = JSON.parse(localStorage.getItem('waitTimeData'))
+  
+    if(data){
+		  setWaitTimeData(data);
+    }
+  }, [])
+
+  
 
   function style(wait) {
     let style = "";
@@ -84,8 +89,8 @@ function WaitTimePage() {
           <Navigation />
           <p className="heading">{garageName} Garage Wait Times Report</p>
           <div className="wait-times-pickers">
-            <DatePicker label={"In-Date 12:00AM"} setDate={setIndate} />
-            <DatePicker label={"Out-Date 11:59PM"} setDate={setOutDate} />
+            <DatePicker value={inDate} label={"In-Date 12:00AM"} setDate={setIndate} />
+            <DatePicker value={outDate} label={"Out-Date 11:59PM"} setDate={setOutDate} />
             <div className="selectors">
               <TypePicker label={"Type"} type={type} setType={setType} />
               <TicketSelect label={"Ticket Number"} num={num} setNum={setNum} />
