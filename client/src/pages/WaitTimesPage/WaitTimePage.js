@@ -19,6 +19,7 @@ function WaitTimePage() {
   const [type, setType] = useState("M");
   const [num, setNum] = useState("");
   const [isLoading, setIsLoading] = useState(null);
+  const [linking, setLinking] = useState(false)
 
   const { garageName } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -26,50 +27,54 @@ function WaitTimePage() {
   // const params = useSearchParams()
   // console.log(params)
   async function fetchData() {
-    setSearchParams({inDate, outDate, type, num})
+    setSearchParams({ inDate, outDate, type, num })
     let response = [];
     if (inDate !== null && outDate !== null) {
       const token = sessionStorage.getItem('token');
-     
-        setIsLoading(true);
-        response = await axios.get(
-          process.env.REACT_APP_RETRIEVAL_TIME_URL,
-          {
-            params: {
-              garage: garageName,
-              inDate,
-              outDate,
-              type,
-              num,
-            },
 
-            headers: {
-              authorization: 'Bearer ' + token
-            }
-          });
-      
+      setIsLoading(true);
+      response = await axios.get(
+        process.env.REACT_APP_RETRIEVAL_TIME_URL,
+        {
+          params: {
+            garage: garageName,
+            inDate,
+            outDate,
+            type,
+            num,
+          },
+
+          headers: {
+            authorization: 'Bearer ' + token
+          }
+        });
+
       setIsLoading(false);
       setWaitTimeData(response.data);
+      type === 'M'? setLinking(true) : setLinking(false)
       localStorage.setItem('waitTimeData', JSON.stringify(response.data))
       console.log("line 73")
     }
   }
 
   useEffect(() => {
-    
+
     const data = JSON.parse(localStorage.getItem('waitTimeData'))
-  
-    if(data){
-		  setWaitTimeData(data);
+    const urlParams = new URLSearchParams(window.location.search);
+    const typeParam = urlParams.get('type');
+    typeParam === "M" ? setLinking(true) : setLinking(false)
+
+    if (data) {
+      setWaitTimeData(data);
     }
 
-    else if(inDate){
+    else if (inDate) {
       fetchData()
     }
 
   }, [])
 
-  
+
 
   function style(wait) {
     let style = "";
@@ -110,9 +115,9 @@ function WaitTimePage() {
           ) : (
             <div className="wait-table">
               <div className='rate-table-header'>
-                    <p className='rate-table-header__text'>{garageName} Wait Time Report</p>
-                    <p className='rate-table-header__text'><b>From: </b>{inDate} <b>To: </b>{outDate} </p>
-                </div>
+                <p className='rate-table-header__text'>{garageName} Wait Time Report</p>
+                <p className='rate-table-header__text'><b>From: </b>{inDate} <b>To: </b>{outDate} </p>
+              </div>
               <Table striped bordered className="table-sm table-font">
                 <thead>
                   <tr className="table-warning">
@@ -133,9 +138,14 @@ function WaitTimePage() {
 
                       return (
                         <tr key={index}>
-                          <td>
-                            <Link to={`/reportSelect/${garageName}/monthlies/carDetails/${data.STOPAKey2}`}>{data.STOPAKey2}</Link>
-                          </td>
+                          {linking === true ?
+                            <td>
+                              <Link to={`/reportSelect/${garageName}/monthlies/carDetails/${data.STOPAKey2}`}>{data.STOPAKey2}</Link>
+                            </td> :
+                            <td>
+                              {data.STOPAKey2}
+                            </td>
+                          }
                           <td>
                             {new Date(
                               data.InDateTime.slice(0, -1)
