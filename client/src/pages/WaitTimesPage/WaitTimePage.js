@@ -10,6 +10,7 @@ import { Button } from "react-bootstrap";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
 import Navigation from "../../components/Navigation/Navigation";
 import EmailFormDisplayToggler from "../../components/EmailFormToggler/EmailFormDisplayToggler";
+import { set } from "firebase/database";
 
 function WaitTimePage() {
   const [waitTimeData, setWaitTimeData] = useState(null);
@@ -60,16 +61,17 @@ function WaitTimePage() {
   useEffect(() => {
 
     const data = JSON.parse(sessionStorage.getItem('waitTimeData'))
-    const urlParams = new URLSearchParams(window.location.search);
-    const typeParam = urlParams.get('type');
+    const typeParam = searchParams.get('type');
+    
+    const inParam = searchParams.get('inDate');
+    const outParam = searchParams.get('outDate');
+    setIndate(inParam)
+    setOutDate(outParam)
+    
     typeParam === "M" ? setLinking(true) : setLinking(false)
 
     if (data) {
       setWaitTimeData(data);
-    }
-
-    else if (inDate) {
-      fetchData()
     }
 
   }, [])

@@ -46,11 +46,10 @@ export default function Monthlies() {
 
   }
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const typeParam = urlParams.get('type');
+  const typeParam = searchParams.get('type');
+  console.log(typeParam)
   useEffect(() => {
-    // const urlParams = new URLSearchParams(window.location.search);
-    // const typeParam = urlParams.get('type');
+  
     setType(typeParam)
     const data = JSON.parse(sessionStorage.getItem('monthliesData'))
   
