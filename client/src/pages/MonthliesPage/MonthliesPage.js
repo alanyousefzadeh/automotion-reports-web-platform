@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import axios from 'axios'
 import ActiveMonthlies from '../../components/ActiveMonthlies/ActiveMonthlies'
 import InActiveMonthlies from '../../components/InActiveMonthlies/InActiveMonthlies'
@@ -14,6 +14,8 @@ export default function Monthlies() {
   const [monthliesData, setMonthliesData] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [type, setType] = useState(null)
+  const [searchParams, setSearchParams] = useSearchParams();
+
 
   const { garageName } = useParams()
   async function fetchMonthliesData() {
@@ -38,7 +40,18 @@ export default function Monthlies() {
     }
   }
 
+  const typeHandler = (e) => {
+    setType(e.target.value)
+    setSearchParams({type: e.target.value})
+
+  }
+
   useEffect(() => {
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const typeParam = urlParams.get('type');
+    setType(typeParam)
+
     const data = JSON.parse(localStorage.getItem('monthliesData'))
   
     if(data){
@@ -56,7 +69,7 @@ export default function Monthlies() {
         isLoading ? <LoadingSpinner /> :
           <div className='report'>
             <p>Select a report from the dropdown menu</p>
-            <select name="reports" onChange={(e) => setType(e.target.value)}>
+            <select name="reports" onChange={(e) => typeHandler(e)}>
               <option value="Select">Select Report</option>
               <option value="Active">Active Monthlies</option>
               <option value="Inactive">Inactive Monthlies</option>
