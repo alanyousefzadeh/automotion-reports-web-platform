@@ -1,6 +1,9 @@
+import { Link } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
+
 function OverParkedTable(props){
-    const {overParkedData} = props
+    const {overParkedData, garageName} = props
+
     return (
 
         <Table striped bordered className='report table-sm'>
@@ -18,7 +21,8 @@ function OverParkedTable(props){
                 return(
                 <tr key={index}>
                     <th>{data.type}</th>
-                    <td>{data.STOPAKey2}</td>
+                    {/* <td>{data.STOPAKey2}</td> */}
+                    <td><Link to={`/reportSelect/${garageName}/daily/carDetails/${data.STOPAKey2}`}>{data.STOPAKey2}</Link></td>
                     <td>{new Date((data.InDateTime).slice(0,-1)).toLocaleString()}</td>
                     <td>{data.TotalDays}</td>
                 </tr>

@@ -14,7 +14,7 @@ export default function CarDetailsPage() {
         axios.
             get(
                 //'http://localhost:8080/carDetails',
-                'https://automotion-heroku-server/carDetails',
+                'https://automotion-heroku-server.herokuapp.com/carDetails',
                 {
                     params: {
                         carId,

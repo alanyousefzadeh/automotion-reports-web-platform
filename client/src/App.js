@@ -181,12 +181,21 @@ function App() {
             />
             
             {/* All automated Garages Daily report (24 hours) */}
-            <Route
+            <Route 
               path="/reportSelect/:garageName/daily"
               element={
                 <ProtectedRoute>
                   <AutomatedDailyReportPage 
                   //email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
+                  />
+                </ProtectedRoute>
+              }
+            />
+             <Route 
+              path="/reportSelect/:garageName/daily/carDetails/:carId"
+              element={
+                <ProtectedRoute>
+                  <CarDetailsPage
                   />
                 </ProtectedRoute>
               }

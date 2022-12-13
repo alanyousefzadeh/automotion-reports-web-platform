@@ -115,7 +115,7 @@ function AutomatedDailyReportPage() {
       {response ? (
         <>
           <RateTable garageName={garageName} rateData={response.rateTable} />
-          <OverParkedTable overParkedData={response.overParked} />
+          <OverParkedTable overParkedData={response.overParked} garageName={garageName} />
         </>
       ) : (
         ""
