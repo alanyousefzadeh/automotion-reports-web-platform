@@ -33,7 +33,7 @@ export default function Monthlies() {
           }
         });
       setMonthliesData(res.data);
-      localStorage.setItem('monthliesData', JSON.stringify(res.data))
+      sessionStorage.setItem('monthliesData', JSON.stringify(res.data))
       setIsLoading(false);
     } catch (err) {
       console.log(err)
@@ -46,20 +46,20 @@ export default function Monthlies() {
 
   }
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const typeParam = urlParams.get('type');
   useEffect(() => {
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const typeParam = urlParams.get('type');
+    // const urlParams = new URLSearchParams(window.location.search);
+    // const typeParam = urlParams.get('type');
     setType(typeParam)
-
-    const data = JSON.parse(localStorage.getItem('monthliesData'))
+    const data = JSON.parse(sessionStorage.getItem('monthliesData'))
   
     if(data){
 		  setMonthliesData(data);
     }else{
       fetchMonthliesData();
     }
-  }, []);
+  }, [typeParam]);
 
   return (
 

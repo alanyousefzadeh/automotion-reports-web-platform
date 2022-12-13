@@ -14,6 +14,7 @@ export default function Navigation() {
     
     try {
       sessionStorage.removeItem("token");
+      sessionStorage.removeItem("monthliesData")
       await logout();
       nav('/login');
       console.log('You are logged out')

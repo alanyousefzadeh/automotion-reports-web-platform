@@ -52,14 +52,14 @@ function WaitTimePage() {
       setIsLoading(false);
       setWaitTimeData(response.data);
       type === 'M'? setLinking(true) : setLinking(false)
-      localStorage.setItem('waitTimeData', JSON.stringify(response.data))
+      sessionStorage.setItem('waitTimeData', JSON.stringify(response.data))
       console.log("line 73")
     }
   }
 
   useEffect(() => {
 
-    const data = JSON.parse(localStorage.getItem('waitTimeData'))
+    const data = JSON.parse(sessionStorage.getItem('waitTimeData'))
     const urlParams = new URLSearchParams(window.location.search);
     const typeParam = urlParams.get('type');
     typeParam === "M" ? setLinking(true) : setLinking(false)
