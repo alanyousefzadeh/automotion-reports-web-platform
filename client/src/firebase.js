@@ -62,7 +62,7 @@ function UpdateUserData(updatedUser) {
 
 async function isUserTech(currentAuthUserEmail, setIsTech){
   const dbRef = ref(getDatabase());
-  let isTech = null
+  // let isTech = null
   await get(child(dbRef, `users/`)).then((snapshot) => {
     snapshot.forEach((child) => {
       if ((child.val().email) === currentAuthUserEmail) {
@@ -74,7 +74,7 @@ async function isUserTech(currentAuthUserEmail, setIsTech){
       }
     })
   });
-  return isTech
+  // return isTech
 }
 
 export { writeUserData, removeUserData, UpdateUserData, isUserTech}

@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom";
 import axios from 'axios'
 import './AdminUpdateDetailsPage.scss'
-import { UpdateUserData } from '../../firebase'
+import { UpdateUserData, isUserTech } from '../../firebase'
 import AdminModal from '../../components/AdminModal/AdminModal'
 import Button from "react-bootstrap/Button";
 import Navigation from '../../components/Navigation/Navigation';
+import LoadingSpinner from '../../components/LoadingWheel/LoadingWheel';
 
 export default function AdminUpdateDetailsPage() {
     const [res, setRes] = useState(null)
@@ -13,6 +14,8 @@ export default function AdminUpdateDetailsPage() {
     const [email, setEmail] = useState('')
     const [newPassword, setNewPassword] = useState('')
     const [show, setShow] = useState(false)
+    const [isTech, setIsTech] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
 
     const handleClose = () => {
         setShow(false)
@@ -23,6 +26,7 @@ export default function AdminUpdateDetailsPage() {
     const { userId } = useParams()
 
     useEffect(() => {
+        setIsLoading(true)
         axios.
             post(process.env.REACT_APP_ADMIN_USER_DETAILS_URL, {
                 userId
@@ -30,7 +34,13 @@ export default function AdminUpdateDetailsPage() {
             .then(response => {
                 setRes(response.data)
                 setEmail(response.data.email)
+                isUserTech(response.data.email, setIsTech)
+                .then(()=> {
+                    isTech ? setType("Tech") : setType("Admin")
+                    setIsLoading(false) 
+                })    
             })
+    
     }, [])
 
     const applyHandler = async (e) => {
@@ -63,13 +73,14 @@ export default function AdminUpdateDetailsPage() {
                 handleClose={handleClose}
                 body={"User Updated"}
             /> :
-            res ?
+            isLoading ? <LoadingSpinner/> :
 
                 <div className='report'>
                     <Navigation/>
                     <div className='update-user-header'>
                         <h5 className='update-user-header__text'>Update User Details For:</h5>
                         <p className='update-user-header__text'>{res.email}</p>
+                        <p>This user's current status: {isTech ? "Tech" : "Admin"}</p>
                     </div>
                     <form onSubmit={applyHandler} className='edit-user-form'>
                        
@@ -82,15 +93,15 @@ export default function AdminUpdateDetailsPage() {
                             <input className='input' type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)} placeholder="Edit Password" />
                         </div>
                         <p className='radio-buttons-title'>User Type:</p>
-                        <div className='radio-buttons' onChange={e => setType(e.target.value)}>
+                        <div className='radio-buttons'>
 
                             <div className='radio-selectios'>
                                 <div className='type-radio'>
-                                    <input className='type-input' type="radio" value="Admin" name="type" />
+                                    <input className='type-input' onChange={e => setType(e.target.value)} type="radio" value="Admin" name="type" />
                                     <p className='type-radio_text'>Admin</p>
                                 </div>
                                 <div className='type-radio'>
-                                    <input className='type-input' type="radio" value="Tech" name="type" />
+                                    <input className='type-input' onChange={e => setType(e.target.value)} type="radio" value="Tech" name="type" />
                                     <p className='type-radio_text'>Tech</p>
                                 </div>
                             </div>
@@ -98,7 +109,7 @@ export default function AdminUpdateDetailsPage() {
                         <Button type="submit">Apply Changes</Button>
                     </form>
                 </div>
-                : ""
+                
 
     )
 }

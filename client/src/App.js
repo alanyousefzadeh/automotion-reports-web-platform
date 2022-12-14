@@ -110,7 +110,6 @@ function App() {
               element={
                 <ProtectedRoute>
                   <ReportSelectPage 
-                  //email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
                   />
                 </ProtectedRoute>
               }
@@ -123,7 +122,6 @@ function App() {
               element={
                 <ProtectedRoute>
                   <SchemehornFilteredPage 
-                  //email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
                   />
                 </ProtectedRoute>
               }
@@ -136,7 +134,6 @@ function App() {
               element={
                 <ProtectedRoute>
                   <SchemehornDailyPage
-                  //email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
                   />
                 </ProtectedRoute>
               }
@@ -149,7 +146,6 @@ function App() {
               element={
                 <ProtectedRoute>
                   <AtlanticFilteredReportPage
-                  //email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
                   />
                 </ProtectedRoute>
               }
@@ -161,7 +157,6 @@ function App() {
               element={
                 <ProtectedRoute>
                   <AutomatedFilteredReportPage
-                  //email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
                   />
                 </ProtectedRoute>
               }
@@ -174,7 +169,6 @@ function App() {
               element={
                 <ProtectedRoute>
                   <AtlanticDailyReportPage
-                  //email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
                   />
                 </ProtectedRoute>
               }
@@ -186,7 +180,6 @@ function App() {
               element={
                 <ProtectedRoute>
                   <AutomatedDailyReportPage 
-                  //email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
                   />
                 </ProtectedRoute>
               }
@@ -207,7 +200,6 @@ function App() {
               element={
                 <ProtectedRoute>
                   <WaitTimePage
-                  //email={['shmuelw@automotionparking.com', 'alany@adgorg.com']}
                   />
                 </ProtectedRoute>
               }
@@ -220,7 +212,6 @@ function App() {
               element={
                 <ProtectedRoute>
                   <AtlanticOpenPage
-                  //email={['alany@adgorg.com']}
                   />
                 </ProtectedRoute>
               }

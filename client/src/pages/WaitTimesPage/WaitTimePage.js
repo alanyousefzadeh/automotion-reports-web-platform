@@ -53,21 +53,21 @@ function WaitTimePage() {
       setIsLoading(false);
       setWaitTimeData(response.data);
       type === 'M'? setLinking(true) : setLinking(false)
-      sessionStorage.setItem('waitTimeData', JSON.stringify(response.data))
+      sessionStorage.setItem(`${garageName}-waitTimeData`, JSON.stringify(response.data))
       console.log("line 73")
     }
   }
-
+  
   useEffect(() => {
 
-    const data = JSON.parse(sessionStorage.getItem('waitTimeData'))
+    const data = JSON.parse(sessionStorage.getItem(`${garageName}-waitTimeData`))
     const typeParam = searchParams.get('type');
-    
+
     const inParam = searchParams.get('inDate');
     const outParam = searchParams.get('outDate');
     setIndate(inParam)
     setOutDate(outParam)
-    
+
     typeParam === "M" ? setLinking(true) : setLinking(false)
 
     if (data) {

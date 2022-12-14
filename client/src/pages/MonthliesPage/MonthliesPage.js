@@ -33,7 +33,7 @@ export default function Monthlies() {
           }
         });
       setMonthliesData(res.data);
-      sessionStorage.setItem('monthliesData', JSON.stringify(res.data))
+      sessionStorage.setItem(`${garageName}-monthliesData`, JSON.stringify(res.data))
       setIsLoading(false);
     } catch (err) {
       console.log(err)
@@ -51,7 +51,7 @@ export default function Monthlies() {
   useEffect(() => {
   
     setType(typeParam)
-    const data = JSON.parse(sessionStorage.getItem('monthliesData'))
+    const data = JSON.parse(sessionStorage.getItem(`${garageName}-monthliesData`))
   
     if(data){
 		  setMonthliesData(data);

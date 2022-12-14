@@ -10,7 +10,7 @@ const ProtectedRoute = ({children})=> {
     const {user} = UserAuth();
     console.log(window.location.pathname)
     let path = (window.location.pathname)
-    const {garageName} = useParams()
+    const {garageName,carId} = useParams()
     
     let techAllowedRoutes = [
         '/welcome',
@@ -23,7 +23,8 @@ const ProtectedRoute = ({children})=> {
         `/reportSelect/${garageName}/Wait`,
         `/reportSelect/24th%20Street/Filter`, 
         `/reportSelect/24th%20Street/Monthlies`, 
-        `/reportSelect/24th%20Street/Wait`
+        `/reportSelect/24th%20Street/Wait`,
+        `/reportSelect/${garageName}/monthlies/carDetails/${carId}`
     ]
     //if no user is logged into Firebase, return to login page
     if(!user){
