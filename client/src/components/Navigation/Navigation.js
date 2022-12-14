@@ -10,16 +10,15 @@ import { isUserTech } from '../../firebase';
 export default function Navigation() {
   const [error, setError] = useState("")
   const [isTech, setIsTech] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
 
   const {user, logout} = UserAuth()
   const nav = useNavigate();
   
-  // useEffect(()=> {
-    //setIsLoading(true)
+  useEffect(()=> {
     isUserTech(user.email, setIsTech)
-  //   setIsLoading(false)
-  // })
+  },[])
+    
+ 
   const handleLogout = async () => {
     
     try {

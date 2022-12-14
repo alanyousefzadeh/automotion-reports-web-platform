@@ -59,18 +59,21 @@ function WelcomePage() {
     
     setTimeout(() => 
       setIsLoading(false)
-    , "500")
+    , "400")
   }
+
   useEffect(() => {
     checkUser()
   }, [])
 
   return (
     <>
-      <Navigation />
+      
       {isLoading ?
         <LoadingSpinner />
         :
+        <>
+        <Navigation />
         <div className="cards d-flex justify-content-center">
           {garages.map((garage) => (
             <div key={garage.id} className={(isTech && (garage.title === "Atlantic Terrace" || garage.title ==="Schemehorn")) ? 'hidden' : ""}>
@@ -82,6 +85,7 @@ function WelcomePage() {
             </div>
           ))}
         </div>
+        </>
       }
     </>
   );
