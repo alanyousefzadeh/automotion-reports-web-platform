@@ -10,11 +10,12 @@ export default function CarDetailsPage() {
     const [carData, setCarData] = useState(null)
     const { carId, garageName } = useParams()
 
+    const token = sessionStorage.getItem('token');
+
     useEffect(() => {
         axios.
             get(
-                //'http://localhost:8080/carDetails',
-                'https://automotion-heroku-server.herokuapp.com/carDetails',
+                process.env.REACT_APP_CAR_DETAILS_URL,
                 {
                     params: {
                         carId,
