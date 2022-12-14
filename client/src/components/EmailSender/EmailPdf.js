@@ -13,7 +13,7 @@ const base64Email = (from , to , body) => {
             return exportPDF(group);
         })
         .then((dataUri) => {
-            axios.post('http://localhost:8080/emailGenerator',{dataUri,
+            axios.post(process.env.REACT_APP_EMAIL,{dataUri,
                 from : from,
                 to:to,
                 body:body}).then(response => alert(response.data))
