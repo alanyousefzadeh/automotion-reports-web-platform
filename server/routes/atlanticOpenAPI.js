@@ -3,10 +3,9 @@ const atlanticOpenAPIController = require('../controllers/atlanticOpenAPIControl
 
 const authenticate = require('../middleware/authenticate');
 
-//router.use(authenticate);
 
 router
     .route('/')
-    .get(atlanticOpenAPIController.atlanticOpenAPI);
+    .get(authenticate, atlanticOpenAPIController.atlanticOpenAPI);
 
 module.exports = router;
