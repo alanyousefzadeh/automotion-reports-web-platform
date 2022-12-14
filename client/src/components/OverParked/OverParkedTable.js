@@ -21,7 +21,14 @@ function OverParkedTable(props){
                 return(
                 <tr key={index}>
                     <th>{data.type}</th>
-                    <td><Link to={`/reportSelect/${garageName}/daily/carDetails/${data.STOPAKey2}`}>{data.STOPAKey2}</Link></td>
+                    {
+                        data.type == 'T' ?
+                        <td>{data.STOPAKey2}</td>
+                        :
+                        <td><Link to={`/reportSelect/${garageName}/daily/carDetails/${data.STOPAKey2}`}>{data.STOPAKey2}</Link></td>
+
+                    }
+                    
                     <td>{new Date((data.InDateTime).slice(0,-1)).toLocaleString()}</td>
                     <td>{data.TotalDays}</td>
                 </tr>
