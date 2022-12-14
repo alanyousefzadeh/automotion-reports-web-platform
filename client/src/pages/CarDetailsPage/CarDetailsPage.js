@@ -20,9 +20,9 @@ export default function CarDetailsPage() {
                         carId,
                         garageName
                     },
-                    // headers: {
-                    //   authorization: 'Bearer ' + token
-                    // }
+                    headers: {
+                      authorization: 'Bearer ' + token
+                    }
 
                 }
             )
