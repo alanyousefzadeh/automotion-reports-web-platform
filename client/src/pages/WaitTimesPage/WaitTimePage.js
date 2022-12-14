@@ -54,7 +54,6 @@ function WaitTimePage() {
       setWaitTimeData(response.data);
       type === 'M'? setLinking(true) : setLinking(false)
       sessionStorage.setItem(`${garageName}-waitTimeData`, JSON.stringify(response.data))
-      console.log("line 73")
     }
   }
   
