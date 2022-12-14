@@ -1,15 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Navigation.scss";
 import {useState} from 'react'
 import { Navigate, useNavigate } from "react-router-dom";
 import { UserAuth } from '../Context/AuthContext';
 import {AuthContextProvider} from '../Context/AuthContext'
+import { isUserTech } from '../../firebase';
+
 
 export default function Navigation() {
   const [error, setError] = useState("")
+  const [isTech, setIsTech] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+
   const {user, logout} = UserAuth()
   const nav = useNavigate();
- 
+  
+  // useEffect(()=> {
+    //setIsLoading(true)
+    isUserTech(user.email, setIsTech)
+  //   setIsLoading(false)
+  // })
   const handleLogout = async () => {
     
     try {
@@ -42,7 +52,7 @@ export default function Navigation() {
           </li>
         </div>
         <div className="navigation__right">
-          <li>
+          <li className={isTech ? "hidden" : ""}>
             <button className="nav__button" onClick={adminRoute}>Admin</button>
           </li>
         </div>

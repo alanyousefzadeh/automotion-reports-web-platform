@@ -1,5 +1,5 @@
 import './WelcomePage.scss'
-import React, { useState} from "react";
+import React, { useState, useEffect } from "react";
 import GarageCard from "../../components/GarageCard/GarageCard";
 import baxter from "../../assets/baxter.png";
 import vanvorst from "../../assets/vanvorst.png";
@@ -8,31 +8,34 @@ import atlanticTerrace from "../../assets/atlanticTerrace.png";
 import street24 from '../../assets/street24.png';
 import schemehorn from "../../assets/schemehorn.png"
 import Navigation from '../../components/Navigation/Navigation'
+import { isUserTech } from '../../firebase';
+import { getAuth } from "firebase/auth";
+import LoadingSpinner from '../../components/LoadingWheel/LoadingWheel';
 
-const data = [
+const garages = [
   {
-    id: 4,
+    id: 1,
     title: "Atlantic Terrace",
     image: atlanticTerrace,
   },
   {
-    id: 1,
+    id: 2,
     title: "Baxter",
     image: baxter,
   },
   {
-    id: 5,
+    id: 3,
     title: "Schemehorn",
     image: schemehorn
   },
 
   {
-    id: 2,
+    id: 4,
     title: "VanVorst",
     image: vanvorst,
   },
   {
-    id: 3,
+    id: 5,
     title: "Waverly",
     image: waverly,
   },
@@ -44,23 +47,36 @@ const data = [
 ];
 
 function WelcomePage() {
-  
-  const [currUser, setCurrUser] = useState(null);
+
   const [failedAuth, setFailedAuth] = useState(false);
+  const [isTech, setIsTech] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  const auth = getAuth()
+  useEffect(() => {
+    setIsLoading(true)
+    isUserTech(auth.currentUser.email, setIsTech)
+    setIsLoading(false)
+  })
 
   return (
     <>
-    <Navigation/>
-    <div className="cards d-flex justify-content-center">
-      {data.map((garage) => (
-        <GarageCard
-          key={garage.id}
-          id={garage.id}
-          title={garage.title}
-          image={garage.image}
-        />
-      ))}
-    </div>
+      <Navigation />
+      {isLoading ?
+        <LoadingSpinner />
+        :
+        <div className="cards d-flex justify-content-center">
+          {garages.map((garage) => (
+            <div key={garage.id} className={(isTech && (garage.title === "Atlantic Terrace" || garage.title ==="Schemehorn")) ? 'hidden' : ""}>
+              <GarageCard
+                id={garage.id}
+                title={garage.title}
+                image={garage.image}
+              />
+            </div>
+          ))}
+        </div>
+      }
     </>
   );
 }
