@@ -11,6 +11,8 @@ import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
 import Navigation from "../../components/Navigation/Navigation";
 import EmailFormDisplayToggler from "../../components/EmailFormToggler/EmailFormDisplayToggler";
 import { set } from "firebase/database";
+import {pdfExport} from "../../components/EmailSender/EmailPdf";
+import {PDFExport} from "@progress/kendo-react-pdf";
 
 function WaitTimePage() {
   const [waitTimeData, setWaitTimeData] = useState(null);
@@ -21,7 +23,7 @@ function WaitTimePage() {
   const [num, setNum] = useState("");
   const [isLoading, setIsLoading] = useState(null);
   const [linking, setLinking] = useState(false)
-
+  const container = React.useRef(null);
   const { garageName } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -110,10 +112,13 @@ function WaitTimePage() {
               Generate Table
             </Button>
             <EmailFormDisplayToggler />
+            <Button onClick={() => pdfExport(container)}>PDF</Button>
           </div>
           {isLoading ? (
             <LoadingSpinner />
           ) : (
+              <div id="PDFExport">
+                <PDFExport  fileName={`Report for ${new Date().getFullYear()}`} forcePageBreak=".page-break" scale={0.68} paperSize="Letter" margin={{ top: 5, left: 5, right: 5, bottom: 5 }} ref={container}>
             <div className="wait-table">
               <div className='rate-table-header'>
                 <p className='rate-table-header__text'>{garageName} Wait Time Report</p>
@@ -170,6 +175,8 @@ function WaitTimePage() {
                 </tbody>
               </Table>
             </div>
+                </PDFExport>
+              </div>
           )}
         </div>
       )}

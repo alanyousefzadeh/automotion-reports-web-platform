@@ -8,6 +8,9 @@ import SchemehornRevenueSummaryComponent from "../../components/SchemehornRevenu
 import SchemehornDiscountComponent from "../../components/SchemehornDiscountComponent/SchemehornDiscountComponent";
 import SchemehornTicketRangesComponent from "../../components/SchemehornTicketRangesComponent/SchemehornTicketRangesComponent";
 import SchemehornPaymentTypeComponent from "../../components/SchemehornPaymentTypeComponent/SchemehornPaymentTypeComponent";
+import EmailFormDisplayToggler from "../../components/EmailFormToggler/EmailFormDisplayToggler";
+import {pdfExport} from "../../components/EmailSender/EmailPdf";
+import {PDFExport} from "@progress/kendo-react-pdf";
 
 function SchemehornFilteredPage() {
   const [inDate, setInDate] = useState(null);
@@ -17,7 +20,7 @@ function SchemehornFilteredPage() {
   const [ticketRanges, setTicketRanges] = useState(null);
   const [paymentTypes, setPaymentTypes] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const container = React.useRef(null);
   const getSchemehornData = async () => {
 
     setLoading(true);
@@ -100,12 +103,17 @@ function SchemehornFilteredPage() {
       <Navigation />
       <DatePicker label={"In-Date 12:00AM"} setDate={setInDate} />
       <DatePicker label={"Out-Date 11:59PM"} setDate={setOutDate} />
+
       <Button className="button" onClick={getData}>
         Generate Report
       </Button>
+        <EmailFormDisplayToggler />
+        <Button onClick={() => pdfExport(container)}>PDF</Button>
       {loading ? (
         <LoadingSpinner />
       ) : (
+          <div id="PDFExport">
+              <PDFExport  fileName={`Report for ${new Date().getFullYear()}`} forcePageBreak=".page-break" scale={0.68} paperSize="Letter" margin={{ top: 5, left: 5, right: 5, bottom: 5 }} ref={container}>
         <>
           <SchemehornRevenueSummaryComponent
             inDate={inDate}
@@ -117,6 +125,8 @@ function SchemehornFilteredPage() {
           <SchemehornTicketRangesComponent ticketRanges={ticketRanges} />
           <SchemehornPaymentTypeComponent paymentTypes={paymentTypes} />
         </>
+           </PDFExport>
+          </div>
       )}
     </div>
   );

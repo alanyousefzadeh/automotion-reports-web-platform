@@ -10,6 +10,9 @@ import Navigation from '../../components/Navigation/Navigation';
 import NonRegularChargeTable from '../../components/NonRegularChargeTable/NonRegularChargeTable';
 import AllRateTable from '../../components/AllRateTable/AllRateTable';
 import RegularRateTable from '../../components/RegularRateTable/RegularRateTable';
+import EmailFormDisplayToggler from "../../components/EmailFormToggler/EmailFormDisplayToggler";
+import {pdfExport} from "../../components/EmailSender/EmailPdf";
+import {PDFExport} from "@progress/kendo-react-pdf";
 
 export default function AutomatedFilteredByRate() {
 
@@ -27,6 +30,7 @@ export default function AutomatedFilteredByRate() {
     const { garageName } = useParams()
     console.log(garageName)
 
+    const container = React.useRef(null);
     const clickHandler = async () => {
         if (rate && startDate && endDate) {
             const token = sessionStorage.getItem('token');
@@ -59,6 +63,10 @@ export default function AutomatedFilteredByRate() {
     return (
         <div className='report'>
             <Navigation />
+            <EmailFormDisplayToggler />
+            <Button onClick={() => pdfExport(container)}>PDF</Button>
+            <div id="PDFExport">
+            <PDFExport  fileName={`Report for ${new Date().getFullYear()}`} forcePageBreak=".page-break" scale={0.68} paperSize="Letter" margin={{ top: 5, left: 5, right: 5, bottom: 5 }} ref={container}>
             <div>
                 <p className='filter-by-rate__header'>{garageName} Filter By Rate Report</p>
             </div>
@@ -93,6 +101,8 @@ export default function AutomatedFilteredByRate() {
                 }
                 </>
             }
+            </PDFExport>
+            </div>
         </div>
     )
 }

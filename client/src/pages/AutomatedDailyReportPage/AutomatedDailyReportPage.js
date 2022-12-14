@@ -8,7 +8,10 @@ import "./AutomatedDailyReport.scss";
 import AutomatedDailyHeader from "../../components/AutomatedDailyHeader/AutomatedDailyHeader";
 import EmailFormDisplayToggler from "../../components/EmailFormToggler/EmailFormDisplayToggler";
 import { automatedGarageAPI, formatDate } from "./AutomatedDailyReportHelpers";
+import {PDFExport} from "@progress/kendo-react-pdf";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
+import Button from "react-bootstrap/Button";
+import {pdfExport} from "../../components/EmailSender/EmailPdf";
 
 function AutomatedDailyReportPage() {
   const [response, setResponse] = useState(null);
@@ -21,7 +24,7 @@ function AutomatedDailyReportPage() {
   let transientOutTable = new Array(24).fill(0);
   let monthlyInTable = new Array(24).fill(0);
   let monthlyOutTable = new Array(24).fill(0);
-
+  const container = React.useRef(null);
   let monthlyInTotal = 0
   let monthlyOutTotal = 0
   let transientInTotal = 0
@@ -81,8 +84,11 @@ function AutomatedDailyReportPage() {
     isLoading ? <LoadingSpinner/> :
     <div className="report">
       <Navigation />
+      <Button onClick={()=>pdfExport(container)}>PDF</Button>
       <EmailFormDisplayToggler />
-      <div className="daily-report__header">
+      <div id="PDFExport">
+        <PDFExport  fileName={`Report for ${new Date().getFullYear()}`} forcePageBreak=".page-break" scale={0.68} paperSize="Letter" margin={{ top: 5, left: 5, right: 5, bottom: 5 }} ref={container}>
+        <div className="daily-report__header">
         <p className="daily-report__header__text">{garageName} Garage Daily Report</p>
         <p className="daily-report__header__text">Yesterday {formattedDate}, 12AM - 11:59PM </p>
       </div>
@@ -120,6 +126,8 @@ function AutomatedDailyReportPage() {
       ) : (
         ""
       )}
+        </PDFExport>
+      </div>
     </div>
   );
 }
