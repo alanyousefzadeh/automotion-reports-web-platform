@@ -53,11 +53,17 @@ function WelcomePage() {
   const [isLoading, setIsLoading] = useState(true)
 
   const auth = getAuth()
+  async function checkUser(){
+    
+    await isUserTech(auth.currentUser.email, setIsTech)
+    
+    setTimeout(() => 
+      setIsLoading(false)
+    , "500")
+  }
   useEffect(() => {
-    setIsLoading(true)
-    isUserTech(auth.currentUser.email, setIsTech)
-    setIsLoading(false)
-  })
+    checkUser()
+  }, [])
 
   return (
     <>

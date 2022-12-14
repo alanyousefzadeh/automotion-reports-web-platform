@@ -14,15 +14,22 @@ function ReportSelectPage() {
   const automatedGarageReports = ["Daily Report", "Filtered Report", "Filter By Rate", "Monthlies", "Wait Times Report"]
   const atlanticReports = ["Daily report", "Filtered Report", "Open Tickets Report"]
 
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [isTech, setIsTech] = useState(null)
 
   const auth = getAuth()
+  async function checkUser(){
+    
+    await isUserTech(auth.currentUser.email, setIsTech)
+    
+    setTimeout(() => 
+      setIsLoading(false)
+    , "500")
+  }
   useEffect(() => {
-    setIsLoading(true)
-    isUserTech(auth.currentUser.email, setIsTech)
-    setIsLoading(false)
-  })
+ 
+    checkUser()
+  }, [])
 
   return (
     <>
