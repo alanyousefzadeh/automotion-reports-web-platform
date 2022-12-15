@@ -78,7 +78,7 @@ export default function AdminDeletePage() {
                         {
                             res.map((user, i) => {
                                 return (
-                                    <div key={i}>
+                                    <div className="admin-portal-user" key={i}>
                                         <input onChange={checkHandler} type="checkbox" id="email" name="email" value={user} />
                                         <label htmlFor="email">{user[1]}</label>
                                     </div>

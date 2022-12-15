@@ -67,15 +67,17 @@ export default function Monthlies() {
       {
         isLoading ? <LoadingSpinner /> :
           <div className='report'>
-            <p>Select a report from the dropdown menu</p>
-            <select name="reports" onChange={(e) => typeHandler(e)}>
-              <option value="Select">Select Report</option>
-              <option value="Active">Active Monthlies</option>
-              <option value="Inactive">Inactive Monthlies</option>
-              <option value="Repo">Repo Monthlies</option>
-              <option value="InUse">In Use Monthlies</option>
-            </select>
-            <div className='report'>
+            <div className='monthlies-header'>
+              <p>Select a report from the dropdown menu</p>
+              <select name="reports" onChange={(e) => typeHandler(e)}>
+                <option value="Select">Select Report</option>
+                <option value="Active">Active Monthlies</option>
+                <option value="Inactive">Inactive Monthlies</option>
+                <option value="Repo">Repo Monthlies</option>
+                <option value="InUse">In Use Monthlies</option>
+              </select>
+            </div>
+            <div className='report monthlies-names'>
               {type === "Active" ?
                 <ActiveMonthlies
                   data={monthliesData.monthliesActive}

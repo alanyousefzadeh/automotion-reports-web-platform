@@ -9,7 +9,7 @@ import { isUserTech } from '../../firebase';
 
 export default function Navigation() {
   const [error, setError] = useState("")
-  const [isTech, setIsTech] = useState(null)
+  const [isTech, setIsTech] = useState(true)
 
   const {user, logout} = UserAuth()
   const nav = useNavigate();

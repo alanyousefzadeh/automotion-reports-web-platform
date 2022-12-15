@@ -7,7 +7,7 @@ export default function InUseMonthlies(props) {
   const {data, garage} = props  
   return (
     <div>
-        <p>{garage} In Use Monthlies: {data.length}</p>
+        <p className='monthlies-type-header'>{garage} In Use Monthlies: {data.length}</p>
         <Table striped bordered className="monthlies report table-sm">
         <thead>
           <tr className="table-warning">

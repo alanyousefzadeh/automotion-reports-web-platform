@@ -112,7 +112,7 @@ function WaitTimePage() {
               Generate Table
             </Button>
             <EmailFormDisplayToggler />
-            <Button onClick={() => pdfExport(container)}>PDF</Button>
+            <Button className="pdf-button" onClick={() => pdfExport(container)}>PDF</Button>
           </div>
           {isLoading ? (
             <LoadingSpinner />

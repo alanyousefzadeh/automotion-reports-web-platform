@@ -84,7 +84,7 @@ function AutomatedDailyReportPage() {
     isLoading ? <LoadingSpinner/> :
     <div className="report">
       <Navigation />
-      <Button onClick={()=>pdfExport(container)}>PDF</Button>
+      <Button className="pdf-button" onClick={()=>pdfExport(container)}>PDF</Button>
       <EmailFormDisplayToggler />
       <div id="PDFExport">
         <PDFExport  fileName={`Report for ${new Date().getFullYear()}`} forcePageBreak=".page-break" scale={0.68} paperSize="Letter" margin={{ top: 5, left: 5, right: 5, bottom: 5 }} ref={container}>

@@ -3,6 +3,7 @@ import axios from "axios";
 import AtlanticOpenTable from '../../components/AtlanticOpenTable/AtlanticOpenTable';
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
 import EmailFormDisplayToggler from "../../components/EmailFormToggler/EmailFormDisplayToggler";
+import Navigation from "../../components/Navigation/Navigation";
 export default function AtlanticOpenPage() {
   const [atlanticOpenData, setAtlanticOpenData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -36,6 +37,7 @@ export default function AtlanticOpenPage() {
 
   return (
     <>
+    <Navigation/>
     {isLoading ? <LoadingSpinner/> :
     <div>
       <AtlanticOpenTable data={atlanticOpenData}/>

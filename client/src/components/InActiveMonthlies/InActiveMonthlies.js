@@ -8,7 +8,7 @@ export default function InActiveMonthlies(props) {
     
   return (
     <div>
-        <p>{garage} Inactive Monthlies: {data.length}</p>
+        <p className='monthlies-type-header'>{garage} Inactive Monthlies: {data.length}</p>
         <Table striped bordered className="monthlies report table-sm">
         <thead>
           <tr className="table-warning">

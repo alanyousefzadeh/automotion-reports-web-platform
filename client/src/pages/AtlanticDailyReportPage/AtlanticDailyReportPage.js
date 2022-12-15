@@ -220,7 +220,9 @@ const AtlanticDailyReportPage = () => {
                   timeZone: "America/New_York",
                 })}
               />
-              <EmailFormDisplayToggler />
+              <div className="atlantic-email-toggler">
+                <EmailFormDisplayToggler />
+              </div>
               <AtlanticTable
                 atlanticTable={atlanticTable}
                 atlanticDiscountTable={sortObjectByKeys(atlanticDiscountTable)}

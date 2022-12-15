@@ -63,8 +63,9 @@ export default function AutomatedFilteredByRate() {
     return (
         <div className='report'>
             <Navigation />
+            
+            <Button className="pdf-button"onClick={() => pdfExport(container)}>PDF</Button>
             <EmailFormDisplayToggler />
-            <Button onClick={() => pdfExport(container)}>PDF</Button>
             <div id="PDFExport">
             <PDFExport  fileName={`Report for ${new Date().getFullYear()}`} forcePageBreak=".page-break" scale={0.68} paperSize="Letter" margin={{ top: 5, left: 5, right: 5, bottom: 5 }} ref={container}>
             <div>
@@ -72,14 +73,16 @@ export default function AutomatedFilteredByRate() {
             </div>
             <DatePicker label={'Starting Date'} setDate={setStartDate} />
             <DatePicker label={'Ending Date'} setDate={setEndDate} />
-            <RatePicker
-                garage={garageName}
-                setRate={setRate}
-                setData={setData}
-            />
-            <Button onClick={clickHandler} className="button">
-                Submit
-            </Button>
+            <div className='filter-by-rate-buttons'>
+                <RatePicker
+                    garage={garageName}
+                    setRate={setRate}
+                    setData={setData}
+                />
+                <Button onClick={clickHandler} className="button">
+                    Submit
+                </Button>
+            </div>
             {loading ? <LoadingSpinner /> :
                 <>
                 <div className='rate-table-header'>

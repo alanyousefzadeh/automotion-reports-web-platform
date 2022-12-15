@@ -235,11 +235,13 @@ function FilteredReportPage() {
             {isLoading ? (
               <LoadingSpinner />
             ) : (
-              <AtlanticTable
-                atlanticTable={atlanticTable}
-                atlanticDiscountTable={sortObjectByKeys(atlanticDiscountTable)}
-                atlanticMiscTable={atlanticMiscTable}
-              />
+              <div className="atlantic-filtered-table">
+                <AtlanticTable
+                  atlanticTable={atlanticTable}
+                  atlanticDiscountTable={sortObjectByKeys(atlanticDiscountTable)}
+                  atlanticMiscTable={atlanticMiscTable}
+                />
+              </div>
             )}
           </div>
         )}

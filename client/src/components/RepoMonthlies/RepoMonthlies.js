@@ -7,7 +7,7 @@ export default function RepoMonthlies(props) {
   const {data, garage} = props
   return (
     <div>
-        <p>{garage} Repo Monthlies : {data.length}</p>
+        <p className="monthlies-type-header">{garage} Repo Monthlies: {data.length}</p>
         <Table striped bordered className="monthlies report table-sm">
         <thead>
           <tr className="table-warning">

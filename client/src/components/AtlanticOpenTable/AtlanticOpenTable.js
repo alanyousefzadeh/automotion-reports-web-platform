@@ -12,7 +12,7 @@ export default function AtlanticOpenTable(props) {
     <div className="report">
       <p className="atlantic_open_header">Atlantic Terrace Currently Open Tickets</p>
       <EmailFormDisplayToggler/>
-      <Table striped bordered className="report table-sm">
+      <Table striped bordered className="report table-sm atlantic-open-table">
         <thead>
           <tr className="table-warning">
             <th>Ticket Num/FOB</th>
