@@ -16,6 +16,7 @@ const monthliesRoute = require('./routes/monthliesRoute')
 const adminRoute = require('./routes/adminRoute')
 const wakeUpRoute = require('./routes/wakeUpRoute')
 const carDetailsRoute = require('./routes/carDetailsRoute')
+const googleSheetsRoute = require('./routes/googleSheetsRoute')
 
 const port = process.env.PORT || 8080;
 
@@ -36,9 +37,8 @@ app.use('/filterByRate', filterByRateRoute)
 app.use('/monthlies', monthliesRoute)
 app.use('/admin', adminRoute)
 app.use('/carDetails', carDetailsRoute)
-////
-
-
+app.use("/googleSheets", googleSheetsRoute)
+ 
           
 //port listener
 app.listen(port, () => {
