@@ -22,6 +22,7 @@ import AdminUpdatePage from "./pages/AdminUpdatePage/AdminUpdatePage";
 import AdminUpdateDetailsPage from "./pages/AdminUpdateDetailsPage/AdminUpdateDetailsPage";
 import UnauthorizedPage from "./pages/UnauthorizedPage/UnauthorizedPage";
 import CarDetailsPage from "./pages/CarDetailsPage/CarDetailsPage";
+import MonthliesRevenuePage from "./pages/MonthliesRevenuePage/MonthliesRevenuePage";
 
 function App() {
 
@@ -244,6 +245,15 @@ function App() {
               element={
                 <ProtectedRoute>
                   <CarDetailsPage
+                  />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/reportSelect/:garageName/revenue"
+              element={
+                <ProtectedRoute>
+                  <MonthliesRevenuePage
                   />
                 </ProtectedRoute>
               }

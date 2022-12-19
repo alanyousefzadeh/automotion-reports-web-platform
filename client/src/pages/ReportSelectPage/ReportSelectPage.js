@@ -11,7 +11,7 @@ function ReportSelectPage() {
   let { garageName } = useParams();
 
   const schemehornReports = ["Daily report", "Filtered Report"]
-  const automatedGarageReports = ["Daily Report", "Filtered Report", "Filter By Rate", "Monthlies", "Wait Times Report"]
+  const automatedGarageReports = ["Daily Report", "Filtered Report", "Filter By Rate", "Monthlies", "Revenue for Monthlies", "Wait Times Report"]
   const atlanticReports = ["Daily report", "Filtered Report", "Open Tickets Report"]
 
   const [isLoading, setIsLoading] = useState(true)
