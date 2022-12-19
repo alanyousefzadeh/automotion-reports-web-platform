@@ -10,6 +10,7 @@ export default function MonthliesRevenuePage() {
 
   const [payments, setPayments] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [type, setType] = useState(null)
 
   const { garageName } = useParams()
   console.log(garageName)
@@ -30,6 +31,12 @@ export default function MonthliesRevenuePage() {
         setIsLoading(false)
       })
   }, [])
+
+  const typeHandler = (e) => {
+    setType(e.target.value)
+    //setSearchParams({type: e.target.value})
+  
+  }
 
   let statusIndex;
   let fobIndex;
@@ -68,9 +75,18 @@ export default function MonthliesRevenuePage() {
   }
 
   return (
-    isLoading ? <LoadingSpinner /> :
+    <>
+    <Navigation />
+    {isLoading ? <LoadingSpinner /> :
       <>
-        <Navigation />
+        <div className='monthlies-header'>
+          <select name="reports" onChange={(e) => typeHandler(e)}>
+            <option value="Select">Select Report</option>
+            <option value="Active">Active</option>
+            <option value="ConflictsQB">Conflicts - not on QB</option>
+            <option value="ConflictsGS">Conflicts - not on GS</option>
+            </select>
+        </div>
         <p className='monthlies_revenue_header'>{garageName} Monthlies Revenue Table</p>
         <div>
           <MonthliesRevenueTable
@@ -83,5 +99,7 @@ export default function MonthliesRevenuePage() {
           />
         </div>
       </>
+    }
+    </>
   )
 }

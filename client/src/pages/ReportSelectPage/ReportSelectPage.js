@@ -69,7 +69,7 @@ function ReportSelectPage() {
                   {
                     automatedGarageReports.map((report, index) => {
                       return (
-                        <div key={index} className={isTech && (report === "Daily Report" || report === "Filtered Report" || report === "Filter By Rate") ? "hidden" : ""}>
+                        <div key={index} className={isTech && (report === "Daily Report" || report === "Filtered Report" || report === "Filter By Rate" || report === "Revenue for Monthlies") ? "hidden" : ""}>
                         <ReportCard
                           
                           name={garageName}
