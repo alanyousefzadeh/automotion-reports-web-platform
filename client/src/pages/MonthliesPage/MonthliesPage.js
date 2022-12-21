@@ -16,7 +16,6 @@ export default function Monthlies() {
   const [type, setType] = useState(null)
   const [searchParams, setSearchParams] = useSearchParams();
 
-
   const { garageName } = useParams()
   async function fetchMonthliesData() {
     const token = sessionStorage.getItem('token');
@@ -55,6 +54,7 @@ export default function Monthlies() {
   
     if(data){
 		  setMonthliesData(data);
+      setIsLoading(false)
     }else{
       fetchMonthliesData();
     }
