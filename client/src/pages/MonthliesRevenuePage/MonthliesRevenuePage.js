@@ -6,6 +6,7 @@ import MonthliesRevenueTable from '../../components/MonthliesRevenueTable/Monthl
 import './MonthliesRevenuePage.scss';
 import LoadingSpinner from '../../components/LoadingWheel/LoadingWheel';
 import MonthliesRevenueConflictsQBTable from '../../components/MonthliesRevenueConflictsQBTable/MonthliesRevenueConflictsQBTable';
+import MonthliesRevenueConflictsGSTable from '../../components/MonthliesRevenueConflictsGSTable/MonthliesRevenueConflictsGSTable';
 
 export default function MonthliesRevenuePage() {
 
@@ -125,6 +126,19 @@ export default function MonthliesRevenuePage() {
             type === "ConflictsQB" ?
               <div>
                 <MonthliesRevenueConflictsQBTable
+                  payments={payments}
+                  fobStatusIndex={statusIndex}
+                  fob={fobIndex}
+                  name={nameIndex}
+                  type={typeIndex}
+                  rate={rateIndex}
+                />
+
+              </div> 
+              : 
+              type === "ConflictsGS" ?
+              <div>
+                <MonthliesRevenueConflictsGSTable
                   payments={payments}
                   fobStatusIndex={statusIndex}
                   fob={fobIndex}

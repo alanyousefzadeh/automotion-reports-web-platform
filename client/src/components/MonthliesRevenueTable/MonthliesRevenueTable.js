@@ -11,7 +11,7 @@ export default function MonthliesRevenueTable(props) {
         
         if (((payment[fobStatusIndex] === "Active") || payment[fobStatusIndex]==='Last Month') && payment[rate].length > 0) {
           // Remove the dollar sign and parse the string as an integer
-          const amountAsInt = parseInt(payment[rate].slice(1));
+          const amountAsInt = parseFloat(payment[rate].slice(1));
           // Add the amount to the total and return the new total
           return total + amountAsInt;
         }
@@ -23,6 +23,14 @@ export default function MonthliesRevenueTable(props) {
     let curr = 0;
     return (
         <Table striped bordered className="table-sm report">
+            <thead>
+                <tr className="table-success">
+                    <th>{}</th>
+                    <th></th>
+                    <th>Total:</th>
+                    <th>${sum.toLocaleString()}</th>
+                </tr>
+            </thead>
             <thead>
                 <tr className="table-warning">
                     <th>Name</th>
@@ -36,8 +44,8 @@ export default function MonthliesRevenueTable(props) {
                     //let paymentEdited = payment[rate].replace(/[$,]/g, '')
                     if((payment[fobStatusIndex] === "Active") || payment[fobStatusIndex]==='Last Month') {
                         //console.log("total:", payment[rate], "name:", payment[name])
-                        //console.log(parseInt(payment[rate].slice(1)))
-                        curr += payment[rate] !== '' ? (parseInt(payment[rate].slice(1))) : 0 ;
+                        //console.log(parseFloat(payment[rate].slice(1)))
+                        curr += payment[rate] !== '' ? (parseFloat(payment[rate].slice(1))) : 0 ;
                         console.log(curr, payment[rate])
                         return (
                             <tr key={i}>
@@ -50,11 +58,6 @@ export default function MonthliesRevenueTable(props) {
                     }
                 })}
             </tbody>
-            <thead>
-                <tr className="table-success">
-                    <th>Total: ${sum.toLocaleString()}</th>
-                </tr>
-        </thead>
         </Table>
     )
 }
