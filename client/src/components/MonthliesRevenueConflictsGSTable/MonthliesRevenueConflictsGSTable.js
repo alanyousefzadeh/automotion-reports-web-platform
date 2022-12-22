@@ -13,40 +13,19 @@ export default function MonthliesRevenueConflictsGSTable(props) {
             fobsInQuickBooks.add(payment[28])
         }
 
-        console.log(fobsInQuickBooks)
     });
 
     //set to store all FOBs in QBs
     let fobsInGoogleSheets = new Set()
-    payments.forEach(payment => {
-        fobsInGoogleSheets.add(payment[fob])
+    payments.slice(1).forEach(row => {
+        if ((row[fobStatusIndex] === "Active") || row[fobStatusIndex] === 'Last Month')
+        fobsInGoogleSheets.add(row[fob])
     });
-    console.log("fobs in GS", fobsInGoogleSheets)
 
     //filter for payments in QBs that arent in Google Sheets (GS)
     let filteredPayments = Array.from(fobsInQuickBooks).filter((fob) => !fobsInGoogleSheets.has(fob))
 
-    console.log("fobs not in GS",filteredPayments)
-
-    // let QBsNotInGS = .map(payment => {
-    //     if(!fobsInGoogleSheets.has(payment[28])){
-    //         return payment[26]
-    //     }
-    // })
-    // console.log("QBsNotInGS", QBsNotInGS)
-    // const sum = filteredPayments.reduce((total, payment) => {
-    //     // Check if the amount is a valid string
-    //     console.log("total:", payment[rate], "name:", payment[name])
-
-    //     if (((payment[fobStatusIndex] === "Active") || payment[fobStatusIndex] === 'Last Month') && payment[rate].length > 0) {
-    //         // Remove the dollar sign and parse the string as an integer
-    //         const amountAsInt = parseFloat(payment[rate].slice(1));
-    //         // Add the amount to the total and return the new total
-    //         return total + amountAsInt;
-    //     }
-    //     // Otherwise, return the total unchanged
-    //     return total;
-    // }, 0);
+    
     return (
         <Table striped bordered className="table-sm report">
             <thead>

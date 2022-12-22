@@ -13,8 +13,6 @@ export default function MonthliesRevenueConflictsQBTable(props) {
             //payment[28] is the fob number in QBs
             fobsInQuickBooks.add(payment[28])
         }
-
-        console.log(fobsInQuickBooks)
     });
 
     let filteredPayments = payments.filter((payment) => {
@@ -27,8 +25,6 @@ export default function MonthliesRevenueConflictsQBTable(props) {
 
     const sum = filteredPayments.reduce((total, payment) => {
         // Check if the amount is a valid string
-        console.log("total:", payment[rate], "name:", payment[name])
-
         if (((payment[fobStatusIndex] === "Active") || payment[fobStatusIndex] === 'Last Month') && payment[rate].length > 0) {
             // Remove the dollar sign and parse the string as an integer
             const amountAsInt = parseFloat(payment[rate].slice(1));
