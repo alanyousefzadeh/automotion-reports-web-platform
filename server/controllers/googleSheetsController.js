@@ -15,6 +15,8 @@ exports.sheets = async(req, res) => {
             sheet = "Waverly"
         case '24th Street':
             sheet = "24th"
+        case "Schermerhorn":
+            sheet = "Schermerhorn"
     }
 
     console.log(sheet)

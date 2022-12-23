@@ -88,7 +88,7 @@ exports.transactions = async (req, res) => {
   data.overParked = await knex.raw(helpers.overParkedQuery())
 
   //query for starting ticket num
-   data.ticketStart = await knex.raw(helpers.ticketStartNum(inDate, outDate))
+  data.ticketStart = await knex.raw(helpers.ticketStartNum(inDate, outDate))
   
   //query for end ticket num
   data.ticketEnd = await knex.raw(helpers.ticketEndNum(inDate, outDate))
