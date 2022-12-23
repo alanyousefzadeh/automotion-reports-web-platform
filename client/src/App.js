@@ -23,6 +23,7 @@ import AdminUpdateDetailsPage from "./pages/AdminUpdateDetailsPage/AdminUpdateDe
 import UnauthorizedPage from "./pages/UnauthorizedPage/UnauthorizedPage";
 import CarDetailsPage from "./pages/CarDetailsPage/CarDetailsPage";
 import MonthliesRevenuePage from "./pages/MonthliesRevenuePage/MonthliesRevenuePage";
+import SchemehornMonthlyRevenuePage from "./pages/SchemehornMonthlyRevenuePage/SchemehornMonthlyRevenuePage";
 
 function App() {
 
@@ -135,6 +136,17 @@ function App() {
               element={
                 <ProtectedRoute>
                   <SchemehornDailyPage
+                  />
+                </ProtectedRoute>
+              }
+            />
+            {/* schemehorn monthly revenue report */}
+            <Route
+              exact
+              path="/reportSelect/schemehorn/revenue"
+              element={
+                <ProtectedRoute>
+                  <SchemehornMonthlyRevenuePage 
                   />
                 </ProtectedRoute>
               }

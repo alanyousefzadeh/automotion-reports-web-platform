@@ -15,6 +15,7 @@ export default function MonthliesRevenueConflictsQBTable(props) {
         }
     });
 
+    //payments in Google Sheets that aren't in QuickBooks
     let filteredPayments = payments.filter((payment) => {
         return (payment[fobStatusIndex] === "Active" ||
             payment[fobStatusIndex] === 'Last Month') &&

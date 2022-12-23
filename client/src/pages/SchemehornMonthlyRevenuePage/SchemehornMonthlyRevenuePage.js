@@ -3,7 +3,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 import axios from 'axios';
 import Navigation from '../../components/Navigation/Navigation';
 import MonthliesRevenueTable from '../../components/MonthliesRevenueTable/MonthliesRevenueTable';
-import './MonthliesRevenuePage.scss';
+//import './MonthliesRevenuePage.scss';
 import LoadingSpinner from '../../components/LoadingWheel/LoadingWheel';
 import MonthliesRevenueConflictsQBTable from '../../components/MonthliesRevenueConflictsQBTable/MonthliesRevenueConflictsQBTable';
 import MonthliesRevenueConflictsGSTable from '../../components/MonthliesRevenueConflictsGSTable/MonthliesRevenueConflictsGSTable';
@@ -15,9 +15,6 @@ export default function MonthliesRevenuePage() {
   const [type, setType] = useState(null)
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const { garageName } = useParams()
-  console.log(garageName)
-
   const getMonthliesRevenue = async () => {
     const token = sessionStorage.getItem('token');
     try {
@@ -25,13 +22,13 @@ export default function MonthliesRevenuePage() {
         .get(process.env.REACT_APP_GOOGLE_SHEETS_URL,
           {
             params: {
-              garageName
+              garageName:"Schermerhorn"
             },
             headers: {
               authorization: 'Bearer ' + token
             }
           })
-      sessionStorage.setItem(`${garageName}-monthliesRevenue`, JSON.stringify(response.data))
+      sessionStorage.setItem(`Schermerhorn-monthliesRevenue`, JSON.stringify(response.data))
       setPayments(response.data)
       setIsLoading(false)
 
@@ -44,7 +41,7 @@ export default function MonthliesRevenuePage() {
   useEffect(() => {
 
     setType(typeParam)
-    const data = JSON.parse(sessionStorage.getItem(`${garageName}-monthliesRevenue`))
+    const data = JSON.parse(sessionStorage.getItem(`Schermerhorn-monthliesRevenue`))
 
     if (data) {
       setPayments(data);
@@ -60,41 +57,12 @@ export default function MonthliesRevenuePage() {
 
   }
 
-  let statusIndex;
-  let fobIndex;
-  let nameIndex;
-  let typeIndex;
-  let rateIndex;
-  switch (garageName) {
-    case 'Baxter':
-      statusIndex = 5;
-      fobIndex = 2;
-      nameIndex = 0;
-      typeIndex = 13;
-      rateIndex = 15;
-      break;
-    case 'VanVorst':
-      statusIndex = 5;
-      fobIndex = 4;
-      nameIndex = 1;
-      typeIndex = 12;
-      rateIndex = 18;
-      break;
-    case 'Waverly':
-      statusIndex = 3;
-      fobIndex = 2;
-      nameIndex = 0;
-      typeIndex = 11;
-      rateIndex = 13;
-      break;
-    case '24th Street':
-      statusIndex = 3;
-      fobIndex = 2;
-      nameIndex = 0;
-      typeIndex = 11;
-      rateIndex = 15;
-      break;
-  }
+  let statusIndex = 1;
+  let fobIndex = 0;
+  let nameIndex = 2;
+  let typeIndex = 10;
+  let rateIndex = 15; 
+
 
   return (
     <>
@@ -105,11 +73,11 @@ export default function MonthliesRevenuePage() {
             <select name="reports" onChange={(e) => typeHandler(e)}>
               <option value="Select">Select Report</option>
               <option value="Active">Active</option>
-              <option value="Conflicts (Listed in Sheets, but not in QuickBooks)">Conflicts - not on QB</option>
-              <option value="Conflicts (Listed in QBs, but not in GoogleSheets)">Conflicts - not on GS</option>
+              <option value="ConflictsQB">Conflicts - not on QB</option>
+              <option value="ConflictsGS">Conflicts - not on GS</option>
             </select>
           </div>
-          <p className='monthlies_revenue_header'>{garageName} {type} Monthlies Table</p>
+          <p className='monthlies_revenue_header'>Schermerhorn {type} Monthlies Table</p>
           {type === "Active" ?
             <div>
               <MonthliesRevenueTable
@@ -122,7 +90,7 @@ export default function MonthliesRevenuePage() {
               />
             </div>
             :
-            type === "Conflicts (Listed in Sheets, but not in QuickBooks)" ?
+            type === "ConflictsQB" ?
               <div>
                 <MonthliesRevenueConflictsQBTable
                   payments={payments}
@@ -135,7 +103,7 @@ export default function MonthliesRevenuePage() {
 
               </div> 
               : 
-              type === "Conflicts (Listed in QBs, but not in GoogleSheets)" ?
+              type === "ConflictsGS" ?
               <div>
                 <MonthliesRevenueConflictsGSTable
                   payments={payments}
@@ -146,7 +114,9 @@ export default function MonthliesRevenuePage() {
                   rate={rateIndex}
                 />
 
-              </div> : ""
+              </div> 
+              : 
+              ""
           }
 
         </>

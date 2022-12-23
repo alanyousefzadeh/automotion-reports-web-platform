@@ -7,6 +7,7 @@ export default function MonthliesRevenueTable(props) {
 
     console.log(payments[0])
     let sum = (payments[0][30])
+    let formattedSum = parseFloat(sum.replace(/,/g, ''))
 
     return (
         <Table striped bordered className="table-sm report">
@@ -15,7 +16,7 @@ export default function MonthliesRevenueTable(props) {
                     <th></th>
                     <th></th>
                     <th>Total:</th>
-                    <th>${sum}</th>
+                    <th>${formattedSum.toLocaleString()}</th>
                 </tr>
             </thead>
             <thead>

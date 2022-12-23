@@ -10,7 +10,7 @@ import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
 function ReportSelectPage() {
   let { garageName } = useParams();
 
-  const schemehornReports = ["Daily report", "Filtered Report"]
+  const schemehornReports = ["Daily report", "Filtered Report", "Revenue for Monthlies"]
   const automatedGarageReports = ["Daily Report", "Filtered Report", "Filter By Rate", "Monthlies", "Revenue for Monthlies", "Wait Times Report"]
   const atlanticReports = ["Daily report", "Filtered Report", "Open Tickets Report"]
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import './SchemehornDailyPage.scss'
 import Navigation from "../../components/Navigation/Navigation";
 import LoadingSpinner from "../../components/LoadingWheel/LoadingWheel";
 import SchemehornRevenueSummaryComponent from "../../components/SchemehornRevenueSummaryComponent/SchemehornRevenueSummaryComponent";
@@ -114,7 +115,7 @@ function SchemehornDailyPage() {
     <div className="report">
       <Navigation />
         <EmailFormDisplayToggler />
-        <Button onClick={() => pdfExport(container)}>PDF</Button>
+        <Button className="schemehorn_PDF" onClick={() => pdfExport(container)}>PDF</Button>
       {loading ? (
         <LoadingSpinner />
       ) : (

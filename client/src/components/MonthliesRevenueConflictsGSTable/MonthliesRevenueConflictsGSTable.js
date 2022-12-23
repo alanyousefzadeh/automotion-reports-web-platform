@@ -10,9 +10,10 @@ export default function MonthliesRevenueConflictsGSTable(props) {
         //lenghts > 28 on google sheets are QBs Fobs
         if (payment.length > 28) {
             //payment[28] is the fob number in QBs
-            fobsInQuickBooks.add(payment[28])
+            if(payment[28].length > 0){
+                fobsInQuickBooks.add(payment[28])
+            }
         }
-
     });
 
     //set to store all FOBs in QBs
@@ -24,23 +25,34 @@ export default function MonthliesRevenueConflictsGSTable(props) {
 
     //filter for payments in QBs that arent in Google Sheets (GS)
     let filteredPayments = Array.from(fobsInQuickBooks).filter((fob) => !fobsInGoogleSheets.has(fob))
-
+    console.log(filteredPayments)
+    let conflictTotals = 0
+     filteredPayments.reduce((acc, val) => {
+        return 
+    }, 0)
     
+    payments.forEach(payment => {
+        if(payment.length > 28){
+            if(filteredPayments.includes(payment[28])){
+                conflictTotals += parseFloat(payment[27])
+            }
+        }
+    })
     return (
         <Table striped bordered className="table-sm report">
             <thead>
-                {/* <tr className="table-success">
-                    <th>{ }</th>
+                <tr className="table-success">
+                    <th></th>
                     <th></th>
                     <th>Total:</th>
-                    <th>${sum.toLocaleString()}</th>
-                </tr> */}
+                    <th>${conflictTotals.toLocaleString()}</th>
+                </tr>
             </thead>
             <thead>
                 <tr className="table-warning">
                     <th>Name</th>
                     <th>FOB</th>
-                    {/* <th>Type</th> */}
+                    <th>Type</th>
                     <th>Total</th>
                 </tr>
             </thead>
@@ -52,7 +64,7 @@ export default function MonthliesRevenueConflictsGSTable(props) {
                             <tr key={i}>
                                 <td>{payment[26]}</td>
                                 <td>{payment[28]}</td>
-                                {/* //<td>{payment[type]}</td> */}
+                                <td>{payment[type]}</td>
                                 <td>${payment[27]}</td>
                             </tr>
                         );
