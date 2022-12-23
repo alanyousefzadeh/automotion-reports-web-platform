@@ -73,11 +73,11 @@ export default function MonthliesRevenuePage() {
             <select name="reports" onChange={(e) => typeHandler(e)}>
               <option value="Select">Select Report</option>
               <option value="Active">Active</option>
-              <option value="ConflictsQB">Conflicts - not on QB</option>
-              <option value="ConflictsGS">Conflicts - not on GS</option>
+              <option value="Conflicts (Listed in Sheets, but not in QuickBooks)">Conflicts - not on QB</option>
+              <option value="Conflicts (Listed in QBs, but not in GoogleSheets)">Conflicts - not on GS</option>
             </select>
           </div>
-          <p className='monthlies_revenue_header'>Schermerhorn {type} Monthlies Table</p>
+          <p className='monthlies_revenue_header'>Schermerhorn {type}</p>
           {type === "Active" ?
             <div>
               <MonthliesRevenueTable
@@ -90,7 +90,7 @@ export default function MonthliesRevenuePage() {
               />
             </div>
             :
-            type === "ConflictsQB" ?
+            type === "Conflicts (Listed in Sheets, but not in QuickBooks)" ?
               <div>
                 <MonthliesRevenueConflictsQBTable
                   payments={payments}
@@ -103,7 +103,7 @@ export default function MonthliesRevenuePage() {
 
               </div> 
               : 
-              type === "ConflictsGS" ?
+              type === "Conflicts (Listed in QBs, but not in GoogleSheets)" ?
               <div>
                 <MonthliesRevenueConflictsGSTable
                   payments={payments}

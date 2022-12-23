@@ -109,7 +109,7 @@ export default function MonthliesRevenuePage() {
               <option value="Conflicts (Listed in QBs, but not in GoogleSheets)">Conflicts - not on GS</option>
             </select>
           </div>
-          <p className='monthlies_revenue_header'>{garageName} {type} Monthlies Table</p>
+          <p className='monthlies_revenue_header'>{garageName} {type}</p>
           {type === "Active" ?
             <div>
               <MonthliesRevenueTable
